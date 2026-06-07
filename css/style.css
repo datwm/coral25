@@ -124,6 +124,41 @@ body {
 }
 
 /* =========================================
+   BOTÓN HAMBURGUESA (Móvil)
+   ========================================= */
+.hamburger {
+    display: none; /* Oculto en PC */
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1001;
+}
+
+.hamburger span {
+    display: block;
+    width: 28px;
+    height: 3px;
+    background-color: var(--gold); /* Color dorado para la hamburguesa */
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+    transform-origin: center;
+}
+
+/* Animación para convertir la hamburguesa en X */
+.hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+    opacity: 0; 
+}
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* =========================================
    BOTÓN GALA
    ========================================= */
 .btn-gala {
@@ -330,14 +365,13 @@ body {
     height: 100%;
 }
 
-/* ---- INICIO DEL CAMBIO PARA SEPARAR TÍTULOS ---- */
-/* Títulos de las cuerdas (Sopranos, Tenores, etc.) */
+/* Títulos de las cuerdas */
 .voice-title {
     border-bottom: 1px solid var(--glass-border);
     padding-bottom: 8px;
-    margin-bottom: 15px; /* Este es el espacio que genera la separación */
+    margin-bottom: 15px; 
     color: var(--gold);
-    font-family: var(--font-serif); /* Usa Georgia en lugar de Playfair */
+    font-family: var(--font-serif); 
 }
 
 /* Lista de integrantes */
@@ -345,13 +379,12 @@ body {
     list-style: none;
     padding: 0;
     margin: 0;
-    margin-top: 0; /* Refuerza que no hay espacio extra arriba */
+    margin-top: 0; 
     display: flex;
     flex-direction: column;
     gap: 8px; 
-    line-height: 1.6; /* Interlineado interno */
+    line-height: 1.6; 
 }
-/* ---- FIN DEL CAMBIO ---- */
 
 /* Formateo de cada integrante */
 .member-list li {
@@ -432,6 +465,45 @@ body {
     }
 }
 
+@media (max-width: 768px) {
+    /* --- MENÚ HAMBURGUESA DESPLEGABLE --- */
+    .hamburger {
+        display: flex; /* Mostrar la hamburguesa en móviles */
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0; 
+        width: 75%; 
+        height: 100vh;
+        background-color: rgba(10, 10, 10, 0.95); /* Fondo oscuro acorde a la web */
+        backdrop-filter: blur(15px);
+        border-left: 1px solid var(--glass-border);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+        transform: translateX(100%); /* Lo empuja fuera de la pantalla */
+        transition: transform 0.4s ease-in-out;
+        z-index: 1000;
+    }
+
+    /* Clase activa agregada por JavaScript */
+    .nav-links.open {
+        transform: translateX(0); /* Aparece en pantalla */
+    }
+
+    .nav-links li {
+        margin: 0;
+    }
+
+    .nav-links a {
+        font-size: 1.3rem;
+        color: var(--text-main);
+    }
+}
+
 @media (max-width: 600px) {
     .voice-grid {
         grid-template-columns: 1fr;
@@ -440,13 +512,6 @@ body {
     
     .voice-card {
         padding: 15px;
-    }
-
-    .nav-links {
-        display: none; 
-    }
-    .navbar {
-        justify-content: center; 
     }
     
     .hero-title {
