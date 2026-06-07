@@ -3,98 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Coral 25</title>
-    <!-- Se añade ?v=2 para forzar la actualización de la caché del navegador -->
-    <link rel="stylesheet" href="css/style.css?v=2">
-    <!-- Dependencias de Google Fonts eliminadas -->
+    <title>Prensa - Coral 25</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts (Optimizado) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Estilos específicos para el Blog -->
+    <!-- Estilos específicos para Prensa -->
     <style>
-        .blog-card {
-            display: flex;
-            gap: 2rem;
+        .prensa-card {
             margin-bottom: 2.5rem;
             padding-bottom: 2.5rem;
             border-bottom: 1px solid var(--glass-border);
         }
 
-        .blog-card:last-child {
+        .prensa-card:last-child {
             border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
 
-        .blog-fecha {
-            min-width: 80px;
-            text-align: center;
-            border-right: 1px solid var(--gold);
-            padding-right: 1.5rem;
-        }
-
-        .blog-fecha .dia {
-            font-size: 2.5rem;
-            font-family: var(--font-serif); /* Fuente nativa reemplazada */
-            color: var(--gold);
-            line-height: 1;
-        }
-
-        .blog-fecha .mes {
+        .prensa-medio {
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: var(--text-muted);
-            margin-top: 0.3rem;
-        }
-
-        .blog-info h3 {
-            color: var(--gold-light);
-            font-family: var(--font-serif); /* Fuente nativa reemplazada */
-            font-size: 1.3rem;
+            color: var(--gold);
             margin-bottom: 0.5rem;
         }
 
-        .blog-info p {
+        .prensa-titulo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .prensa-extracto {
             color: var(--text-muted);
             font-size: 0.95rem;
             line-height: 1.6;
+            font-style: italic;
+            border-left: 3px solid var(--glass-border);
+            padding-left: 1.5rem;
+            margin: 1rem 0;
             text-align: justify;
         }
 
-        .blog-link {
+        .prensa-link {
             color: var(--gold);
             font-size: 0.85rem;
             text-decoration: none;
             letter-spacing: 1px;
             text-transform: uppercase;
-            margin-top: 0.8rem;
+            transition: color 0.3s;
             display: inline-block;
-            border-bottom: 1px solid transparent;
-            transition: border 0.3s;
+            margin-top: 0.5rem;
         }
 
-        .blog-link:hover {
-            border-bottom: 1px solid var(--gold);
-        }
-        
-        /* Responsive para celulares */
-        @media (max-width: 600px) {
-            .blog-card {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .blog-fecha {
-                border-right: none;
-                border-bottom: 1px solid var(--gold);
-                padding-right: 0;
-                padding-bottom: 1rem;
-                display: flex;
-                gap: 10px;
-                align-items: center;
-                justify-content: flex-start;
-            }
-            .blog-fecha .dia {
-                font-size: 2rem;
-            }
+        .prensa-link:hover {
+            color: var(--gold-light);
         }
     </style>
 </head>
@@ -115,8 +84,8 @@
             <li><a href="historia.html">Historia</a></li>
             <li><a href="repertorio.html">Repertorio</a></li>
             <li><a href="galeria.html">Galería</a></li>
-            <li><a href="sucesos.html" class="active">Blog</a></li>
-            <li><a href="prensa.html">Prensa</a></li>
+            <li><a href="sucesos.html">Blog</a></li>
+            <li><a href="prensa.html" class="active">Prensa</a></li>
             <li><a href="contacto.html">Contacto</a></li>
         </ul>
     </nav>
@@ -124,47 +93,33 @@
     <!-- Contenido de la Página -->
     <div class="page-content">
         
-        <h1 class="page-title">Sucesos</h1>
-        <p style="text-align: center; color: var(--text-muted); max-width: 600px; margin: -1rem auto 3rem auto;">Noticias, próximos conciertos y novedades del Coral 25.</p>
-        
-        <!-- Banner Próximo Concierto -->
-        <div class="announcement-bar">
-            <div class="marquee-container">
-                <div class="marquee-content">
-                    <span>★ PRÓXIMO CONCIERTO: Sábado 15 de Julio a las 20:00 hs — Teatro Español de 25 de Mayo — Entrada gratuita ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <span>★ PRÓXIMO CONCIERTO: Sábado 15 de Julio a las 20:00 hs — Teatro Español de 25 de Mayo — Entrada gratuita ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <span>★ PRÓXIMO CONCIERTO: Sábado 15 de Julio a las 20:00 hs — Teatro Español de 25 de Mayo — Entrada gratuita ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <span>★ PRÓXIMO CONCIERTO: Sábado 15 de Julio a las 20:00 hs — Teatro Español de 25 de Mayo — Entrada gratuita ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                </div>
-            </div>
-        </div>
+        <h1 class="page-title">Prensa</h1>
+        <p style="text-align: center; color: var(--text-muted); max-width: 600px; margin: -1rem auto 3rem auto;">Apariciones en medios y notas sobre la actividad del Coral 25.</p>
 
         <div class="glass-card">
             
-            <!-- Entrada 1 -->
-            <div class="blog-card">
-                <div class="blog-fecha">
-                    <div class="dia">15</div>
-                    <div class="mes">Oct</div>
-                </div>
-                <div class="blog-info">
-                    <h3>Participación en el Octubre Coral</h3>
-                    <p>El Coral 25 tuvo una destacada participación en la edición de este año del Octubre Coral regional, compartiendo escenario con agrupaciones de toda la provincia de Buenos Aires. Fue una jornada de intercambio musical y camaradería.</p>
-                    <a href="#" class="blog-link">Leer más</a>
-                </div>
+            <!-- Nota 1 -->
+            <div class="prensa-card">
+                <div class="prensa-medio">Diario La Voz de 25 de Mayo</div>
+                <div class="prensa-titulo">El Coral 25 celebró su aniversario con un concierto emotivo</div>
+                <div class="prensa-extracto">"Ayer por la noche, la agrupación dirigida por Silvia Blanco demostró por qué es un pilar de la cultura local, llenando el auditorio municipal de voces y colores en una noche que quedará en la memoria de la ciudad."</div>
+                <a href="#" class="prensa-link">Leer nota completa ↗</a>
             </div>
 
-            <!-- Entrada 2 (Ejemplo adicional) -->
-            <div class="blog-card">
-                <div class="blog-fecha">
-                    <div class="dia">25</div>
-                    <div class="mes">May</div>
-                </div>
-                <div class="blog-info">
-                    <h3>Aniversario del Coro</h3>
-                    <p>Celebramos un nuevo aniversario de la agrupación con un concierto especial en el salón municipal, interpretando las obras más emblemáticas de nuestro repertorio histórico.</p>
-                    <a href="#" class="blog-link">Leer más</a>
-                </div>
+            <!-- Nota 2 -->
+            <div class="prensa-card">
+                <div class="prensa-medio">Radio FM Del Centro</div>
+                <div class="prensa-titulo">Entrevista a Silvia Blanco: "El canto es un abrazo comunitario"</div>
+                <div class="prensa-extracto">"En la mañana de hoy, conversamos con la directora del Coral 25 sobre la próxima gira a Córdoba y la importancia de mantener viva la cultura coral en el interior de la provincia."</div>
+                <a href="#" class="prensa-link">Escuchar entrevista ↗</a>
+            </div>
+
+            <!-- Nota 3 (Ejemplo adicional) -->
+            <div class="prensa-card">
+                <div class="prensa-medio">Portal Cultural Bonaerense</div>
+                <div class="prensa-titulo">25 de Mayo brilló en la Intercoraliada regional</div>
+                <div class="prensa-extracto">"La delegación local fue una de las más aplaudidas del encuentro que reunió a más de doscientos coralistas en la ciudad de Río Cuarto."</div>
+                <a href="#" class="prensa-link">Leer nota completa ↗</a>
             </div>
 
         </div>
