@@ -6,7 +6,6 @@
     <title>Historia - Coral 25</title>
     <!-- Se añade ?v=2 para forzar la actualización de la caché del navegador -->
     <link rel="stylesheet" href="css/style.css?v=2">
-    <!-- Dependencias de Google Fonts eliminadas -->
     
     <!-- Estilos específicos para esta página -->
     <style>
@@ -125,7 +124,15 @@
             <img src="img/logo_coral.png" alt="Logo" class="logo-img">
             <span>Coral 25</span>
         </a>
-        <ul class="nav-links">
+
+        <!-- BOTÓN HAMBURGUESA -->
+        <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
             <li><a href="index.html">Inicio</a></li>
             <li><a href="el_coro.html">El Coro</a></li>
             <li><a href="historia.html" class="active">Historia</a></li>
@@ -242,6 +249,25 @@
             </p>
         </div>
     </footer>
+
+    <!-- JAVASCRIPT PARA EL MENÚ MÓVIL -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            hamburger.classList.toggle('active');
+        });
+
+        // Cerrar el menú al hacer clic en un enlace
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                hamburger.classList.remove('active');
+            });
+        });
+    </script>
 
 </body>
 </html>

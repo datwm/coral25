@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Coro | Coral 25</title>
     <link rel="stylesheet" href="css/style.css">
-    <!-- Dependencias de Google Fonts eliminadas -->
 </head>
 <body>
 
@@ -18,7 +17,15 @@
             <img src="img/logo_coral.png" alt="Logo" class="logo-img">
             <span>Coral 25</span>
         </a>
-        <ul class="nav-links">
+
+        <!-- BOTÓN HAMBURGUESA -->
+        <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
             <li><a href="index.html">Inicio</a></li>
             <li><a href="el_coro.html" class="active">El Coro</a></li>
             <li><a href="historia.html">Historia</a></li>
@@ -43,7 +50,7 @@
             </div>
         </div>
 
-        <!-- Grilla de Voces -->
+        <!-- Grilla de Voces (¡Orden Coral 25: Sopranos, Tenores, Bajos y Contraltos!) -->
         <div class="voice-grid">
             
             <!-- Tarjeta Sopranos -->
@@ -126,10 +133,29 @@
                 ©2026 Coral 25 - Ciudad de 25 de Mayo, Buenos Aires, Argentina.
             </p>
             <p class="footer-firma">
-                <a href="https://wa.me." target="_blank">Design_MM</a>
+                <a href="https://wa.me" target="_blank">Design_MM</a>
             </p>
         </div>
     </footer>
+
+    <!-- JAVASCRIPT PARA EL MENÚ MÓVIL -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            hamburger.classList.toggle('active');
+        });
+
+        // Cerrar el menú al hacer clic en un enlace
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                hamburger.classList.remove('active');
+            });
+        });
+    </script>
 
 </body>
 </html>
