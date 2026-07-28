@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SOLUCIÓN DEFINITIVA: Evita que Dark Reader modifique los colores/fondos de la página -->
+    <meta name="darkreader-lock">
+    
     <title>Coral 25</title>
-    <link rel="stylesheet" href="css/style.css?v=2">
+    <!-- Subí la versión a ?v=4 para que el navegador actualice la caché del CSS | Pruebo con v=3 -->
+    <link rel="stylesheet" href="css/style.css?v=4">
 </head>
 <body>
     
-    <!-- Fondo de Gala -->
-    <div class="gala-bg" style="background-image: url('img/fondo_coral25.webp');"></div>
+    <!-- Fondo de Gala (Restaurado) -->
+  <!--   <div class="gala-bg" style="background-image: url('img/fondo_coral25.webp');"></div>  -->
+   <div class="gala-bg" style="background-image: url('img/hero.jpg');"></div>
 
     <!-- Navegación -->
     <nav class="navbar">
@@ -18,7 +24,7 @@
             <span>Coral 25</span>
         </a>
 
-        <!-- BOTÓN HAMBURGUESA NUEVO -->
+        <!-- BOTÓN HAMBURGUESA -->
         <button class="hamburger" id="hamburger" aria-label="Abrir menú">
             <span></span>
             <span></span>
@@ -39,6 +45,7 @@
 
     <!-- Hero Estilo Estudio Coral -->
     <section class="hero-estudio">
+        <!-- Overlay restaurado -->
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-line"></div>
@@ -55,10 +62,10 @@
     <div class="announcement-bar">
         <div class="marquee-container">
             <div class="marquee-content">
-                <span>★ PRÓXIMO CONCIERTO: Sábado 15 de Julio a las 20:00 hs — Teatro Español de 25 de Mayo — Entrada gratuita ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span>★ PRÓXIMO CONCIERTO: Sábado 15 de Julio a las 20:00 hs — Teatro Español de 25 de Mayo — Entrada gratuita ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span>★ PRÓXIMO CONCIERTO: Sábado 15 de Julio a las 20:00 hs — Teatro Español de 25 de Mayo — Entrada gratuita ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span>★ PRÓXIMO CONCIERTO: Sábado 15 de Julio a las 20:00 hs — Teatro Español de 25 de Mayo — Entrada gratuita ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>★ Bienvenidos a nuestro sitio del Coral 25 ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>★ Bienvenidos a nuestro sitio del Coral 25 ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>★ Bienvenidos a nuestro sitio del Coral 25 ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>★ Bienvenidos a nuestro sitio del Coral 25 ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </div>
         </div>
     </div>
@@ -69,10 +76,10 @@
         <div class="footer-content">
             <p class="footer-text">
                 <img src="img/logo_coral.png" alt="Coral 25" class="footer-logo"> 
-                ©2026 Coral 25 - Ciudad de 25 de Mayo, Buenos Aires, Argentina.
+                ©2026 - Coral 25 - Todos los derechos reservados - 25 de Mayo, Buenos Aires, Argentina.
             </p>
             <p class="footer-firma">
-                <a href="https://wa.me" target="_blank">Design_MM</a>
+            <a href="https://mariomolinacc.github.io" target="_blank">🌐 Web Design by MM</a>
             </p>
         </div>
     </footer>
@@ -100,3 +107,4 @@
 
 </body>
 </html>
+
