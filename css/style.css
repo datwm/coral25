@@ -10,7 +10,7 @@
     --text-muted: #a0a0a0;
     --glass-border: rgba(255, 255, 255, 0.1);
     
-    /* Fuentes nativas del sistema (Sin dependencias externas) */
+    /* Fuentes nativas del sistema */
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-serif: Georgia, "Times New Roman", Times, serif;
 }
@@ -29,27 +29,36 @@ body {
 }
 
 /* =========================================
-   EFECTO DE Fondo DE GALA (Luces de escenario)
+   EFECTO DE FONDO DE GALA + KEN BURNS
    ========================================= */
 .gala-bg {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: -5%;          /* Más grande que el viewport */
+    left: -5%;
+    width: 110%;
+    height: 110%;
     z-index: -1;
     background-color: #0a0a0a; 
-    background-attachment: scroll; 
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
-    background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #0a0a0a 70%);
+    /* La imagen viene del inline style del HTML:
+       style="background-image: url('img/hero.jpg');" */
     
     will-change: transform;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+
+    /* --- KEN BURNS: zoom in + paneo suave --- */
+    animation: kenBurnsZoom 20s ease-in-out infinite alternate;
 }
 
+@keyframes kenBurnsZoom {
+    0%   { transform: scale(1)    translate(0%, 0%); }
+    100% { transform: scale(1.12) translate(-1.5%, -1%); }
+}
+
+/* Luz dorada de escenario (se mantiene sobre la imagen) */
 .gala-bg::before {
     content: '';
     position: absolute;
@@ -57,14 +66,30 @@ body {
     left: 50%;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
     transform: translate(-50%, 0);
     animation: pulseLight 6s infinite alternate;
+    z-index: 1; /* Sobre la imagen de fondo */
 }
 
 @keyframes pulseLight {
-    0% { opacity: 0.5; transform: translate(-50%, 0) scale(1); }
-    100% { opacity: 1; transform: translate(-50%, 0) scale(1.2); }
+    0%   { opacity: 0.5; transform: translate(-50%, 0) scale(1); }
+    100% { opacity: 1;   transform: translate(-50%, 0) scale(1.2); }
+}
+
+/* Respeto a movimiento reducido (accesibilidad) */
+@media (prefers-reduced-motion: reduce) {
+    .gala-bg {
+        animation: none !important;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .gala-bg::before {
+        animation: none !important;
+        opacity: 0.8;
+    }
 }
 
 /* =========================================
@@ -127,7 +152,7 @@ body {
    BOTÓN HAMBURGUESA (Móvil)
    ========================================= */
 .hamburger {
-    display: none; /* Oculto en PC */
+    display: none;
     flex-direction: column;
     gap: 5px;
     background: none;
@@ -141,13 +166,12 @@ body {
     display: block;
     width: 28px;
     height: 3px;
-    background-color: var(--gold); /* Color dorado para la hamburguesa */
+    background-color: var(--gold);
     border-radius: 2px;
     transition: all 0.3s ease-in-out;
     transform-origin: center;
 }
 
-/* Animación para convertir la hamburguesa en X */
 .hamburger.active span:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
@@ -272,7 +296,7 @@ body {
 }
 
 @keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(30px); }
+    0%   { opacity: 0; transform: translateY(30px); }
     100% { opacity: 1; transform: translateY(0); }
 }
 
@@ -350,7 +374,6 @@ body {
     color: var(--text-muted);
 }
 
-/* Contenedor principal de las 4 cuerdas */
 .voice-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr); 
@@ -359,13 +382,11 @@ body {
     padding: 20px 0;
 }
 
-/* Tarjeta individual de cada voz */
 .voice-card {
     padding: 20px;
     height: 100%;
 }
 
-/* Títulos de las cuerdas */
 .voice-title {
     border-bottom: 1px solid var(--glass-border);
     padding-bottom: 8px;
@@ -374,19 +395,16 @@ body {
     font-family: var(--font-serif); 
 }
 
-/* Lista de integrantes */
 .member-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    margin-top: 0; 
     display: flex;
     flex-direction: column;
     gap: 8px; 
     line-height: 1.6; 
 }
 
-/* Formateo de cada integrante */
 .member-list li {
     font-family: var(--font-sans);
     font-size: 0.9rem;
@@ -395,7 +413,7 @@ body {
 }
 
 /* =========================================
-   PIE DE PÁGINA (FOOTER)
+   PIE DE PÁGINA (FOOTER) - CENTRADO
    ========================================= */
 .site-footer {
     padding: 0 5%;
@@ -410,27 +428,28 @@ body {
 
 .footer-content {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    gap: 15px;
-    padding: 10px 0;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0 20px;
+    text-align: center;
 }
 
 .footer-text {
     margin: 0;
-    flex: 1;
-    min-width: 250px;
     display: flex;
     align-items: center;
+    justify-content: center;
     color: var(--text-muted);
     font-size: 0.9rem;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .footer-logo {
     height: 25px;
     width: auto;
-    margin-right: 10px;
     opacity: 0.7;
 }
 
@@ -439,8 +458,7 @@ body {
     font-size: 0.8em;
     opacity: 0.5;
     font-family: var(--font-sans);
-    text-align: right;
-    min-width: 80px;
+    text-align: center;
 }
 
 .footer-firma a {
@@ -466,9 +484,8 @@ body {
 }
 
 @media (max-width: 768px) {
-    /* --- MENÚ HAMBURGUESA DESPLEGABLE --- */
     .hamburger {
-        display: flex; /* Mostrar la hamburguesa en móviles */
+        display: flex;
     }
 
     .nav-links {
@@ -477,21 +494,20 @@ body {
         right: 0; 
         width: 75%; 
         height: 100vh;
-        background-color: rgba(10, 10, 10, 0.95); /* Fondo oscuro acorde a la web */
+        background-color: rgba(10, 10, 10, 0.95); 
         backdrop-filter: blur(15px);
         border-left: 1px solid var(--glass-border);
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 2.5rem;
-        transform: translateX(100%); /* Lo empuja fuera de la pantalla */
+        transform: translateX(100%); 
         transition: transform 0.4s ease-in-out;
         z-index: 1000;
     }
 
-    /* Clase activa agregada por JavaScript */
     .nav-links.open {
-        transform: translateX(0); /* Aparece en pantalla */
+        transform: translateX(0); 
     }
 
     .nav-links li {
@@ -557,4 +573,30 @@ body {
 @keyframes marquee {
     0%   { transform: translateX(0); }
     100% { transform: translateX(-50%); }
+}
+
+/* ==================================================== */
+/* --- FORMACIÓN ACTUAL (El Coro) -------------------- */
+/* ==================================================== */
+.formacion-container {
+    text-align: center;
+    margin-top: 50px; 
+    margin-bottom: 40px;
+}
+
+.formacion-title {
+    font-size: 1.8rem;
+    color: var(--gold-light); 
+    margin-bottom: 20px;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.formacion-img {
+    max-width: 100%;
+    height: auto;
+    width: 800px; 
+    border-radius: 12px; 
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); 
+    border: 1px solid var(--glass-border);
 }
