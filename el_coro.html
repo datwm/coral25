@@ -3,13 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="darkreader-lock">
     <title>El Coro | Coral 25</title>
     <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* Estilo del contenedor para forzar el centro */
+        .contenedor-foto-360 {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Esto centra la imagen y el botón */
+            width: 100%;
+        }
+        
+        /* Estilo del botón */
+        .btn-360 {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        .btn-360:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
 
     <!-- Fondo de Gala -->
-    <div class="gala-bg" style="background-image: url('img/fondo_el_coro.webp');"></div>
+    <div class="gala-bg" style="background-image: url('img/fondo_coro.jpg');"></div>
 
     <!-- Navegación -->
     <nav class="navbar">
@@ -18,11 +52,8 @@
             <span>Coral 25</span>
         </a>
 
-        <!-- BOTÓN HAMBURGUESA -->
         <button class="hamburger" id="hamburger" aria-label="Abrir menú">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </button>
 
         <ul class="nav-links" id="nav-links">
@@ -50,10 +81,8 @@
             </div>
         </div>
 
-        <!-- Grilla de Voces (¡Orden Coral 25: Sopranos, Tenores, Bajos y Contraltos!) -->
+        <!-- Grilla de Voces -->
         <div class="voice-grid">
-            
-            <!-- Tarjeta Sopranos -->
             <div class="glass-card voice-card">
                 <h3 class="voice-title">Sopranos</h3>
                 <ul class="member-list">
@@ -72,20 +101,17 @@
                     <li>VAUDAGNA, MARÍA FERNANDA</li>
                 </ul>
             </div>
-
-            <!-- Tarjeta Tenores -->
             <div class="glass-card voice-card">
                 <h3 class="voice-title">Tenores</h3>
                 <ul class="member-list">
                     <li>CASTRO, SANTIAGO</li>
                     <li>IMPERATRICE, PABLO</li>
+                    <li>MELIAN, HUGO</li>
                     <li>MELIÁN, WALTER</li>
                     <li>PINILLA, ALBERTO</li>
-                    <li>SOSA, JUAN CARLOS</li>                 
+                    <li>SOSA, JUAN CARLOS</li>
                 </ul>
             </div>
-
-            <!-- Tarjeta Bajos -->
             <div class="glass-card voice-card">
                 <h3 class="voice-title">Bajos</h3>
                 <ul class="member-list">
@@ -97,8 +123,6 @@
                     <li>SCLAVI, JUAN ENRIQUE</li>
                 </ul>
             </div>
-
-            <!-- Tarjeta Contraltos -->
             <div class="glass-card voice-card">
                 <h3 class="voice-title">Contraltos</h3>
                 <ul class="member-list">
@@ -115,9 +139,22 @@
                     <li>PELLEGRINI, MARTA</li>
                     <li>SCOTTI, SUSANA</li>
                     <li>SILVA, GRACIELA</li>
+                    <li>MARTINEZ, VALERIA</li>
                     <li>VILLACORTA, GRACIELA</li>
                     <li>ZABALA, OLGA</li>
                 </ul>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: Formación Actual + Botón 360 -->
+        <div class="formacion-container">
+            <h2 class="formacion-title">Formación Actual</h2>
+            
+            <!-- Nuevo contenedor forzando el centro -->
+            <div class="contenedor-foto-360">
+                <img src="img/formacion_actual.jpg" alt="Formación actual del Coral 25" class="formacion-img">
+         <!--       <a href="visor3d.html" class="btn-360">🌐 Ver en 360°</a>   -->
+                <a href="visor3d.html" class="btn-360" id="boton360">🌐 Ver en 360°</a> <!-- <--- id="boton360" -->
             </div>
 
         </div>
@@ -132,23 +169,19 @@
                 <img src="img/logo_coral.png" alt="Coral 25" class="footer-logo"> 
                 ©2026 Coral 25 - Ciudad de 25 de Mayo, Buenos Aires, Argentina.
             </p>
-            <p class="footer-firma">
-                <a href="https://wa.me" target="_blank">Design_MM</a>
+              <p class="footer-firma">
+              <a href="https://mariomolinacc.github.io" target="_blank">🌐 Web Design by MM</a>
             </p>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT PARA EL MENÚ MÓVIL -->
     <script>
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('nav-links');
-
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('open');
             hamburger.classList.toggle('active');
         });
-
-        // Cerrar el menú al hacer clic en un enlace
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('open');
@@ -159,3 +192,4 @@
 
 </body>
 </html>
+
