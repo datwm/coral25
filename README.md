@@ -2,4 +2,7 @@
 Sitio web oficial del Grupo Coral 25 Voces. Desarrollado con HTML, CSS y JavaScript, por **Mario Molina**. 
 Su datos de contacto son:  
 
-Web:   " mariomolinacc.github.io "  |  Email: molina.aec@gmail.com | Ubicación: Argentina
+[Visita mi web](https://mariomolinacc.github.io) 
+
+
+|  Email: molina.aec@gmail.com | Ubicación: Argentina
