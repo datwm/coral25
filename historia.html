@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SOLUCIÓN DEFINITIVA: Evita que Dark Reader modifique los colores/fondos de la página -->
+    <meta name="darkreader-lock">
+    
     <title>Historia - Coral 25</title>
-    <!-- Se añade ?v=2 para forzar la actualización de la caché del navegador -->
-    <link rel="stylesheet" href="css/style.css?v=2">
+    <!-- Se añade ?v=4 para forzar la actualización de la caché del navegador -->
+    <link rel="stylesheet" href="css/style.css?v=4">
     
     <!-- Estilos específicos para esta página -->
     <style>
@@ -20,9 +24,10 @@
         /* Resaltado dorado para los hitos */
         .hito-titulo {
             color: var(--gold);
-            font-family: var(--font-serif); /* Fuente nativa reemplazada */
+            font-family: var(--font-serif);
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
+            margin-top: 1.5rem;
             font-weight: 700;
         }
 
@@ -53,7 +58,7 @@
         }
 
         .directora-seccion h3 {
-            font-family: var(--font-serif); /* Fuente nativa reemplazada */
+            font-family: var(--font-serif);
             font-size: 1.8rem;
             color: var(--gold);
             margin-bottom: 0.5rem;
@@ -89,7 +94,7 @@
 
         .lista-agrupaciones strong {
             color: var(--gold-light);
-            font-family: var(--font-serif); /* Fuente nativa reemplazada */
+            font-family: var(--font-serif);
             display: block;
             margin-bottom: 0.3rem;
         }
@@ -110,6 +115,293 @@
             text-align: center;
             margin-bottom: 2rem;
             font-weight: 300;
+        }
+
+        /* Estilo adicional para listados largos (Giras) */
+        .lista-giras {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 2rem 0;
+            text-align: left;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .lista-giras li {
+            background: rgba(255,255,255,0.03);
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            border-left: 2px solid var(--gold);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .lista-giras li strong {
+            color: var(--gold-light);
+            margin-right: 0.5rem;
+        }
+
+
+        /* ============================================================
+           MENÚ DE SECCIONES ESTILO WIKIPEDIA
+           ============================================================ */
+
+        /* Contenedor general con sidebar */
+        .page-with-toc {
+            display: flex;
+            max-width: 1100px;
+            margin: 0 auto;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .page-main-content {
+            flex: 1;
+            min-width: 0; /* evita overflow en flex */
+        }
+
+        /* El sidebar TOC */
+        .toc-sidebar {
+            position: sticky;
+            top: 100px;
+            width: 260px;
+            min-width: 260px;
+            flex-shrink: 0;
+        }
+
+        .toc-box {
+            background: rgba(15, 12, 20, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 1.2rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .toc-box .toc-title {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--glass-border);
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .toc-box ol {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            counter-reset: toc-counter;
+        }
+
+        .toc-box ol li {
+            counter-increment: toc-counter;
+            margin-bottom: 2px;
+        }
+
+        .toc-box ol li a {
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+            padding: 5px 8px;
+            border-radius: 4px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            line-height: 1.4;
+        }
+
+        .toc-box ol li a::before {
+            content: counter(toc-counter) ".";
+            color: var(--gold);
+            font-weight: 600;
+            min-width: 1.2em;
+            text-align: right;
+            font-size: 0.8em;
+            flex-shrink: 0;
+        }
+
+        .toc-box ol li a:hover {
+            background: rgba(212, 175, 55, 0.08);
+            color: var(--text-main);
+        }
+
+        .toc-box ol li a.toc-active {
+            background: rgba(212, 175, 55, 0.12);
+            color: var(--gold-light);
+            font-weight: 500;
+        }
+
+        /* TOC móvil: botón flotante + panel desplegable */
+        .toc-mobile-toggle {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 90;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid var(--gold);
+            background: rgba(15, 12, 20, 0.92);
+            backdrop-filter: blur(12px);
+            color: var(--gold);
+            font-size: 1.3rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            line-height: 1;
+        }
+
+        .toc-mobile-toggle:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 28px rgba(212, 175, 55, 0.2);
+        }
+
+        .toc-mobile-toggle.is-open {
+            background: var(--gold);
+            color: #0f0c14;
+        }
+
+        .toc-mobile-panel {
+            display: none;
+            position: fixed;
+            bottom: 84px;
+            right: 24px;
+            z-index: 89;
+            width: 280px;
+            max-height: 70vh;
+            overflow-y: auto;
+            background: rgba(15, 12, 20, 0.96);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+            animation: tocSlideUp 0.25s ease-out;
+        }
+
+        .toc-mobile-panel::-webkit-scrollbar {
+            width: 4px;
+        }
+        .toc-mobile-panel::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 2px;
+        }
+
+        @keyframes tocSlideUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .toc-mobile-panel.is-visible {
+            display: block;
+        }
+
+        /* Responsive: ocultar sidebar, mostrar botón móvil */
+        @media (max-width: 900px) {
+            .toc-sidebar {
+                display: none;
+            }
+            .toc-mobile-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .page-with-toc {
+                display: block;
+            }
+        }
+
+
+        /* ============================================================
+           SECCIÓN DE PREMIOS
+           ============================================================ */
+        .premios-seccion {
+            margin-top: 4rem;
+        }
+
+        .premios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .premio-card {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .premio-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(212, 175, 55, 0.35);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .premio-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 1px solid var(--glass-border);
+            transition: transform 0.4s ease;
+        }
+
+        .premio-card:hover .premio-card-img {
+            transform: scale(1.03);
+        }
+
+        /* Contenedor para evitar que el overflow de la imagen rompa el border-radius */
+        .premio-card-img-wrap {
+            overflow: hidden;
+        }
+
+        .premio-card-body {
+            padding: 1.2rem 1.4rem 1.4rem;
+        }
+
+        .premio-card-body h4 {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            color: var(--gold-light);
+            margin: 0 0 0.5rem 0;
+            line-height: 1.3;
+        }
+
+        .premio-card-body .premio-fecha {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            opacity: 0.7;
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+
+        .premio-card-body p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* Ajuste responsive de la grilla de premios */
+        @media (max-width: 680px) {
+            .premios-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll offset para que el ancla no quede detrás del navbar fijo */
+        [id] {
+            scroll-margin-top: 90px;
         }
     </style>
 </head>
@@ -149,92 +441,317 @@
         
         <h1 class="page-title">Historia</h1>
 
-        <!-- Introducción -->
-        <div class="glass-card" style="max-width: 800px; margin: 0 auto 3rem auto;">
-            <h2 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--gold-light); margin-bottom: 1.5rem; text-align: center;">Acerca de Coral 25</h2>
-            <p class="historia-texto">
-                El Coral 25 es un histórico coro con sede en 25 de Mayo (provincia de Buenos Aires). Llevando adelante el canto comunitario, el grupo se destaca en la escena musical bonaerense bajo la dirección de la profesora Silvia Blanco, quien se encarga de la búsqueda, estudio y adaptación del amplio repertorio.
-            </p>
-        </div>
+        <!-- Layout con TOC lateral -->
+        <div class="page-with-toc">
 
-        <!-- La Trayectoria -->
-        <div class="glass-card" style="max-width: 800px; margin: 0 auto 3rem auto;">
-            <h2 class="subtitulo-seccion">La historia y trayectoria del Coral 25</h2>
-            <p class="historia-texto">
-                El coro cuenta con un largo legado de música, habiendo celebrado su 70° aniversario. Durante décadas, ha sido un semillero de generaciones de voces locales, fomentando la pasión por el canto y la cultura coral.
-            </p>
-            <p class="historia-texto" style="margin-top: 1rem;">
-                Con Silvia Blanco en la dirección, la agrupación ha trascendido las fronteras de 25 de Mayo participando activamente en distintos encuentros, festivales y galas. Entre sus hitos más recientes se destacan:
-            </p>
-            
-            <!-- Hitos -->
-            <div style="margin-top: 2rem;">
-                <div class="hito-titulo">• Gala Patria</div>
-                <div class="hito-descripcion">Realizan emotivas presentaciones institucionales, incluyendo interpretaciones del Himno Nacional en importantes veladas locales.</div>
-                
-                <div class="hito-titulo">• Giras Nacionales</div>
-                <div class="hito-descripcion">Han representado a la ciudad en encuentros de gran magnitud como la Intercoraliada en Córdoba y el “Octubre Coral” en la región, así como en intercambios artísticos en Mendoza.</div>
-            </div>
-        </div>
+            <!-- ===== SIDEBAR TOC (Desktop) ===== -->
+            <aside class="toc-sidebar">
+                <div class="toc-box">
+                    <div class="toc-title">Secciones</div>
+                    <ol>
+                        <li><a href="#acerca">Acerca de Coral 25</a></li>
+                        <li><a href="#trayectoria">Trayectoria y Hitos</a></li>
+                        <li><a href="#escenarios">Escenarios Compartidos</a></li>
+                        <li><a href="#exterior">En el Exterior</a></li>
+                        <li><a href="#provincias">Otras Provincias</a></li>
+                        <li><a href="#bsas">Provincia de Bs. As.</a></li>
+                        <li><a href="#eventos">Organización de Eventos</a></li>
+                        <li><a href="#distinciones">Distinciones</a></li>
+                        <li><a href="#discografia">Material Discográfico</a></li>
+                        <li><a href="#directora">La Directora</a></li>
+                        <li><a href="#premios">Premios</a></li>
+                    </ol>
+                </div>
+            </aside>
 
-        <!-- Acerca de la Directora -->
-        <div class="directora-seccion">
-            <h2 class="subtitulo-seccion">Acerca de la Directora</h2>
-            
-            <div class="director-card" style="max-width: 800px; text-align: left;">
-                
-                <!-- Descomenta las líneas de abajo si tienes una foto de la directora en tu carpeta /img -->
-                <!-- <div style="text-align: center;">
-                    <img src="img/silvia_blanco.jpg" alt="Silvia M. Blanco" class="foto-directora">
-                </div> -->
-                
-                <div style="text-align: center; margin-bottom: 1.5rem;">
-                    <h3>Silvia M. Blanco</h3>
-                    <span class="rol">Directora Coral y Educadora Musical</span>
+            <!-- ===== CONTENIDO PRINCIPAL ===== -->
+            <div class="page-main-content">
+
+                <!-- Introducción -->
+                <div class="glass-card" style="margin: 0 auto 3rem auto;" id="acerca">
+                    <h2 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--gold-light); margin-bottom: 1.5rem; text-align: center;">Acerca de Coral 25</h2>
+                    <p class="historia-texto">
+                        El Coral 25 fue creado en Octubre de 1956 a partir de un coro estudiantil, siendo su primera directora Irma Urteaga. A ella le sucedieron varios directores hasta su actual conductora, la profesora Silvia Blanco, quien asumió la dirección en 1989.
+                    </p>
+                    <p class="historia-texto" style="margin-top: 1rem;">
+                        Hasta ese año, con alguna intermitencia, la agrupación actuó repetidamente en la zona y en la provincia de Buenos Aires, destacándose las presentaciones acompañando a Ariel Ramírez, Los Fronterizos, Zamba Quipildor, la Orquesta de Cámara de la Alianza Francesa y solistas del Teatro Colón.
+                    </p>
+                    <p class="historia-texto" style="margin-top: 1rem;">
+                        A partir de 1989, el Coral 25 se ha desempeñado en forma ininterrumpida, revelando una forma de trabajo orientada permanentemente a la superación, al intercambio de experiencias y a una apertura general hacia todos los sectores de la comunidad, con un reconocimiento infinito hacia el público que los acompaña.
+                    </p>
                 </div>
 
-                <p class="historia-texto">
-                    Silvia M. Blanco es una destacada directora coral y educadora musical radicada en la ciudad de Veinticinco de Mayo, Buenos Aires, con una amplia y reconocida trayectoria en la formación y dirección de agrupaciones corales en toda la región.
-                </p>
+                <!-- La Trayectoria -->
+                <div class="glass-card" style="margin: 0 auto 3rem auto;" id="trayectoria">
+                    <h2 class="subtitulo-seccion">Trayectoria y Hitos</h2>
+                    
+                    <!-- Escenarios Compartidos -->
+                    <div class="hito-titulo" id="escenarios">Escenarios Compartidos con Artistas Profesionales</div>
+                    <ul class="lista-agrupaciones">
+                        <li><strong>Año 1991</strong><p>Conjunto Opus 4</p></li>
+                        <li><strong>Año 1992</strong><p>Cuti y Roberto Carabajal</p></li>
+                        <li><strong>Año 1993</strong><p>La Misa Criolla con Zamba Quipildor y el Grupo Nan</p></li>
+                        <li><strong>Año 1994</strong><p>Los Chalchaleros</p></li>
+                        <li><strong>Año 2007</strong><p>La Biblia con Vox Dei</p></li>
+                        <li><strong>Año 2009</strong><p>La Misa Criolla con Zamba Quipildor</p></li>
+                    </ul>
 
-                <!-- Trayectoria Agrupaciones -->
-                <h4 style="color: var(--gold); font-family: var(--font-serif); margin-top: 2.5rem; margin-bottom: 1.5rem; text-align: center; font-size: 1.2rem;">Trayectoria y Agrupaciones Destacadas</h4>
-                <p class="historia-texto" style="margin-bottom: 1.5rem;">
-                    La maestra Blanco ha liderado y formado múltiples coros en la provincia de Buenos Aires. Su trabajo se destaca por llevar el canto coral a distintos escenarios y promover el intercambio cultural entre comunidades:
-                </p>
-                
-                <ul class="lista-agrupaciones">
-                    <li>
-                        <strong>Coral del Norte (25 de Mayo)</strong>
-                        <p>Directora, representa a las localidades de Norberto de la Riestra, Pedernales y Ernestina.</p>
-                    </li>
-                    <li>
-                        <strong>Agrupación Coral Saladillo</strong>
-                        <p>Dirige este ensamble desde abril de 1992.</p>
-                    </li>
-                    <li>
-                        <strong>Agrupación Coral Dudignac</strong>
-                        <p>Asumió la dirección de esta agrupación en el año 2000.</p>
-                    </li>
-                    <li>
-                        <strong>Coro de Niños de 25 de Mayo</strong>
-                        <p>Fundadora y directora de este proyecto coral infantil desde 1990 junto a la Dirección de Cultura Municipal.</p>
-                    </li>
-                    <li>
-                        <strong>Agrupación Coral Alborada (Bragado)</strong>
-                        <p>Dirigida por Silvia Blanco entre 1991 y 1992.</p>
-                    </li>
-                </ul>
+                    <!-- Giras Internacionales -->
+                    <div class="hito-titulo" id="exterior">En el Exterior</div>
+                    <ul class="lista-giras">
+                        <li><strong>1996</strong> Brasil (Rio do Sul) - Primer intercambio cultural Z.C.C. y A.M.A.V.I.</li>
+                        <li><strong>1998</strong> Uruguay (Colonia) - Invitados por la Subsecretaría de Cultura de la Pcia. de Bs. As.</li>
+                        <li><strong>1999</strong> Chile (Linares) - Encuentro Coral hermandad Argentino-Chilena</li>
+                        <li><strong>2015</strong> Brasil (Criciúma, Nova Veneza, Forquilhinhas) - Festival Internacional de Coros</li>
+                        <li><strong>2016</strong> Uruguay (La Paz y Colonia del Sacramento) - 1er Encuentro Internacional de Coros</li>
+                        <li><strong>2019</strong> Colombia (Bucaramanga y Zapatoca) - Festival Internacional Gustavo Gomez Ardila (Ganadores por concurso)</li>
+                    </ul>
 
-                <!-- Formación y Docencia -->
-                <h4 style="color: var(--gold); font-family: var(--font-serif); margin-top: 2rem; margin-bottom: 1rem; text-align: center; font-size: 1.2rem;">Formación y Docencia</h4>
-                <p class="historia-texto">
-                    Además de su labor como directora, se ha desempeñado como educadora, destacando su paso como profesora de la cátedra de Dirección Coral en el conservatorio Alberto Williams de Chivilcoy. Sus agrupaciones participan frecuentemente en importantes encuentros, conciertos regionales y festivales.
-                </p>
-            </div>
+                    <!-- Otras Provincias -->
+                    <div class="hito-titulo" id="provincias">En otras Provincias Argentinas</div>
+                    <ul class="lista-giras">
+                        <li><strong>1991</strong> Río Negro (Cipolletti)</li>
+                        <li><strong>1993</strong> Chubut (Trelew - Eisteddfod)</li>
+                        <li><strong>1994</strong> Córdoba (Santa Rosa de Calamuchita) y CABA (Auditorio Parque Centenario)</li>
+                        <li><strong>1995</strong> Santiago del Estero (Termas de Río Hondo)</li>
+                        <li><strong>1997</strong> Córdoba (Santa Rosa, Ucacha, Bengolea)</li>
+                        <li><strong>1998</strong> Santa Fe (3° Encuentro Nacional de Coros Populares)</li>
+                        <li><strong>2000</strong> Entre Ríos (Gualeguaychú)</li>
+                        <li><strong>2002</strong> Santa Fe (Villa Cañas)</li>
+                        <li><strong>2003</strong> Santa Fe (Rosario)</li>
+                        <li><strong>2004</strong> Río Negro (Bariloche)</li>
+                        <li><strong>2005</strong> Neuquén (San Martín de los Andes)</li>
+                        <li><strong>2007</strong> La Pampa (Santa Rosa)</li>
+                        <li><strong>2009</strong> Salta</li>
+                        <li><strong>2010</strong> Córdoba (Mina Clavero)</li>
+                        <li><strong>2012</strong> Tucumán y Catamarca</li>
+                        <li><strong>2013</strong> Entre Ríos (Gualeguay)</li>
+                        <li><strong>2014</strong> Córdoba (La Falda)</li>
+                        <li><strong>2015</strong> Chubut (Trevelin, Esquel)</li>
+                        <li><strong>2017</strong> San Luis (Potrero de los Funes)</li>
+                        <li><strong>2018</strong> Santa Fe (Rosario)</li>
+                        <li><strong>2025</strong> Mendoza (San Rafael)</li>
+                    </ul>
+
+                    <!-- Provincia de Bs As -->
+                    <div class="hito-titulo" id="bsas">En la Provincia de Buenos Aires</div>
+                    <p class="historia-texto" style="margin-bottom: 2rem; line-height: 2;">
+                        Encuentros Corales en: Punta Alta, Necochea, Pinamar, Tornquist, Ayacucho, 9 de Julio, Navarro, Lobos, Roque Pérez, Saladillo, Bolívar, Henderson, General Pinto, Lincoln, Pasteur, Campana, Escobar, Chivilcoy, Mercedes, Alberti, Bragado, Dudignac, Merlo, Moquehuá, General Arenales, Las Flores, Junín y Tandil.
+                    </p>
+
+                    <!-- Organización -->
+                    <div class="hito-titulo" id="eventos">Organización de Eventos</div>
+                    <p class="historia-texto">
+                        El coro es permanente organizador de eventos que fomentan, consolidan y desarrollan el canto coral en 25 de Mayo. Se destacan:
+                    </p>
+                    <ul class="lista-agrupaciones">
+                        <li><strong>1992 al 1996</strong><p>Organizador del Concierto Apertura de los Encuentros Corales Bonaerenses, junto a la Subsecretaría de Cultura y el Maestro Mario Mancuso.</p></li>
+                        <li><strong>1996 al 1998</strong><p>Idea y organiza el 1°, 2° y 3° Encuentro Coral para Coros del Mercosur en 25 de Mayo.</p></li>
+                        <li><strong>2008 y 2012</strong><p>Organiza Encuentros Internacionales de Coros con participación de coros de Colombia, Venezuela, Uruguay, Paraguay, Chile, Ecuador, Brasil y México.</p></li>
+                    </ul>
+
+                    <!-- Distinciones -->
+                    <div class="hito-titulo" id="distinciones">Distinciones</div>
+                    <ul class="lista-agrupaciones">
+                        <li><strong>Año 2018</strong><p>Coral 25 fue distinguido en el Senado de la Nación por sus 62 años de vida.</p></li>
+                        <li><strong>Año 2026</strong><p>Distinguido en el Honorable Consejo Deliberante de la ciudad de 25 de Mayo por sus 70 años de vida.</p></li>
+                    </ul>
+
+                    <!-- Discografía -->
+                    <div class="hito-titulo" id="discografia">Material Discográfico</div>
+                    <ul class="lista-agrupaciones">
+                        <li><strong>Año 2007</strong><p>CD "Patriótico" junto a la Banda de Conciertos de la Gendarmería Nacional (12 canciones patrias).</p></li>
+                        <li><strong>Año 2011</strong><p>CD "Te Quiero 25" junto a artistas locales de 25 de Mayo.</p></li>
+                        <li><strong>Año 2016</strong><p>"Canciones Patrias" (Re-edición).</p></li>
+                    </ul>
+                </div>
+
+                <!-- Acerca de la Directora -->
+                <div class="directora-seccion" id="directora">
+                    <h2 class="subtitulo-seccion">Acerca de la Directora</h2>
+                    
+                    <div class="director-card" style="max-width: 800px; text-align: left; margin: 0 auto;">
+                        
+                        <!-- Descomenta las líneas de abajo si tienes una foto de la directora en tu carpeta /img -->
+                        <!-- <div style="text-align: center;">
+                            <img src="img/silvia_blanco.jpg" alt="Silvia Blanco" class="foto-directora">
+                        </div> -->
+                        
+                        <div style="text-align: center; margin-bottom: 1.5rem;">
+                            <h3>Silvia Blanco</h3>
+                            <span class="rol">Directora Coral y Educadora Musical</span>
+                        </div>
+
+                        <p class="historia-texto">
+                            Nacida en la ciudad de La Plata, Provincia de Buenos Aires, Silvia Blanco es una destacada directora coral y educadora musical. Realizó la carrera del Profesorado Superior de Órgano en el Conservatorio de Música "Gilardo Gilardi", donde formó parte del Coro de la Institución siendo posteriormente jefa de cuerda. Comenzó la Licenciatura en Dirección Orquestal en la Facultad de Bellas Artes de la UNLP, donde cursó también las materias de Dirección Coral.
+                        </p>
+
+                        <!-- Trayectoria Agrupaciones -->
+                        <h4 style="color: var(--gold); font-family: var(--font-serif); margin-top: 2.5rem; margin-bottom: 1.5rem; text-align: center; font-size: 1.2rem;">Coros Fundados y Dirigidos</h4>
+                        <p class="historia-texto" style="margin-bottom: 1.5rem;">
+                            La maestra Blanco ha fundado y dirigido múltiples agrupaciones corales en la región, llevando el canto a distintos escenarios y comunidades:
+                        </p>
+                        
+                        <ul class="lista-agrupaciones">
+                            <li>
+                                <strong>Coral 25 (Ciudad de 25 de Mayo)</strong>
+                                <p>Directora desde 1989.</p>
+                            </li>
+                            <li>
+                                <strong>Agrupación Coral Saladillo</strong>
+                                <p>Fundadora y directora de este ensamble.</p>
+                            </li>
+                            <li>
+                                <strong>Coro de Cámara "Oscar Alvarado" (Saladillo)</strong>
+                                <p>Fundadora y directora.</p>
+                            </li>
+                            <li>
+                                <strong>Coro Femenino "Bocca Chiusa" (Saladillo)</strong>
+                                <p>Fundadora y directora.</p>
+                            </li>
+                            <li>
+                                <strong>Coral del Sur (Partido de 25 de Mayo)</strong>
+                                <p>Fundadora y directora.</p>
+                            </li>
+                            <li>
+                                <strong>Coral del Norte (Partido de 25 de Mayo)</strong>
+                                <p>Fundadora y directora (Norberto de la Riestra, Pedernales, Ernestina).</p>
+                            </li>
+                            <li>
+                                <strong>Coral Riestra (Norberto de la Riestra)</strong>
+                                <p>Fundadora y directora.</p>
+                            </li>
+                            <li>
+                                <strong>Coro de Niños "Acuarela 25" (25 de Mayo)</strong>
+                                <p>Fundadora y directora desde 1990 junto a la Dirección de Cultura Municipal.</p>
+                            </li>
+                            <li>
+                                <strong>Coro Juvenil Municipal "Uñen Lafquen" (25 de Mayo)</strong>
+                                <p>Fundadora y directora.</p>
+                            </li>
+                            <li>
+                                <strong>Coro de la Tercera Edad "Alborada" (Bragado)</strong>
+                                <p>Directora (1991 - 1992).</p>
+                            </li>
+                        </ul>
+
+                        <!-- Docencia -->
+                        <h4 style="color: var(--gold); font-family: var(--font-serif); margin-top: 2rem; margin-bottom: 1rem; text-align: center; font-size: 1.2rem;">Labor Docente</h4>
+                        <p class="historia-texto">
+                            Comenzó su labor profesional como docente en jardines de infantes y ciclos primarios (públicos y privados) de La Plata y 25 de Mayo. Se desempeñó en el ciclo básico del Liceo Naval Militar de Río Santiago (Ensenada) y como profesora de la cátedra de Dirección Coral en el Conservatorio de Música Alberto Williams de Chivilcoy. Actualmente, es docente del Taller de Canto Común y el Coro Popular del Profesorado de Teatro CEPEAC Nº1.
+                        </p>
+
+                        <!-- Cursos y Perfeccionamiento -->
+                        <h4 style="color: var(--gold); font-family: var(--font-serif); margin-top: 2rem; margin-bottom: 1rem; text-align: center; font-size: 1.2rem;">Perfeccionamiento y Clínicas Internacionales</h4>
+                        <p class="historia-texto">
+                            Su búsqueda constante de excelencia la ha llevado a realizar numerosos cursos de perfeccionamiento en dirección coral, técnica vocal y repertorio con maestros de talla mundial. Se destaca especialmente su formación en música sinfónico-coral y barroca organizado por la Asociación J.S. Bach con el Maestro Helmuth Rilling (Alemania), donde en dos oportunidades (1987 y 1996) fue seleccionada para dirigir en los conciertos finales entre decenas de alumnos activos.
+                        </p>
+                        <p class="historia-texto" style="margin-top: 1rem;">
+                            A su vez, ha dictado clínicas de repertorio, técnicas de ensayo y dirección coral en el país y en el exterior, destacándose la clínica de música popular argentina y latinoamericana dictada en la ciudad de Berlín, Alemania, con el Coro Hispano Alemán.
+                        </p>
+
+                        <!-- Discografía Directora -->
+                        <h4 style="color: var(--gold); font-family: var(--font-serif); margin-top: 2rem; margin-bottom: 1rem; text-align: center; font-size: 1.2rem;">Material Discográfico como Directora</h4>
+                        <ul class="lista-agrupaciones">
+                            <li><strong>"Patriótico"</strong><p>CD de Canciones Patrias con Coral 25 junto a la Banda de Concierto de Gendarmería Nacional.</p></li>
+                            <li><strong>"Viva la Patria"</strong><p>CD de Canciones Patrias con Agrupación Coral Saladillo junto a la Banda de Concierto de Gendarmería Nacional. (Ambos CDs se presentaron en vivo y en la Honorable Cámara de Diputados de La Plata, convirtiéndose en la primera mujer civil en dirigir la banda militar).</p></li>
+                            <li><strong>"Saladillo su Música y su Gente"</strong><p>CD con la Agrupación Coral Saladillo y artistas locales.</p></li>
+                            <li><strong>"Te Amo 25"</strong><p>CD con Coral 25 y artistas locales.</p></li>
+                            <li><strong>"Te Amo 25 Rock"</strong><p>CD con el Coro Juvenil Uñen Lafquen y artistas locales.</p></li>
+                            <li><strong>"Un Sueño Compartido"</strong><p>CD con el Coro de Cámara "El Tejar" (Repertorio latinoamericano).</p></li>
+                            <li><strong>"Canciones Patrias" (Re-edición 2016)</strong><p>Re-edición discográfica.</p></li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <!-- ===== SECCIÓN DE PREMIOS ===== -->
+                <div class="premios-seccion" id="premios">
+                    <div class="glass-card" style="max-width: 800px; margin: 0 auto;">
+                        <h2 class="subtitulo-seccion">Premios y Reconocimientos</h2>
+                        
+                        <div class="premios-grid">
+
+                            <!-- PREMIO 1 (ejemplo) — Reemplaza src, título y descripción -->
+                            <div class="premio-card">
+                                <div class="premio-card-img-wrap">
+                                    <img src="img/premio_ejemplo_1.jpg" alt="Premio Festival Internacional Gustavo Gómez Ardila" class="premio-card-img">
+                                </div>
+                                <div class="premio-card-body">
+                                    <span class="premio-fecha">2019 · Colombia</span>
+                                    <h4>Ganadores del Festival Internacional Gustavo Gómez Ardila</h4>
+                                    <p>Coral 25 obtuvo el primer puesto por concurso en el festival internacional de Bucaramanga, representando a Argentina en tierras colombianas.</p>
+                                </div>
+                            </div>
+
+                            <!-- PREMIO 2 (ejemplo) — Reemplaza src, título y descripción -->
+                            <div class="premio-card">
+                                <div class="premio-card-img-wrap">
+                                    <img src="img/premio_ejemplo_2.jpg" alt="Distinción Senado de la Nación" class="premio-card-img">
+                                </div>
+                                <div class="premio-card-body">
+                                    <span class="premio-fecha">2018 · Buenos Aires</span>
+                                    <h4>Distinción del Senado de la Nación</h4>
+                                    <p>Reconocimiento por los 62 años de trayectoria ininterrumpida al servicio de la cultura coral argentina, otorgado en el recinto del Senado.</p>
+                                </div>
+                            </div>
+
+                            <!-- PREMIO 3 (ejemplo) — Reemplaza src, título y descripción -->
+                            <div class="premio-card">
+                                <div class="premio-card-img-wrap">
+                                    <img src="img/premio_ejemplo_3.jpg" alt="Distinción Honorable Concejo Deliberante" class="premio-card-img">
+                                </div>
+                                <div class="premio-card-body">
+                                    <span class="premio-fecha">2026 · 25 de Mayo</span>
+                                    <h4>Distinguido por el H.C.D. de 25 de Mayo</h4>
+                                    <p>Homenaje en el Honorable Consejo Deliberante por los 70 años de vida del coro, reconociendo su aporte a la identidad cultural de la ciudad.</p>
+                                </div>
+                            </div>
+
+                            <!-- ➕ AGREGÁ MÁS PREMIOS COPIANDO ESTE BLOQUE Y CAMBIANDO LOS DATOS:
+                            <div class="premio-card">
+                                <div class="premio-card-img-wrap">
+                                    <img src="img/TU_IMAGEN.jpg" alt="Descripción de la imagen" class="premio-card-img">
+                                </div>
+                                <div class="premio-card-body">
+                                    <span class="premio-fecha">AÑO · LUGAR</span>
+                                    <h4>Título del Premio</h4>
+                                    <p>Breve descripción del logro o reconocimiento obtenido.</p>
+                                </div>
+                            </div>
+                            -->
+
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- fin .page-main-content -->
+        </div><!-- fin .page-with-toc -->
+
+    </div><!-- fin .page-content -->
+
+
+    <!-- ===== TOC MÓVIL: Botón flotante + Panel desplegable ===== -->
+    <button class="toc-mobile-toggle" id="tocToggle" aria-label="Índice de secciones">☰</button>
+    <div class="toc-mobile-panel" id="tocPanel">
+        <div class="toc-box" style="border: none; background: transparent; padding: 0;">
+            <div class="toc-title">Secciones</div>
+            <ol>
+                <li><a href="#acerca">Acerca de Coral 25</a></li>
+                <li><a href="#trayectoria">Trayectoria y Hitos</a></li>
+                <li><a href="#escenarios">Escenarios Compartidos</a></li>
+                <li><a href="#exterior">En el Exterior</a></li>
+                <li><a href="#provincias">Otras Provincias</a></li>
+                <li><a href="#bsas">Provincia de Bs. As.</a></li>
+                <li><a href="#eventos">Organización de Eventos</a></li>
+                <li><a href="#distinciones">Distinciones</a></li>
+                <li><a href="#discografia">Material Discográfico</a></li>
+                <li><a href="#directora">La Directora</a></li>
+                <li><a href="#premios">Premios</a></li>
+            </ol>
         </div>
-
     </div>
+
 
     <!-- Pie de Página -->
     <footer class="site-footer">
@@ -245,13 +762,16 @@
                 ©2026 Coral 25 - Ciudad de 25 de Mayo, Buenos Aires, Argentina.
             </p>
             <p class="footer-firma">
-                <a href="https://wa.me." target="_blank">Design_MM</a>
+                <a href="https://mariomolinacc.github.io" target="_blank">🌐 Web Design by MM</a>
             </p>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT PARA EL MENÚ MÓVIL -->
+    <!-- JAVASCRIPT -->
     <script>
+        // ==========================================
+        // Menú hamburguesa (móvil)
+        // ==========================================
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('nav-links');
 
@@ -260,13 +780,89 @@
             hamburger.classList.toggle('active');
         });
 
-        // Cerrar el menú al hacer clic en un enlace
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('open');
                 hamburger.classList.remove('active');
             });
         });
+
+
+        // ==========================================
+        // TOC Móvil: abrir/cerrar panel
+        // ==========================================
+        const tocToggle = document.getElementById('tocToggle');
+        const tocPanel = document.getElementById('tocPanel');
+
+        tocToggle.addEventListener('click', () => {
+            const isOpen = tocPanel.classList.toggle('is-visible');
+            tocToggle.classList.toggle('is-open', isOpen);
+            tocToggle.textContent = isOpen ? '✕' : '☰';
+        });
+
+        // Cerrar panel al hacer clic en un enlace del TOC móvil
+        tocPanel.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                tocPanel.classList.remove('is-visible');
+                tocToggle.classList.remove('is-open');
+                tocToggle.textContent = '☰';
+            });
+        });
+
+
+        // ==========================================
+        // TOC: resaltar sección activa al hacer scroll
+        // (funciona para sidebar desktop Y panel móvil)
+        // ==========================================
+        const tocLinks = document.querySelectorAll('.toc-box a');
+        const sections = [];
+
+        // Recopilar las secciones que tienen id y están en el TOC
+        tocLinks.forEach(link => {
+            const id = link.getAttribute('href').substring(1);
+            const section = document.getElementById(id);
+            if (section) sections.push({ id, el: section, links: [] });
+        });
+
+        // Asociar cada link (desktop + móvil) a su sección
+        tocLinks.forEach(link => {
+            const id = link.getAttribute('href').substring(1);
+            const entry = sections.find(s => s.id === id);
+            if (entry) entry.links.push(link);
+        });
+
+        function updateActiveToc() {
+            const scrollY = window.scrollY;
+            let currentId = sections[0]?.id || '';
+
+            for (let i = sections.length - 1; i >= 0; i--) {
+                if (sections[i].el.offsetTop - 120 <= scrollY) {
+                    currentId = sections[i].id;
+                    break;
+                }
+            }
+
+            tocLinks.forEach(link => link.classList.remove('toc-active'));
+            if (currentId) {
+                const entry = sections.find(s => s.id === currentId);
+                if (entry) entry.links.forEach(link => link.classList.add('toc-active'));
+            }
+        }
+
+        // Throttle para no saturar el scroll
+        let tocTicking = false;
+        window.addEventListener('scroll', () => {
+            if (!tocTicking) {
+                window.requestAnimationFrame(() => {
+                    updateActiveToc();
+                    tocTicking = false;
+                });
+                tocTicking = true;
+            }
+        });
+
+        // Ejecutar una vez al cargar
+        updateActiveToc();
     </script>
 
 </body>
