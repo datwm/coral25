@@ -1,59 +1,83 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prensa | Coral 25</title>
     <style>
+        /* ╔═════════════════════════════════════════════════════════════╗
+           ║  PANEL DE PARÁMETROS — TEMA OSCURO FIJO                      ║
+           ║  Editá SOLO esta sección para retoques rápidos de diseño.    ║
+           ║  El resto del código no hace falta tocarlo.                  ║
+           ║                                                              ║
+           ║  Lógica de colores de botones:                               ║
+           ║    AZUL  (--tag-*)   = ubicación / mapas                     ║
+           ║    ROJO  (--press-*) = notas de prensa / diarios             ║
+           ╚═════════════════════════════════════════════════════════════╝ */
         :root {
-            --bg: #f0f2f5;
-            --card: #ffffff;
-            --text: #202122;
-            --text-muted: #54595d;
-            --accent: #3366cc;
-            --accent-hover: #2850a8;
-            --wiki-blue: #364d7c;
-            --border: #c8cdd3;
-            --border-accent: #a2a9b1;
-            --tag-bg: #edf2f8;
-            --tag-border: #cdd8e4;
-            --tag-text: #364d7c;
-            --shadow-card: 0 1px 4px rgba(0,0,0,0.06), 0 8px 30px rgba(0,0,0,0.04);
-            --h1-color: #000;
-            --img-border: #dde1e6;
-            --tab-hover: #eaecf0;
-            --tab-active-bg: var(--card);
-            --wa-green: #25D366;
-            --hdr-bg: #ffffff;
-            --exp-hover: #f3f6fa;
-        }
-        [data-theme="dark"] {
-            --bg: #1c1d21;
-            --card: #282930;
-            --text: #c8cad0;
-            --text-muted: #94969e;
-            --accent: #7eaaff;
-            --wiki-blue: #8da6cc;
-            --border: #4a5a78;
-            --tag-bg: #2a3044;
-            --tag-border: #3e4e6a;
-            --tag-text: #90b0d8;
+            /* ── 1. COLORES ─────────────────────────────────────── */
+            --bg: #1c1d21;                  /* Fondo general de la página */
+            --card: #282930;                /* Fondo del contenedor y posts */
+            --text: #c8cad0;                /* Texto principal */
+            --text-muted: #94969e;          /* Texto secundario (resúmenes, pies) */
+            --h1-color: #dce0e8;            /* Título de página y de posts */
+
+            --accent: #7eaaff;              /* Acento: fechas, enlaces, botones */
+            --accent-hover: #9dbcff;        /* Acento al pasar el mouse */
+
+            --border: #4a5a78;              /* Bordes y líneas divisorias */
+
+            /* Paleta azul — botón "Ver ubicación" */
+            --tag-bg: #2a3044;              /* Fondo del botón */
+            --tag-border: #3e4e6a;          /* Borde del botón */
+            --tag-text: #90b0d8;            /* Texto del botón */
+
+            /* Paleta rojo editorial — botón "Ver nota completa" */
+            --press-bg: #3a2830;            /* Fondo del botón (tono vino) */
+            --press-border: #7a4a58;        /* Borde del botón */
+            --press-text: #f0b4c0;          /* Texto (rosa suave) */
+            --press-hover: #d95c6e;         /* Relleno al pasar el mouse */
+
+            --tab-hover: #2e2f38;           /* Fondo de pestaña al pasar el mouse */
+            --tab-active-bg: var(--card);   /* Fondo de la pestaña activa */
+            --hdr-bg: #282930;              /* Fondo del encabezado fijo */
+            --wa-green: #2ee06e;            /* Botón flotante WhatsApp */
+            --lb-overlay: rgba(0,0,0,0.94); /* Oscurecido del visor de imágenes */
+
             --shadow-card: 0 1px 6px rgba(0,0,0,0.25), 0 10px 40px rgba(0,0,0,0.18);
-            --h1-color: #dce0e8;
-            --img-border: #3a4a64;
-            --tab-hover: #2e2f38;
-            --tab-active-bg: var(--card);
-            --wa-green: #2ee06e;
-            --hdr-bg: #282930;
-            --exp-hover: #2e2f38;
+
+            /* ── 2. TIPOGRAFÍA ──────────────────────────────────── */
+            --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-title: "New York", Georgia, "Times New Roman", serif;
+            --font-date: "Courier New", monospace;
+
+            --size-body: 16px;              /* Texto base de la página */
+            --size-h1: 2.4rem;              /* Título de la página (H1) */
+            --size-page-sub: 1.2rem;        /* Subtítulo bajo el H1 */
+            --size-post-title: 1.5rem;      /* Título de cada post */
+            --size-excerpt: 1rem;           /* Texto de los posts */
+            --size-date: 0.9rem;            /* Fecha */
+            --size-caption: 0.8rem;         /* Pies de imagen / mapa / video */
+
+            /* ── 3. LAYOUT Y MEDIDAS ────────────────────────────── */
+            --container-max: 1200px;        /* Ancho máximo del contenido */
+            --container-pad: 48px 52px;     /* Relleno del contenedor principal */
+            --media-col: 300px;             /* Ancho de la columna de imagen */
+            --gap-post: 32px;               /* Separación entre posts */
+            --gap-media: 10px;              /* Separación imagen/mapa dentro del post */
+            --radius: 8px;                  /* Redondeo de esquinas de los posts */
+            --radius-media: 6px;            /* Redondeo de imágenes y mapas */
         }
+
+        /* ════════════════════════════════════════════════════════════
+           DE ACÁ PARA ABAJO NO HACE FALTA TOCAR NADA
+           ════════════════════════════════════════════════════════════ */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: var(--font-body);
             background-color: var(--bg); color: var(--text);
-            line-height: 1.65; font-size: 16px;
+            line-height: 1.65; font-size: var(--size-body);
             -webkit-font-smoothing: antialiased;
-            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
         /* --- Contenedor general --- */
@@ -63,25 +87,25 @@
         .wiki-header-wrapper {
             position: sticky; top: 0; z-index: 1000;
             background: var(--hdr-bg); border-bottom: 1px solid var(--border);
-            box-shadow: 0 2px 8px rgba(0,0,0,.08); backdrop-filter: blur(6px);
+            box-shadow: 0 2px 8px rgba(0,0,0,.15); backdrop-filter: blur(6px);
         }
         .wiki-header {
             display: flex; align-items: flex-end; justify-content: space-between;
-            padding: 12px 24px; gap: 16px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto;
+            padding: 12px 24px; gap: 16px; flex-wrap: wrap;
+            max-width: var(--container-max); margin: 0 auto;
         }
         .wiki-logo {
-            font-family: "New York", Georgia, "Times New Roman", serif;
+            font-family: var(--font-title);
             font-size: 1.25rem; font-weight: 700; color: var(--text);
             text-decoration: none; padding-bottom: 10px; white-space: nowrap;
         }
         .wiki-logo:hover { color: var(--accent); }
-        .wiki-nav { display: flex; gap: 0; flex-shrink: 0; }
+        .wiki-nav { display: flex; flex-shrink: 0; }
         .wiki-tab {
             display: block; padding: 9px 18px; font-size: 0.84rem;
             color: var(--text-muted); text-decoration: none;
             border: 1px solid transparent; border-bottom: none;
-            border-radius: 3px 3px 0 0; background: transparent;
-            font-weight: 400; position: relative; top: 1px;
+            border-radius: 3px 3px 0 0; font-weight: 400; position: relative; top: 1px;
         }
         .wiki-tab:hover { color: var(--text); background: var(--tab-hover); }
         .wiki-tab.active {
@@ -91,136 +115,145 @@
 
         /* --- Contenedor de Contenido --- */
         .wiki-container {
-            background: var(--card); padding: 48px 52px;
+            background: var(--card); padding: var(--container-pad);
             box-shadow: var(--shadow-card); border: 1px solid var(--border);
-            border-radius: 0 0 4px 4px; max-width: 1200px; margin: 24px auto;
+            border-radius: 0 0 4px 4px;
+            max-width: var(--container-max); margin: 24px auto;
         }
 
         h1 {
-            font-family: "New York", Georgia, "Times New Roman", serif;
-            font-size: 2.4rem; font-weight: 700; color: var(--h1-color);
+            font-family: var(--font-title);
+            font-size: clamp(1.7rem, 5vw, var(--size-h1));  /* se adapta solo en celular */
+            font-weight: 700; color: var(--h1-color);
             border-bottom: 1px solid var(--border); padding-bottom: 6px;
             margin-bottom: 4px; line-height: 1.15;
         }
+        .page-subtitle {
+            font-family: var(--font-title);
+            font-size: clamp(1rem, 3vw, var(--size-page-sub));
+            font-weight: 400; color: var(--text); margin-top: 12px; line-height: 1.4;
+        }
         .role-subtitle {
-            font-size: 1.05rem; color: var(--text-muted); font-weight: 300;
-            margin-bottom: 36px;
+            font-size: 1rem; color: var(--text-muted); font-weight: 300;
+            margin: 12px 0 36px; line-height: 1.7;
         }
 
         /* --- Estructura de Posts --- */
-        .post-list {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-
+        .post-list { display: flex; flex-direction: column; gap: var(--gap-post); }
         .post-simple {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 24px;
-            padding: 20px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--card);
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            display: grid; grid-template-columns: var(--media-col) 1fr;
+            gap: 24px; padding: 20px;
+            border: 1px solid var(--border); border-radius: var(--radius);
+            background: var(--card); transition: box-shadow 0.3s ease;
         }
-        .post-simple:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        /* Post sin imagen/video (solo texto + enlace) */
+        .post-simple:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
         .post-simple.solo-texto { grid-template-columns: 1fr; }
 
         .post-date {
-            font-family: monospace;
-            color: var(--accent);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: block;
+            font-family: var(--font-date); color: var(--accent);
+            font-size: var(--size-date); font-weight: 600;
+            margin-bottom: 8px; display: block;
         }
-
         .post-title {
-            font-family: "New York", Georgia, "Times New Roman", serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--h1-color);
-            margin-bottom: 12px;
-            line-height: 1.3;
+            font-family: var(--font-title);
+            font-size: var(--size-post-title); font-weight: 700;
+            color: var(--h1-color); margin-bottom: 12px; line-height: 1.3;
         }
-
         .post-excerpt {
             color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.7;
+            font-size: var(--size-excerpt); line-height: 1.7;
         }
         .post-excerpt a { color: var(--accent); }
 
-        /* --- Columna de Media (Imagen / Video / Enlace) --- */
-        .post-media {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
+        /* --- Columna de Media (Imagen / Video / Mapa) --- */
+        .post-media { display: flex; flex-direction: column; gap: var(--gap-media); }
         .media-item {
-            position: relative;
-            width: 100%;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            overflow: hidden;
-            background: var(--bg);
+            position: relative; width: 100%;
+            border: 1px solid var(--border); border-radius: var(--radius-media);
+            overflow: hidden; background: var(--bg);
         }
-
         .media-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            cursor: zoom-in;
-            transition: transform 0.3s ease;
-            display: block;
+            width: 100%; height: 100%; object-fit: cover;
+            cursor: zoom-in; transition: transform 0.3s ease; display: block;
         }
-        .media-item:hover img {
-            transform: scale(1.02);
-        }
+        .media-item:hover img { transform: scale(1.02); }
 
-        .media-video {
-            aspect-ratio: 16 / 9;
+        /* Marco para videos y mapas: el pie queda integrado, igual que en las fotos */
+        .media-frame { position: relative; aspect-ratio: 16 / 9; background: var(--bg); }
+        .media-map .media-frame { aspect-ratio: 4 / 3; }  /* mapa más cuadrado que un video */
+        .media-frame iframe {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; border: 0;
         }
-        .media-video iframe {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border: 0;
+        /* Mapa OpenStreetMap en tonos oscuros, integrado al diseño */
+        .media-map iframe[src*="openstreetmap"] {
+            filter: invert(90%) hue-rotate(180deg) contrast(90%) saturate(90%);
         }
 
         .media-caption {
-            padding: 6px 10px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-align: center;
-            border-top: 1px solid var(--border);
-            background: var(--card);
+            padding: 6px 10px; font-size: var(--size-caption);
+            color: var(--text-muted); text-align: center;
+            border-top: 1px solid var(--border); background: var(--card);
         }
 
-        /* --- Tarjeta de enlace (notas de diarios / prensa) --- */
+        /* --- Botones: base común --- */
+        .map-link, .ver-nota {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 6px; padding: 10px 16px;
+            border-radius: 20px;
+            font-size: 0.82rem; font-weight: 600;
+            text-decoration: none; text-align: center;
+            transition: background 0.2s ease, border-color 0.2s ease,
+                        color 0.2s ease, transform 0.2s ease;
+        }
+
+        /* Botón ubicación — AZUL (paleta --tag-*) */
+        .map-link {
+            border: 1px solid var(--tag-border);
+            background: var(--tag-bg); color: var(--tag-text);
+            margin-top: 16px;
+        }
+        .map-link:hover {
+            background: var(--accent); border-color: var(--accent);
+            color: #fff; transform: translateY(-1px);
+        }
+
+        /* Botón nota de prensa — ROJO EDITORIAL (paleta --press-*) */
+        .ver-nota {
+            border: 1px solid var(--press-border);
+            background: var(--press-bg); color: var(--press-text);
+            width: 100%;
+        }
+        .ver-nota:hover {
+            background: var(--press-hover); border-color: var(--press-hover);
+            color: #fff; transform: translateY(-1px);
+        }
+
+        /* --- Fila de botones al pie del texto (mapa + nota juntos) --- */
+        .post-actions {
+            display: flex; flex-wrap: wrap; gap: 10px;
+            margin-top: 16px;
+        }
+        .post-actions .map-link { margin-top: 0; }   /* la separación la maneja el contenedor */
+        .post-actions .ver-nota  { width: auto; }     /* pill compacta, no ocupa todo el ancho */
+
+        /* --- Tarjeta de enlace (notas de diarios) — borde rojo prensa --- */
         .post-link-card {
             display: flex; flex-direction: column; gap: 6px;
             padding: 14px 16px;
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--accent);
-            border-radius: 6px;
-            background: var(--bg);
+            border: 1px solid var(--border); border-left: 4px solid var(--press-hover);
+            border-radius: var(--radius-media); background: var(--bg);
             text-decoration: none;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         .post-link-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-            border-left-color: var(--accent-hover);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+            border-left-color: var(--press-text);
         }
         .link-card-source {
             font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px;
-            text-transform: uppercase; color: var(--accent);
+            text-transform: uppercase; color: var(--press-hover);
         }
         .link-card-title {
             font-size: 0.95rem; font-weight: 600; color: var(--text); line-height: 1.45;
@@ -228,68 +261,40 @@
         .link-card-cta { font-size: 0.78rem; color: var(--text-muted); }
 
         /* =========================================
-           LIGHTBOX v2 — Zoom en DOS niveles
-           Nivel 1: ajustada a pantalla (como antes)
+           LIGHTBOX — Zoom en DOS niveles
+           Nivel 1: ajustada a pantalla
            Nivel 2: detalle, casi todo el ancho,
            se recorre arrastrando
            ========================================= */
         .lightbox-modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            padding: 32px;
-            background-color: rgba(0,0,0,0.92);
-            justify-content: center;
-            align-items: center;
-            cursor: zoom-out;
-            overflow: hidden;
+            display: none; position: fixed; z-index: 2000;
+            top: 0; left: 0; width: 100%; height: 100%; padding: 32px;
+            background-color: var(--lb-overlay);
+            justify-content: center; align-items: center;
+            cursor: zoom-out; overflow: hidden;
         }
-        /* Nivel 1 */
         .lightbox-modal.active { display: flex; }
-
         .lightbox-modal img {
-            max-width: 100%;
-            max-height: calc(100vh - 120px);
+            max-width: 100%; max-height: calc(100vh - 120px);
             object-fit: contain;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            border-radius: 4px;
-            cursor: zoom-in;              /* avisa que hay un clic más */
-            user-select: none;
-            -webkit-user-drag: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5); border-radius: 4px;
+            cursor: zoom-in; user-select: none; -webkit-user-drag: none;
         }
-
-        /* Nivel 2: DETALLE */
         .lightbox-modal.active.detail {
-            display: block;
-            overflow: auto;               /* permite recorrer la imagen */
-            cursor: default;
+            display: block; overflow: auto; cursor: default;
         }
         .lightbox-modal.detail img {
-            display: block;
-            margin: 0 auto;
-            max-width: none;
-            max-height: none;
-            height: auto;
-            cursor: grab;
-            touch-action: none;
+            display: block; margin: 0 auto;
+            max-width: none; max-height: none; height: auto;
+            cursor: grab; touch-action: none;
         }
         .lightbox-modal.detail img.arrastrando { cursor: grabbing; }
-
         .lightbox-close {
-            position: absolute;
-            top: 20px; right: 30px;
-            color: #fff;
-            font-size: 3rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.2s;
-            z-index: 5;
-            line-height: 1;
+            position: absolute; top: 20px; right: 30px;
+            color: #fff; font-size: 3rem; font-weight: bold;
+            cursor: pointer; transition: color 0.2s; z-index: 5; line-height: 1;
         }
         .lightbox-close:hover { color: var(--accent); }
-
         .lightbox-caption {
             position: fixed; top: 22px; left: 28px; z-index: 4;
             color: rgba(255,255,255,0.75); font-size: 0.85rem;
@@ -308,8 +313,7 @@
             padding: 8px 18px; font-size: 0.82rem; font-family: inherit;
             color: #eee; background: rgba(25,25,30,0.85);
             border: 1px solid rgba(255,255,255,0.25); border-radius: 20px;
-            cursor: pointer; backdrop-filter: blur(4px);
-            transition: background 0.2s;
+            cursor: pointer; backdrop-filter: blur(4px); transition: background 0.2s;
         }
         .lb-btn:hover { background: rgba(70,70,80,0.9); }
         .lb-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
@@ -332,22 +336,21 @@
         .wa-float:hover { transform: scale(1.12); }
         .wa-float svg { width: 30px; height: 30px; fill: #fff; }
 
-        /* --- Responsive Design --- */
+        /* --- Responsive --- */
         @media (max-width: 768px) {
             .wiki-wrapper { padding: 0 12px; }
             .wiki-container { padding: 24px 20px; margin: 12px auto; }
-            h1 { font-size: 1.8rem; }
+            .post-simple { grid-template-columns: 1fr; }   /* imagen arriba, texto abajo */
             .wiki-header { padding: 10px 12px; flex-direction: column; align-items: flex-start; }
             .wiki-nav { width: 100%; overflow-x: auto; }
-            .post-simple { grid-template-columns: 1fr; }
             .lightbox-modal { padding: 16px; }
             .lightbox-caption { max-width: 70vw; font-size: 0.75rem; }
         }
     </style>
 </head>
-<body data-theme="dark">
+<body>
 
-<!-- Lightbox Modal (Zoom en 2 niveles) -->
+<!-- Lightbox (Zoom en 2 niveles) -->
 <div id="lightboxModal" class="lightbox-modal">
     <span class="lightbox-close" id="lightboxClose" title="Cerrar (Esc)">&times;</span>
     <div class="lightbox-caption" id="lightboxCaption"></div>
@@ -369,12 +372,12 @@
         <a href="index.html" class="wiki-logo">El Coral 25</a>
         <nav class="wiki-nav">
             <a href="index.html" class="wiki-tab">Inicio</a>
-            <a href="coro.html" class="wiki-tab">Coro</a>       
-            <a href="historia.html" class="wiki-tab">Historia</a>                
+            <a href="coro.html" class="wiki-tab">Coro</a>
+            <a href="historia.html" class="wiki-tab">Historia</a>
             <a href="repertorio.html" class="wiki-tab">Repertorio</a>
             <a href="multimedia.html" class="wiki-tab">Multimedia</a>
-            <a href="bitacora.html" class="wiki-tab active">Bitácora</a>
-            <a href="prensa.html" class="wiki-tab">Prensa</a>            
+            <a href="bitacora.html" class="wiki-tab">Bitácora</a>
+            <a href="prensa.html" class="wiki-tab active">Prensa</a>
             <a href="contacto.html" class="wiki-tab">Contacto</a>
         </nav>
     </header>
@@ -383,9 +386,12 @@
 <div class="wiki-wrapper">
     <div class="wiki-container">
 
-        <h1>Bitácora Coral</h1>
-        <div class="role-subtitle">Crónica de actividades. El registro vivo de nuestras últimas actuaciones, 
-        viajes y encuentros musicales.</div>
+        <h1>Prensa Coral 25</h1>
+        <h2 class="page-subtitle">Recopilación histórica y contemporánea de registros periodísticos que documentan la trayectoria de Coral 25.</h2>
+        <div class="role-subtitle">
+        El coro en los medios. Eco de nuestras voces en el mundo. Reseñas, entrevistas y recortes de prensa
+        que narran nuestra historia desde afuera. Archivo histórico y actual de notas periodísticas y menciones.
+        </div>
 
         <div class="post-list">
 
@@ -393,46 +399,69 @@
             <article class="post-simple">
                 <div class="post-media">
                     <div class="media-item">
-                        <img src="bitacora/9dejulio_03oct2026.jpg" alt="Flayer Invitación" class="zoomable-img" loading="lazy">
-                        <div class="media-caption">Imagen. 1: Flayer Invitación</div>
+                        <img src="bitacora/tandil_10oct2026.jpeg" alt="Flyer Invitación" class="zoomable-img" loading="lazy">
+                        <div class="media-caption">Imagen. 1: Flyer Invitación</div>
+                    </div>
+                    <!-- Mapa incrustado de OpenStreetMap (código abierto, sin salir de la página) -->
+                    <div class="media-item media-map">
+                        <div class="media-frame">
+                            <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-59.1428%2C-37.3316%2C-59.1228%2C-37.3116&amp;layer=mapnik&amp;marker=-37.3216%2C-59.1328"
+                                title="Mapa: Salón Blanco, Palacio Municipal de Tandil" loading="lazy"></iframe>
+                        </div>
+                        <div class="media-caption">Ubicación: Salón Blanco, Palacio Municipal de Tandil</div>
+                    </div>
+                </div>
+                <div class="post-text">
+                    <span class="post-date">2026-OCT-10 Y 11</span>
+                    <h2 class="post-title">17° ENCUENTRO CORAL SERRANO, INVITA CORO VOCALIS TANDIL,
+                    BUENOS AIRES, ARGENTINA. SALÓN BLANCO, PALACIO MUNICIPAL</h2>
+                    <p class="post-excerpt">
+                        El 17° Encuentro Coral Serrano, organizado por el Coro Vocalis Tandil, es un tradicional evento
+                        de música vocal que se lleva a cabo en la ciudad de Tandil, Provincia de Buenos Aires, Argentina.
+                        La sede de esta destacada cita es el emblemático Salón Blanco del Palacio Municipal, un espacio
+                        histórico que brinda una acústica ideal para las presentaciones corales de la región y
+                        agrupaciones invitadas.
+                    </p>
+                    <div class="post-actions">
+                        <a class="map-link" href="https://www.openstreetmap.org/?mlat=-37.3216&amp;mlon=-59.1328#map=17/-37.3216/-59.1328"
+                           target="_blank" rel="noopener">
+                            📍 Ver mapa ampliado — Tandil (OpenStreetMap)
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ── POST MAS ANTIGUO ── -->
+            <article class="post-simple">
+                <div class="post-media">
+                    <div class="media-item">
+                        <img src="prensa/el9deJulio_2026-10-03.webp" alt="Flyer Invitación" class="zoomable-img" loading="lazy">
+                        <div class="media-caption">Imagen. 1: Flyer Invitación</div>
                     </div>
                 </div>
                 <div class="post-text">
                     <span class="post-date">2026-OCT-03</span>
-                    <h2 class="post-title">Presentación en la ciudad de 9 de Julio, Buenos Aires, Argentina</h2>
+                    <h2 class="post-title">PRESENTACIÓN EN LA CIUDAD DE 9 DE JULIO, BUENOS AIRES, ARGENTINA</h2>
                     <p class="post-excerpt">
-                        El sábado 3 de octubre el Coral 25 participó de un encuentro en la ciudad de 9 de Julio con 
-                        motivo del 10* aniversario de la agrupación Vocal "Ever". El mismo se realizó en el Salón 
-                        Blanco Municipal. Además del anfitrión y el coro de nuestra ciudad, se hizo presente Mester 
-                        de Juglaría de la localidad de... 
+                        El sábado 3 de octubre el Coral 25 participó de un encuentro en la ciudad de 9 de Julio con
+                        motivo del 10* aniversario de la agrupación Vocal "Ever". El mismo se realizó en el Salón
+                        Blanco Municipal. Además del anfitrión y el coro de nuestra ciudad, se hizo presente Mester
+                        de Juglaría de la localidad agrupación coral de Trenque Lauquen, provincia de Buenos Aires,
+                        dirigida por Laura Carabelli y co-dirigida por Mariana Luaces.
                         Después del concierto las agrupaciones compartieron una cena de camaradería.
                     </p>
-                </div>
-            </article>
-
-            <!-- ── POST INTERMEDIO ── -->
-            <article class="post-simple">
-                <div class="post-media">
-                    <div class="media-item">
-                        <img src="bitacora/9dejulio_03oct2026.jpg" alt="Flayer Invitación" class="zoomable-img" loading="lazy">
-                
-                        <div class="media-caption">Imagen. 1: Flayer Invitación</div>
+                    <div class="post-actions">
+                        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Municipalidad+de+9+de+Julio+Buenos+Aires"
+                           target="_blank" rel="noopener">
+                            📍 Ver ubicación — Salón Blanco Municipal
+                        </a>
+                        <a class="ver-nota" href="https://www.diarioel9dejulio.com.ar/noticia/203184"
+                           target="_blank" rel="noopener">
+                            📄 Ver nota completa — Diario El 9 de Julio ↗
+                        </a>
                     </div>
                 </div>
-                <div class="post-text">
-                    <span class="post-date">2026-MAY-10</span>
-                    <h2 class="post-title">Presentación en la ciudad de 9 de Julio, Buenos Aires, Argentina</h2>
-                    <p class="post-excerpt">
-                        El sábado 3 de octubre el Coral 25 participó de un encuentro en la ciudad de 9 de Julio con 
-                        motivo del 10* aniversario de la agrupación Vocal "Ever". El mismo se realizó en el Salón 
-                        Blanco Municipal. Además del anfitrión y el coro de nuestra ciudad, se hizo presente Mester 
-                        de Juglaría de la localidad de... 
-                        Después del concierto las agrupaciones compartieron una cena de camaradería.
-                    </p>
-                </div>
-               </div>
-          </div>      
-     </article>
+            </article>
 
 <!-- ═══════════════════════════════════════════════════════════════════
      PLANTILLAS PARA NUEVOS POSTS
@@ -446,13 +475,15 @@
 
      <article class="post-simple">
          <div class="post-media">
-             <div class="media-item media-video">
-                 <iframe src="https://www.youtube.com/embed/ID_DEL_VIDEO"
-                     title="Título del video" loading="lazy"
-                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                     allowfullscreen></iframe>
+             <div class="media-item">
+                 <div class="media-frame">
+                     <iframe src="https://www.youtube.com/embed/ID_DEL_VIDEO"
+                         title="Título del video" loading="lazy"
+                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                         allowfullscreen></iframe>
+                 </div>
+                 <div class="media-caption">Video 1: actuación en ...</div>
              </div>
-             <div class="media-caption">Video 1: actuación en ...</div>
          </div>
          <div class="post-text">
              <span class="post-date">2026-MM-DD</span>
@@ -468,10 +499,13 @@
 
      <article class="post-simple">
          <div class="post-media">
-             <div class="media-item media-video">
-                 <iframe src="https://player.bilibili.com/player.html?bvid=ID_DEL_VIDEO&page=1&high_quality=1&danmaku=0&autoplay=0"
-                     title="Título del video" loading="lazy" scrolling="no"
-                     frameborder="no" allowfullscreen></iframe>
+             <div class="media-item">
+                 <div class="media-frame">
+                     <iframe src="https://player.bilibili.com/player.html?bvid=ID_DEL_VIDEO&page=1&high_quality=1&danmaku=0&autoplay=0"
+                         title="Título del video" loading="lazy" scrolling="no"
+                         allowfullscreen></iframe>
+                 </div>
+                 <div class="media-caption">Video 1: ...</div>
              </div>
          </div>
          <div class="post-text">
@@ -481,9 +515,6 @@
          </div>
      </article>
 
-   
-   
-   
      ── 3) POST CON NOTA DE DIARIO (solo enlace) ──────────────────
      Los diarios no permiten incrustar su contenido, así que se usa
      una tarjeta que abre la nota en pestaña nueva.
@@ -500,14 +531,10 @@
              </a>
          </div>
      </article>
-     
-    
-     
-     
 
-     ── 4) POST MIXTO: recorte del diario + enlace online ─────────
-     La imagen del recorte se puede ampliar con el visor de 2 niveles
-     y debajo va la tarjeta con el enlace a la nota.
+     ── 4) POST MIXTO: captura del diario + botón "Ver nota" ─────
+     La imagen del recorte se amplía con el visor de 2 niveles y
+     debajo va el botón rojo con el enlace a la nota online.
 
      <article class="post-simple">
          <div class="post-media">
@@ -515,10 +542,8 @@
                  <img src="prensa/recorte01.jpg" alt="Recorte del diario" class="zoomable-img" loading="lazy">
                  <div class="media-caption">Imagen 1: Recorte del diario</div>
              </div>
-             <a class="post-link-card" href="https://www.eldiario.com.ar/la-nota" target="_blank" rel="noopener">
-                 <span class="link-card-source">📄 La Nueva</span>
-                 <span class="link-card-title">"Título de la nota..."</span>
-                 <span class="link-card-cta">Leer online ↗</span>
+             <a class="ver-nota" href="https://www.lanueva.com/la-nota-completa" target="_blank" rel="noopener">
+                 📄 Ver nota completa en La Nueva ↗
              </a>
          </div>
          <div class="post-text">
@@ -528,6 +553,56 @@
          </div>
      </article>
 
+     ── 5) MAPA — OPCIÓN A: botón (la más simple) ─────────────────
+     Abre el mapa en pestaña nueva (en el celular abre la app).
+
+     Google Maps:
+     <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=NOMBRE+DEL+LUGAR"
+        target="_blank" rel="noopener">📍 Ver ubicación — Nombre del lugar</a>
+
+     OpenStreetMap (código abierto):
+     <a class="map-link" href="https://www.openstreetmap.org/?mlat=-37.3216&mlon=-59.1328#map=17/-37.3216/-59.1328"
+        target="_blank" rel="noopener">📍 Ver ubicación — Nombre del lugar</a>
+
+     Truco coordenadas: Google Maps ► clic derecho sobre el punto ►
+     te las copia al portapapeles (formato: -37.3216, -59.1328).
+
+     ── 5) MAPA — OPCIÓN B: incrustado OpenStreetMap ──────────────
+     El mapa se ve DENTRO del post, sin salir de la página.
+     En openstreetmap.org: navegá hasta el lugar ► botón "Compartir"
+     (➦) ► solapa "HTML" ► copiás el iframe y usás solo su src.
+     (El iframe que copia OSM trae width/height: borralos, el CSS
+     ya lo dimensiona.)
+
+     <div class="media-item media-map">
+         <div class="media-frame">
+             <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=LONMIN%2CLATMIN%2CLONMAX%2CLATMAX&layer=mapnik&marker=LAT%2CLON"
+                 title="Mapa: Nombre del lugar" loading="lazy"></iframe>
+         </div>
+         <div class="media-caption">Ubicación: Nombre del lugar</div>
+     </div>
+
+     ── 5) MAPA — OPCIÓN C: incrustado Google Maps ────────────────
+     En Google Maps: menú (☰) ► "Compartir" ► "Insertar un mapa" ►
+     copiás el iframe y usás su src dentro de la misma estructura:
+
+     <div class="media-item media-map">
+         <div class="media-frame">
+             <iframe src="https://www.google.com/maps/embed?pb=...código largo..."
+                 title="Mapa: Nombre del lugar" loading="lazy" allowfullscreen></iframe>
+         </div>
+         <div class="media-caption">Ubicación: Nombre del lugar</div>
+     </div>
+
+     ── 6) MAPA + NOTA DE PRENSA JUNTOS (fórmula rápida) ──────────
+     Ambos botones al pie del texto, ya diferenciados por color:
+     AZUL = ubicación · ROJO = nota de prensa.
+
+     <div class="post-actions">
+         <a class="map-link" href="URL-DEL-MAPA" target="_blank" rel="noopener">📍 Ver ubicación — Lugar</a>
+         <a class="ver-nota" href="URL-DE-LA-NOTA" target="_blank" rel="noopener">📄 Ver nota completa — Medio ↗</a>
+     </div>
+
 ═══════════════════════════════════════════════════════════════════ -->
 
         </div>
@@ -535,13 +610,13 @@
         <footer class="wiki-footer">
             <p>© 2026 Coral 25 - Todos los derechos reservados · Ciudad de 25 de Mayo, Buenos Aires, Argentina</p>
             <span class="icono"> 🌐 </span>
-            <a href="https://mariomolinacc.github.io" target="_blank" style="color: var(--text-muted); text-decoration: none; font-size: 11px; font-family: Arial, sans-serif;"> Diseño Web MM_ScanLab</a>
+            <a href="https://mariomolinacc.github.io" target="_blank" style="color: var(--text-muted); text-decoration: none; font-size: 11px; font-family: Arial, sans-serif;"> ScanLabb Diseño Web</a>
         </footer>
 
     </div>
 </div>
 
-<!-- Script Lightbox v2: zoom en 2 niveles -->
+<!-- Script Lightbox: zoom en 2 niveles -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const lightbox  = document.getElementById("lightboxModal");
@@ -570,9 +645,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const anchoReal = lbImg.naturalWidth || 3000; // tamaño original del archivo
         let ancho;
         if (vw < 768) {
-            ancho = Math.min(anchoReal, vw * 2);   // en celular: zoom 2x, se recorre con el dedo
+            ancho = Math.min(anchoReal, vw * 2);   // celular: zoom 2x, se recorre con el dedo
         } else {
-            ancho = Math.min(anchoReal, vw - 64);  // en PC: casi todo el ancho de pantalla
+            ancho = Math.min(anchoReal, vw - 64);  // PC: casi todo el ancho de pantalla
         }
         lbImg.style.width = ancho + "px";
         lightbox.classList.add("detail");
@@ -582,7 +657,6 @@ document.addEventListener("DOMContentLoaded", function () {
         lbHint.textContent = "Arrastrá la imagen para recorrerla · Clic para volver a ajustar · Esc para cerrar";
     }
 
-
     function abrir(imgClickeada) {
         lbImg.src = imgClickeada.src;
         const pie = imgClickeada.closest(".media-item")?.querySelector(".media-caption");
@@ -591,19 +665,12 @@ document.addEventListener("DOMContentLoaded", function () {
         lightbox.classList.add("active");
         document.body.style.overflow = "hidden"; // bloquea el scroll de la página de fondo
     }
-  
-      function cerrar() {
+
+    function cerrar() {
         lightbox.classList.remove("active", "detail");
         document.body.style.overflow = "";
     }
 
-  
-  
-  
-  
-  
-  
-  
     // Abrir el visor desde cada imagen de post
     document.querySelectorAll(".zoomable-img").forEach(img => {
         img.addEventListener("click", () => abrir(img));
