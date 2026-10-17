@@ -1,15 +1,32 @@
+/* ============================================================
+   CORAL 25 - style.css CONSOLIDADO (v13)
+   ------------------------------------------------------------
+   NOVEDADES DE ESTA VERSION:
+   1. Menu lateral IZQUIERDO fijo en escritorio (sidebar),
+      como una paleta de herramientas de una app de diseno.
+   2. Modelo "app": la ventana del navegador NO scrollea.
+      El contenido se desplaza dentro del body (area de edicion).
+   3. Carrusel de portada con imagen COMPLETA (contain, sin recortes).
+   4. Secciones informativas, banner y pie de la portada, ahora
+      compartidos con todo el sitio.
+   5. En moviles: barra superior con hamburguesa y el menu se
+      desliza desde la IZQUIERDA (igual en todas las paginas).
+   ============================================================ */
+
 /* =========================================
    VARIABLES DE DISEÑO (Gala Tecnológica)
    ========================================= */
 :root {
     --bg-dark: #0a0a0a;
     --bg-card: rgba(20, 20, 20, 0.6);
-    --gold: #D4AF37;
+    --gold: #D4AF37;                 /* Dorado principal (títulos internos) */
+    --gold-soft: #b89e5c;            /* Dorado suave de la portada */
     --gold-light: #F7E7CE;
     --text-main: #ffffff;
     --text-muted: #a0a0a0;
     --glass-border: rgba(255, 255, 255, 0.1);
-    
+    --sidebar-width: 240px;
+
     /* Fuentes nativas del sistema */
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-serif: Georgia, "Times New Roman", Times, serif;
@@ -26,6 +43,38 @@ body {
     background-color: var(--bg-dark);
     color: var(--text-main);
     overflow-x: hidden;
+
+    /* Espacio para el menú lateral izquierdo (en móviles se anula) */
+    padding-left: var(--sidebar-width);
+
+    /* Barra de scroll fina estilo aplicación (Firefox) */
+    scrollbar-width: thin;
+    scrollbar-color: #2a2a2a var(--bg-dark);
+}
+
+/* Barra de scroll fina estilo aplicación (Chrome / Edge / Safari) */
+body::-webkit-scrollbar { width: 10px; }
+body::-webkit-scrollbar-track { background: var(--bg-dark); }
+body::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 5px; }
+body::-webkit-scrollbar-thumb:hover { background: var(--gold-soft); }
+
+/* =========================================
+   MODELO "APP DE DISEÑO" (solo escritorio)
+   La ventana del navegador no scrollea nunca:
+   el contenido se mueve dentro del body, como el
+   área de edición de Figma / AutoCAD. El menú
+   lateral queda fijo como una paleta de herramientas.
+   En móviles se usa el scroll normal del navegador.
+   ========================================= */
+@media (min-width: 769px) {
+    html {
+        height: 100%;
+        overflow: hidden;   /* La página completa no se mueve jamás */
+    }
+    body {
+        height: 100%;
+        overflow-y: auto;   /* Solo el área de contenido scrollea */
+    }
 }
 
 /* =========================================
@@ -50,7 +99,7 @@ body {
     backface-visibility: hidden;
 
     /* --- KEN BURNS: zoom in + paneo suave --- */
-    animation: kenBurnsZoom 20s ease-in-out infinite alternate;
+    animation: kenBurnsZoom 15s ease-in-out infinite alternate;
 }
 
 @keyframes kenBurnsZoom {
@@ -93,63 +142,110 @@ body {
 }
 
 /* =========================================
-   NAVEGACIÓN
+   NAVEGACIÓN - MENÚ LATERAL IZQUIERDO (v13)
+   En escritorio es una columna fija a la izquierda
+   que ocupa toda la altura de la pantalla.
+   En móviles (ver RESPONSIVE) la barra vuelve arriba
+   y el menú se abre como cajón deslizable desde
+   la izquierda, igual que en todas las páginas.
    ========================================= */
 .navbar {
     position: fixed;
     top: 0;
-    width: 100%;
-    padding: 1rem 5%;
+    left: 0;                          /* Pegada al borde izquierdo */
+    width: var(--sidebar-width);
+    height: 100vh;
+    height: 100svh;                   /* Mejor cálculo en móviles */
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;           /* Logo arriba, links debajo */
     align-items: center;
-    backdrop-filter: blur(10px);
-    background: rgba(10, 10, 10, 0.7);
-    border-bottom: 1px solid var(--glass-border);
+    background: #000;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.6);
     z-index: 1000;
+    padding: 28px 16px 40px;
+    box-sizing: border-box;
+    overflow-y: auto;                 /* Por si la pantalla es bajita */
 }
 
+/* Logo apilado: imagen arriba y nombre debajo */
 .logo {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 10px;
     text-decoration: none;
+    flex-shrink: 0;
 }
 
 .logo span {
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--gold);
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 }
 
 .logo-img {
-    height: 30px;
+    height: 46px;    
     width: auto;  
     display: block;
 }
 
+/* Links en columna dentro de la sidebar */
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 2rem;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.nav-links li {
+    width: 100%;
+    text-align: center;
 }
 
 .nav-links a {
-    color: var(--text-main);
+    display: block;
+    padding: 10px 14px;
+    color: #ccc;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     letter-spacing: 1px;
-    transition: color 0.3s;
+    border-radius: 6px;
+    transition: color 0.3s, background 0.3s;
 }
 
-.nav-links a:hover, .nav-links a.active {
-    color: var(--gold);
+.nav-links a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
 }
+
+.nav-links a.active {
+    color: var(--gold-soft);
+    background: rgba(184, 158, 92, 0.12);
+    border-right: 3px solid var(--gold-soft); /* Franja dorada mirando al contenido */
+}
+
+/* Fondo oscuro detrás del menú abierto (solo móvil).
+   Solo la portada lo incluye; en las demás páginas no hace falta. */
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999; /* Debajo del menú (1000) y la hamburguesa (1001) */
+}
+.menu-overlay.show { display: block; }
 
 /* =========================================
    BOTÓN HAMBURGUESA (Móvil)
+   En escritorio no se muestra: el menú lateral
+   ya está siempre visible.
    ========================================= */
 .hamburger {
     display: none;
@@ -183,27 +279,29 @@ body {
 }
 
 /* =========================================
-   BOTÓN GALA
+   BOTÓN GALA (versión rellena, como la portada)
    ========================================= */
 .btn-gala {
     display: inline-block;
-    padding: 1rem 3rem;
-    background: transparent;
-    border: 1px solid var(--gold);
-    color: var(--gold);
+    padding: 12px 30px;
+    background: var(--gold-soft);
+    border: 1px solid var(--gold-soft);
+    border-radius: 4px;
+    color: #fff;
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    font-weight: 700;
     font-size: 0.9rem;
     font-family: var(--font-sans);
-    transition: all 0.4s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
 }
 
 .btn-gala:hover {
-    background: var(--gold);
-    color: var(--bg-dark);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    background: transparent;
+    color: var(--gold-soft);
+    box-shadow: 0 0 20px rgba(184, 158, 92, 0.4);
 }
 
 /* =========================================
@@ -301,10 +399,106 @@ body {
 }
 
 /* =========================================
+   HERO CARRUSEL (Index, v13)
+   La foto se muestra COMPLETA ('contain'), centrada,
+   con fondo negro absorbiendo el espacio sobrante.
+   ========================================= */
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000; /* Fondo detrás de la foto */
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* === GUIA PARA AJUSTAR LAS FOTOS ===
+       1. background-size:
+          - 'contain': Muestra la foto COMPLETA. Nunca la recorta.
+            Si la pantalla es más ancha, deja negro a los costados.
+          - 'cover': Llena todo el espacio, pero RECORTA lo que sobre.
+       2. background-position:
+          - 'center center': La centra perfectamente.
+          - 'center top': La pega arriba (útil si usás 'cover').
+       3. background-repeat: 'no-repeat' evita el mosaico. */
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+/* Etiqueta (caption) inferior */
+.hero-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+    z-index: 4;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    color: #fff;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    pointer-events: none;
+}
+
+.hero-caption span {
+    display: inline-block;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px 20px;
+    border: 1px solid #333;
+    border-radius: 20px;
+}
+
+/* Indicadores del carrusel (se generan solos por JS) */
+.carousel-dots {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 5;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dot.active {
+    background: #fff;
+}
+
+/* =========================================
    CONTENIDO GENERAL (Páginas internas)
+   El padding superior bajó de 8rem a 4rem:
+   ya no hay barra de menú arriba que limpiar.
    ========================================= */
 .page-content {
-    padding: 8rem 5% 4rem;
+    padding: 4rem 5% 4rem;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -413,10 +607,73 @@ body {
 }
 
 /* =========================================
-   PIE DE PÁGINA (FOOTER) - CENTRADO
+   SECCIONES INFORMATIVAS DE LA PORTADA (v13)
+   ========================================= */
+.info-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 5%;
+    box-sizing: border-box;
+    gap: 40px;
+    min-height: 60vh;
+}
+
+.info-logo-col {
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
+    border-right: 1px solid #333;
+    padding-right: 40px;
+}
+
+.info-logo-col img {
+    max-width: 200px;
+    filter: brightness(0.9);
+}
+
+.info-text-col {
+    flex: 2;
+    min-width: 300px;
+}
+
+.info-text-col h2 {
+    font-size: 2.2rem;
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--gold-soft);
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.info-text-col p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ccc;
+}
+
+.directora-text {
+    font-size: 1.2rem;
+    color: var(--gold-soft);
+    margin-top: 25px;
+    font-style: italic;
+}
+
+.conciertos-bg {
+    background-color: #111;
+}
+
+/* =========================================
+   PIE DE PÁGINA (FOOTER) - versión oscura unificada
    ========================================= */
 .site-footer {
-    padding: 0 5%;
+    background: #050505;
+    border-top: 1px solid #222;
+    padding: 30px 5%;
+    text-align: center;
 }
 
 .footer-line {
@@ -441,41 +698,44 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-muted);
+    color: #888;
     font-size: 0.9rem;
     flex-wrap: wrap;
     gap: 10px;
 }
 
 .footer-logo {
-    height: 25px;
+    height: 32px;
     width: auto;
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
 .footer-firma {
     margin: 0;
     font-size: 0.8em;
-    opacity: 0.5;
+    opacity: 0.6;
     font-family: var(--font-sans);
     text-align: center;
 }
 
 .footer-firma a {
-    color: #fff;
+    color: #999;
     text-decoration: none;
-    border-bottom: 1px dotted rgba(255,255,255,0.4);
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
     padding-bottom: 2px;
-    transition: opacity 0.3s;
+    transition: color 0.3s;
 }
 
 .footer-firma a:hover {
-    opacity: 1;
+    color: var(--gold);
     border-bottom: 1px dotted var(--gold);
 }
 
 /* =========================================
    RESPONSIVE / MÓVILES
+   En móvil la sidebar vuelve a ser barra superior,
+   y el menú es un cajón que se desliza desde la
+   IZQUIERDA (antes venía desde la derecha).
    ========================================= */
 @media (max-width: 1024px) {
     .voice-grid {
@@ -484,30 +744,62 @@ body {
 }
 
 @media (max-width: 768px) {
+    body {
+        padding-left: 0; /* El menú ya no ocupa lugar: se desliza encima */
+    }
+
+    /* La navbar vuelve a ser una barra superior */
+    .navbar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        background: rgba(10, 10, 10, 0.9);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        border-bottom: 1px solid var(--glass-border);
+        overflow: visible;
+    }
+
+    .navbar .logo {
+        flex-direction: row; /* Logo horizontal en la barra */
+    }
+
+    .navbar .logo-img {
+        height: 40px;
+    }
+
     .hamburger {
         display: flex;
     }
 
+    /* Cajón deslizable desde la IZQUIERDA */
     .nav-links {
         position: fixed;
         top: 0;
-        right: 0; 
-        width: 75%; 
+        left: 0;
+        width: 75%;
+        max-width: 300px;
         height: 100vh;
-        background-color: rgba(10, 10, 10, 0.95); 
+        height: 100svh;
+        background-color: rgba(10, 10, 10, 0.95);
         backdrop-filter: blur(15px);
-        border-left: 1px solid var(--glass-border);
+        border-right: 1px solid var(--glass-border);
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 2.5rem;
-        transform: translateX(100%); 
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0.6rem;
+        margin: 0;
+        padding: 5rem 1.2rem 2rem;
+        transform: translateX(-100%);
         transition: transform 0.4s ease-in-out;
         z-index: 1000;
     }
 
     .nav-links.open {
-        transform: translateX(0); 
+        transform: translateX(0);
     }
 
     .nav-links li {
@@ -515,8 +807,28 @@ body {
     }
 
     .nav-links a {
-        font-size: 1.3rem;
-        color: var(--text-main);
+        font-size: 1.15rem;
+        text-align: center;
+    }
+
+    /* Hero del carrusel un poco más bajito en móvil */
+    .hero-carousel {
+        height: 70vh;
+        height: 70svh;
+    }
+
+    /* Secciones informativas se apilan */
+    .info-logo-col {
+        border-right: none;
+        border-bottom: 1px solid #333;
+        padding-right: 0;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        flex: 1 100%;
+    }
+    .info-text-col {
+        flex: 1 100%;
+        text-align: center;
     }
 }
 
@@ -539,12 +851,12 @@ body {
 }
 
 /* ==================================================== */
-/* --- BANNER ANIMADO PRÓXIMO CONCIERTO --------------- */
+/* --- BANNER ANIMADO (versión negra con texto dorado) */
 /* ==================================================== */
 .announcement-bar {
     width: 100%;
-    background-color: var(--gold); 
-    color: #000000; 
+    background-color: #000;
+    color: var(--gold-soft);
     overflow: hidden;
     white-space: nowrap;
     font-family: var(--font-sans);
@@ -552,18 +864,22 @@ body {
     font-size: 0.9rem;
     letter-spacing: 1px;
     text-transform: uppercase;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    padding: 15px 0;
     position: relative;
-    z-index: 100; 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); 
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .marquee-container {
-    padding: 10px 0; 
+    padding: 0;
 }
 
 .marquee-content {
-    display: inline-block;
-    animation: marquee 25s linear infinite; 
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 25s linear infinite;
 }
 
 .announcement-bar:hover .marquee-content {
