@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Evita que Dark Reader modifique los colores/fondos de la página -->
+    <meta name="darkreader-lock">
     <title>Bitácora | Coral 25</title>
+    <!-- v13: menú lateral izquierdo + estilos compartidos del sitio.
+         Va ANTES del <style> propio para que los retoques de esta página
+         puedan sobreescribir lo compartido cuando haga falta. -->
+    <link rel="stylesheet" href="css/style.css?v=13">
     <style>
         /* ╔═════════════════════════════════════════════════════════════╗
            ║  PANEL DE PARÁMETROS — TEMA OSCURO FIJO                      ║
            ║  Editá SOLO esta sección para retoques rápidos de diseño.    ║
            ║  El resto del código no hace falta tocarlo.                  ║
+           ║                                                              ║
+           ║  La navegación ya NO vive en esta hoja: el menú lateral      ║
+           ║  viene de css/style.css, compartido con todo el sitio.       ║
            ║                                                              ║
            ║  Lógica de colores de botones:                               ║
            ║    AZUL  (--tag-*)   = ubicación / mapas                     ║
@@ -38,9 +47,6 @@
             --press-text: #f0b4c0;          /* Texto (rosa suave) */
             --press-hover: #d95c6e;         /* Relleno al pasar el mouse */
 
-            --tab-hover: #2e2f38;           /* Fondo de pestaña al pasar el mouse */
-            --tab-active-bg: var(--card);   /* Fondo de la pestaña activa */
-            --hdr-bg: #282930;              /* Fondo del encabezado fijo */
             --wa-green: #2ee06e;            /* Botón flotante WhatsApp */
             --lb-overlay: rgba(0,0,0,0.94); /* Oscurecido del visor de imágenes */
 
@@ -83,41 +89,14 @@
         /* --- Contenedor general --- */
         .wiki-wrapper { width: 100%; margin: 0 auto; padding: 0 24px; }
 
-        /* --- Header Sticky --- */
-        .wiki-header-wrapper {
-            position: sticky; top: 0; z-index: 1000;
-            background: var(--hdr-bg); border-bottom: 1px solid var(--border);
-            box-shadow: 0 2px 8px rgba(0,0,0,.15); backdrop-filter: blur(6px);
-        }
-        .wiki-header {
-            display: flex; align-items: flex-end; justify-content: space-between;
-            padding: 12px 24px; gap: 16px; flex-wrap: wrap;
-            max-width: var(--container-max); margin: 0 auto;
-        }
-        .wiki-logo {
-            font-family: var(--font-title);
-            font-size: 1.25rem; font-weight: 700; color: var(--text);
-            text-decoration: none; padding-bottom: 10px; white-space: nowrap;
-        }
-        .wiki-logo:hover { color: var(--accent); }
-        .wiki-nav { display: flex; flex-shrink: 0; }
-        .wiki-tab {
-            display: block; padding: 9px 18px; font-size: 0.84rem;
-            color: var(--text-muted); text-decoration: none;
-            border: 1px solid transparent; border-bottom: none;
-            border-radius: 3px 3px 0 0; font-weight: 400; position: relative; top: 1px;
-        }
-        .wiki-tab:hover { color: var(--text); background: var(--tab-hover); }
-        .wiki-tab.active {
-            color: var(--text); background: var(--tab-active-bg);
-            border-color: var(--border); font-weight: 500;
-        }
+        /* --- Navegación: el menú lateral / barra móvil la provee
+             css/style.css (clases .navbar, .nav-links, .hamburger) --- */
 
         /* --- Contenedor de Contenido --- */
         .wiki-container {
             background: var(--card); padding: var(--container-pad);
             box-shadow: var(--shadow-card); border: 1px solid var(--border);
-            border-radius: 0 0 4px 4px;
+            border-radius: var(--radius);
             max-width: var(--container-max); margin: 24px auto;
         }
 
@@ -278,7 +257,7 @@
             max-width: 100%; max-height: calc(100vh - 120px);
             object-fit: contain;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5); border-radius: 4px;
-            cursor: zoom-in; user-select: none; -webkit-user-drag: none;
+            cursor: zoom-in; user-select: none; -webkit-drag: none;
         }
         .lightbox-modal.active.detail {
             display: block; overflow: auto; cursor: default;
@@ -338,17 +317,43 @@
 
         /* --- Responsive --- */
         @media (max-width: 768px) {
-            .wiki-wrapper { padding: 0 12px; }
+            /* 80px arriba: limpia la barra superior fija del menú
+               (en escritorio no hace falta: el menú va a la izquierda) */
+            .wiki-wrapper { padding: 80px 12px 0; }
             .wiki-container { padding: 24px 20px; margin: 12px auto; }
             .post-simple { grid-template-columns: 1fr; }   /* imagen arriba, texto abajo */
-            .wiki-header { padding: 10px 12px; flex-direction: column; align-items: flex-start; }
-            .wiki-nav { width: 100%; overflow-x: auto; }
             .lightbox-modal { padding: 16px; }
             .lightbox-caption { max-width: 70vw; font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
+
+<!-- Fondo oscuro al abrir el menú en móvil (tocar afuera cierra) -->
+<div class="menu-overlay" id="menu-overlay"></div>
+
+<!-- Menú lateral izquierdo compartido (en móvil: barra superior + cajón) -->
+<nav class="navbar">
+    <a href="index.html" class="logo">
+        <img src="img/logo_coral.png" alt="Logo" class="logo-img">
+        <span>Coral 25</span>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="coro.html">Coro</a></li>
+        <li><a href="historia.html">Historia</a></li>
+        <li><a href="repertorio.html">Repertorio</a></li>
+        <li><a href="multimedia.html">Multimedia</a></li>
+        <li><a href="bitacora.html" class="active">Bitácora</a></li>
+        <li><a href="prensa.html">Prensa</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+</nav>
 
 <!-- Lightbox (Zoom en 2 niveles) -->
 <div id="lightboxModal" class="lightbox-modal">
@@ -366,22 +371,6 @@
 <a href="https://wa.me/5492345446330?text=Hola%20Mario%2C%20te%20escribo%20desde%20tu%20web.%20Me%20gustar%C3%ADa%20consultarte%20sobre%20un%20proyecto." class="wa-float" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
-
-<div class="wiki-header-wrapper">
-    <header class="wiki-header">
-        <a href="index.html" class="wiki-logo">El Coral 25</a>
-        <nav class="wiki-nav">
-            <a href="index.html" class="wiki-tab">Inicio</a>
-            <a href="coro.html" class="wiki-tab">Coro</a>
-            <a href="historia.html" class="wiki-tab">Historia</a>
-            <a href="repertorio.html" class="wiki-tab">Repertorio</a>
-            <a href="multimedia.html" class="wiki-tab">Multimedia</a>
-            <a href="bitacora.html" class="wiki-tab active">Bitácora</a>
-            <a href="prensa.html" class="wiki-tab">Prensa</a>
-            <a href="contacto.html" class="wiki-tab">Contacto</a>
-        </nav>
-    </header>
-</div>
 
 <div class="wiki-wrapper">
     <div class="wiki-container">
@@ -460,57 +449,6 @@
                 </div>
             </article>
 
-
-
-
-            <!-- ── POST MAS ANTIGUO ── -->
-            <article class="post-simple">
-                <div class="post-media">
-                    <div class="media-item">
-                        <img src="bitacora/homenaje_20junio2026.jpeg" alt="Homenaje al Coral 25 en su 70º" class="zoomable-img" loading="lazy">
-                        <div class="media-caption">Imagen. 1: Homenaje al Coral 25 en su 70º Aniversario</div>
-                       </div>
-                     <div class="media-item">
-                        <img src="bitacora/invitacion_20junio2026.jpeg" alt="Flyer Invitación" class="zoomable-img" loading="lazy">
-                        <div class="media-caption">Imagen. 2: Invitación al Coral 25 en su 70º Aniversario</div>
-                    </div>
-                </div>
-                <div class="post-text">
-                    <span class="post-date">2026-JUN-20</span>
-                    <h2 class="post-title">Homenaje al Coral 25 en su 70º Aniversario: Un orgullo para la cultura de nuestro distrito.</h2>
-                    <p class="post-excerpt">
-                        ¡Una noche inolvidable para nuestra historia coral !<br>
-                        
-                        El pasado sábado 20 de junio, vivimos una jornada de profunda emocióny reconocimiento institucional con motivo de 
-                        los 70 años de trayectoria del Coral 25. </p>
-
-                       <p class="post-excerpt">
-                        Las actividades comenzaron a las 20:00 horas en la Casa de la Cultura, para luego continuar a las 20:30 horas en el 
-                        recinto del Honorable Concejo Deliberante.
-                        
-                        En ambos espacios, el Municipio de 25 de Mayo, a través de la Subsecretaría de Cultura y Juventud junto al Honorable 
-                        Concejo Deliberante (encabezado por nuestro intendente Ramiro Egüen), rindió un merecido homenaje a esta 
-                        gran institución. 
-                        
-                        Celebrar siete décadas de música, unión y pasión es reconocer a quienes han dejado una huella imborrable en el alma 
-                        cultural de nuestro distrito. ¡Gracias a todos los que fueron parte de este 
-                        hermoso festejo y por mantener viva nuestra identidad a través del canto!.                        
-                    </p>
-                </div>
-            </article>
-
-
-
-
-
-
-
-
-
-
-
-
-            
 <!-- ═══════════════════════════════════════════════════════════════════
      PLANTILLAS PARA NUEVOS POSTS
      Copiá la que necesites, pegala ARRIBA de este bloque (así el
@@ -664,6 +602,34 @@
     </div>
 </div>
 
+<!-- Script del menú lateral (compartido con el resto del sitio) -->
+<script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+    const overlay = document.getElementById('menu-overlay');
+
+    function closeMenu() {
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('active');
+        overlay.classList.remove('show');
+    }
+
+    hamburger.addEventListener('click', () => {
+        const isOpen = !navLinks.classList.contains('open');
+        navLinks.classList.toggle('open', isOpen);
+        hamburger.classList.toggle('active', isOpen);
+        overlay.classList.toggle('show', isOpen);
+    });
+
+    // Tocar el fondo oscuro cierra el menú
+    overlay.addEventListener('click', closeMenu);
+
+    // Al hacer click en un link, el menú se cierra
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+</script>
+
 <!-- Script Lightbox: zoom en 2 niveles -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -772,3 +738,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
+

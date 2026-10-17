@@ -4,27 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SOLUCIÓN DEFINITIVA: Evita que Dark Reader modifique los colores/fondos de la página -->
+    <!-- Evita que Dark Reader modifique los colores/fondos de la página -->
     <meta name="darkreader-lock">
     
     <title>Coral 25</title>
-    <!-- Subí la versión a ?v=4 para que el navegador actualice la caché del CSS | Pruebo con v=3 -->
-    <link rel="stylesheet" href="css/style.css?v=4">
+    <!-- v13: menú lateral izquierdo + modelo app + carrusel (todo en el CSS compartido) -->
+    <link rel="stylesheet" href="css/style.css?v=13">
+
+    <style>
+        /* Único estilo exclusivo de la portada: tipografía serif.
+           Todo lo demás (menú lateral, carrusel, secciones, footer)
+           ahora vive en css/style.css, compartido con todas las páginas. */
+        body {
+            font-family: Georgia, "Times New Roman", Times, serif;
+        }
+    </style>
 </head>
 <body>
     
-    <!-- Fondo de Gala (Restaurado) -->
-  <!--   <div class="gala-bg" style="background-image: url('img/fondo_coral25.webp');"></div>  -->
-   <div class="gala-bg" style="background-image: url('img/hero.jpg');"></div>
+    <!-- Fondo oscuro al abrir el menú en móvil (tocar afuera cierra).
+         Las demás páginas no lo necesitan: su JS ya cierra el menú
+         al hacer click en un link. -->
+    <div class="menu-overlay" id="menu-overlay"></div>
 
-    <!-- Navegación -->
+    <!-- Menú lateral izquierdo (en móvil: barra superior + cajón deslizable) -->
     <nav class="navbar">
-        <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+        <a href="index.html" class="logo">
             <img src="img/logo_coral.png" alt="Logo" class="logo-img">
             <span>Coral 25</span>
         </a>
 
-        <!-- BOTÓN HAMBURGUESA -->
         <button class="hamburger" id="hamburger" aria-label="Abrir menú">
             <span></span>
             <span></span>
@@ -41,38 +50,78 @@
             <li><a href="prensa.html">Prensa</a></li>
             <li><a href="contacto.html">Contacto</a></li>
         </ul>
-    </nav> 
+    </nav>
 
-    <!-- Hero Estilo Estudio Coral -->
-    <section class="hero-estudio">
-        <!-- Overlay restaurado -->
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <div class="hero-line"></div>
-            <p class="hero-subtitle">bienvenidos al sitio oficial de</p>
-            <h1 class="hero-title">
-                <img src="img/logo_coral.png" alt="Coral 25 Logo" class="hero-logo">
-            </h1>
-            <p class="hero-director">Dirigido por <strong>Silvia M. Blanco</strong></p>
-            <a href="coro.html" class="btn-gala">Conocé Nuestras Voces</a>
+    <!-- 1. HERO CARRUSEL (la imagen se ve COMPLETA, centrada, fondo negro) -->
+    <section class="hero-carousel">
+        <div class="carousel-slide active" style="background-image: url('fondo/coral_00.webp');" data-caption="1998 - Actual - Directora: Silvia M. Blanco"></div>
+
+<!--
+        <div class="carousel-slide" style="background-image: url('fondo/coral_01.webp');" data-caption="1956 Director: Casilda Lopez Camelo"></div>
+        <div class="carousel-slide" style="background-image: url('fondo/coral_02.webp');" data-caption="1958 - 1966 - Directora: Irma Urteaga"></div>
+        <div class="carousel-slide" style="background-image: url('fondo/coral_03.webp');" data-caption="1973 - 1978 - Directora: Teresa Izaza"></div>
+        <div class="carousel-slide" style="background-image: url('fondo/coral_04.webp');" data-caption="1984 - 1986 - Director: Daniel Riviere"></div>
+-->
+
+        <!-- Etiqueta/Caption inferior -->
+        <div class="hero-caption">
+            <span id="caption-text"></span>
         </div>
+
+        <!-- Los puntos se generan solos según cuántas fotos tengas activas.
+             Si hay una sola foto, no se muestran.
+             Para volver a activar las otras fotos, simplemente descomentá
+             los <div class="carousel-slide"> de arriba. -->
+        <div class="carousel-dots" id="carousel-dots"></div>
     </section> 
 
-    <!-- Banner Próximo Concierto -->
+    <!-- 2. LOGO Y BREVE DESCRIPCIÓN -->
+    <section class="info-section">
+        <div class="info-logo-col">
+            <img src="img/logo_coral.png" alt="Logo Coral 25">
+        </div>
+        <div class="info-text-col">
+            <h2>Quiénes Somos</h2>
+            <p>
+                Desde 1956, somos una agrupación coral apasionada por la música y el canto. 
+                Nuestro objetivo es difundir el arte coral, compartir experiencias y 
+                emocionar a través de nuestras voces. Con una historia rica en 
+                presentaciones, seguimos creciendo y sumando voces a nuestra familia musical.
+            </p>
+            <p class="directora-text">Directora: Silvia M. Blanco</p>
+        </div>
+    </section>
+
+    <!-- 3. + CONCIERTOS -->
+    <section class="info-section conciertos-bg">
+        <div class="info-text-col">
+            <h2>+ Conciertos</h2>
+            <p>
+                Participamos de diversos conciertos en todo el país, llevando nuestra música 
+                a diferentes escenarios, teatros, iglesias y comunidades. Cada presentación 
+                es una oportunidad para conectar con el público y celebrar juntos el arte de cantar.
+            </p>
+            <a href="coro.html" class="btn-gala">Conocé Nuestras Voces</a>
+        </div>
+        <div class="info-logo-col" style="border-right: none; border-left: 1px solid #333; padding-right: 0; padding-left: 40px;">
+            <img src="img/logo_coral.png" alt="Coral en Concierto" style="opacity: 0.8;">
+        </div>
+    </section>
+
+    <!-- 4. BANNER -->
     <div class="announcement-bar">
         <div class="marquee-container">
             <div class="marquee-content">
-                <span>★ Bienvenidos a nuestro sitio del Coral 25 ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span>★ Bienvenidos a nuestro sitio del Coral 25 ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span>★ Bienvenidos a nuestro sitio del Coral 25 ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span>★ Bienvenidos a nuestro sitio del Coral 25 ★&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span>★ Bienvenidos a nuestro sitio del Coral 25 ★ www.bio.site/coral25 ★ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                 <span>★ Bienvenidos a nuestro sitio del Coral 25 ★ www.bio.site/coral25 ★ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                 <span>★ Bienvenidos a nuestro sitio del Coral 25 ★ www.bio.site/coral25 ★ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                 <span>★ Bienvenidos a nuestro sitio del Coral 25 ★ www.bio.site/coral25 ★ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </div>
         </div>
     </div>
 
-    <!-- Pie de Página -->
+    <!-- 5. PIE DE PÁGINA -->
     <footer class="site-footer">
-        <div class="footer-line"></div>
         <div class="footer-content">
             <p class="footer-text">
                 <img src="img/logo_coral.png" alt="Coral 25" class="footer-logo"> 
@@ -84,27 +133,82 @@
         </div>
     </footer>
 
-    <!-- JAVASCRIPT PARA EL MENÚ MÓVIL -->
+    <!-- JAVASCRIPT -->
     <script>
+        // ===== MENÚ (mismo mecanismo que las demás páginas, + overlay) =====
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('nav-links');
+        const overlay = document.getElementById('menu-overlay');
+
+        function closeMenu() {
+            navLinks.classList.remove('open');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('show');
+        }
 
         hamburger.addEventListener('click', () => {
-            // Alterna la clase para abrir/cerrar el menú
-            navLinks.classList.toggle('open');
-            // Alterna la clase para animar la hamburguesa a una "X"
-            hamburger.classList.toggle('active');
+            const isOpen = !navLinks.classList.contains('open');
+            navLinks.classList.toggle('open', isOpen);
+            hamburger.classList.toggle('active', isOpen);
+            overlay.classList.toggle('show', isOpen);
         });
 
-        // Opcional: Cerrar el menú al hacer clic en un enlace
+        // Tocar el fondo oscuro cierra el menú
+        overlay.addEventListener('click', closeMenu);
+
+        // Al hacer click en un link, el menú se cierra
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('open');
-                hamburger.classList.remove('active');
-            });
+            link.addEventListener('click', closeMenu);
         });
+
+        // ===== CARRUSEL =====
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dotsContainer = document.getElementById('carousel-dots');
+        const captionText = document.getElementById('caption-text');
+        let currentIndex = 0;
+        const slideInterval = 5000; 
+
+        // Los puntos se crean solos, uno por cada foto activa.
+        // Si hay una sola foto, no se muestran (no tienen sentido).
+        if (slides.length > 1) {
+            slides.forEach((_, i) => {
+                const dot = document.createElement('span');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', () => currentSlide(i));
+                dotsContainer.appendChild(dot);
+            });
+        } else {
+            dotsContainer.style.display = 'none';
+        }
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            slides[index].classList.add('active');
+            if (dots[index]) dots[index].classList.add('active');
+
+            captionText.textContent = slides[index].getAttribute('data-caption'); 
+
+            currentIndex = index;
+        }
+
+        function nextSlide() {
+            let nextIndex = (currentIndex + 1) % slides.length;
+            showSlide(nextIndex);
+        }
+
+        function currentSlide(index) {
+            showSlide(index);
+            clearInterval(slideTimer);
+            slideTimer = setInterval(nextSlide, slideInterval);
+        }
+
+        showSlide(0); 
+
+        let slideTimer = setInterval(nextSlide, slideInterval);
     </script>
 
 </body>
 </html>
-

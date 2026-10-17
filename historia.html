@@ -399,6 +399,145 @@
             }
         }
 
+        /* ============================================================
+           LÍNEA DE TIEMPO DE DIRECTORES (ERAS DE LA DIRECCIÓN)
+           ============================================================ */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .eras-intro {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            max-width: 640px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        .timeline-directores {
+            position: relative;
+            max-width: 660px;
+            margin: 0 auto;
+            text-align: left;
+            padding: 0.5rem 0;
+        }
+
+        /* Línea vertical dorada de la línea de tiempo */
+        .timeline-directores::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 12px;
+            bottom: 12px;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(212,175,55,0.55), rgba(212,175,55,0.10));
+        }
+
+        .era-item {
+            position: relative;
+            padding: 0 0 2.2rem 2.4rem;
+        }
+
+        .era-item:last-child {
+            padding-bottom: 0.5rem;
+        }
+
+        /* Punto (nodo) de cada era */
+        .era-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #0f0c14;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.10);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .era-item:hover::before {
+            box-shadow: 0 0 0 4px rgba(212,175,55,0.20), 0 0 14px rgba(212,175,55,0.35);
+        }
+
+        .era-item.era-actual::before {
+            background: var(--gold);
+            box-shadow: 0 0 0 4px rgba(212,175,55,0.22), 0 0 18px rgba(212,175,55,0.45);
+        }
+
+        .era-anios {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            background: rgba(212,175,55,0.08);
+            border: 1px solid rgba(212,175,55,0.25);
+            padding: 2px 10px;
+            border-radius: 999px;
+            margin-bottom: 0.5rem;
+        }
+
+        .era-nombre {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            color: var(--gold-light);
+            margin-bottom: 0.35rem;
+            line-height: 1.3;
+        }
+
+        .era-descripcion {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .era-badge-actual {
+            display: inline-block;
+            margin-left: 0.5rem;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #0f0c14;
+            background: var(--gold);
+            padding: 3px 9px;
+            border-radius: 999px;
+            vertical-align: middle;
+            position: relative;
+            top: -2px;
+        }
+
+        /* Nota al pie de la línea de tiempo */
+        .eras-nota {
+            margin-top: 2.5rem;
+            padding: 1rem 1.2rem;
+            background: rgba(212,175,55,0.05);
+            border-left: 2px solid rgba(212,175,55,0.4);
+            border-radius: 0 6px 6px 0;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .eras-nota a,
+        .era-descripcion a {
+            color: var(--gold-light);
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(212,175,55,0.5);
+            transition: color 0.2s ease;
+        }
+
+        .eras-nota a:hover,
+        .era-descripcion a:hover {
+            color: var(--gold);
+            border-bottom-color: var(--gold);
+        }
+
         /* Scroll offset para que el ancla no quede detrás del navbar fijo */
         [id] {
             scroll-margin-top: 90px;
@@ -450,6 +589,7 @@
                     <div class="toc-title">Secciones</div>
                     <ol>
                         <li><a href="#acerca">Acerca de Coral 25</a></li>
+                        <li><a href="#directores">Los Directores</a></li>
                         <li><a href="#trayectoria">Trayectoria y Hitos</a></li>
                         <li><a href="#escenarios">Escenarios Compartidos</a></li>
                         <li><a href="#exterior">En el Exterior</a></li>
@@ -471,7 +611,7 @@
                 <div class="glass-card" style="margin: 0 auto 3rem auto;" id="acerca">
                     <h2 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--gold-light); margin-bottom: 1.5rem; text-align: center;">Acerca de Coral 25</h2>
                     <p class="historia-texto">
-                        El Coral 25 fue creado en Octubre de 1956 a partir de un coro estudiantil, siendo su primera directora Irma Urteaga. A ella le sucedieron varios directores hasta su actual conductora, la profesora Silvia Blanco, quien asumió la dirección en 1989.
+                        En Octubre de 1956 se oficializa el nombre de Coro de la Escuela Normal Mixta y Colegio Nacional Anexo, bajo la dirección de Casilda López Camelo. A partir de este coro estudiantil fue creado el Coral 25. En 1958, ya el coro funcionaba a pleno, y asume la dirección la Sra. Irma Urteaga. A ella le sucedieron varios directores hasta la actual conductora, la profesora Silvia Blanco, quien asumió la dirección en 1989 y abrió la era más extensa de la historia del conjunto.
                     </p>
                     <p class="historia-texto" style="margin-top: 1rem;">
                         Hasta ese año, con alguna intermitencia, la agrupación actuó repetidamente en la zona y en la provincia de Buenos Aires, destacándose las presentaciones acompañando a Ariel Ramírez, Los Fronterizos, Zamba Quipildor, la Orquesta de Cámara de la Alianza Francesa y solistas del Teatro Colón.
@@ -479,6 +619,80 @@
                     <p class="historia-texto" style="margin-top: 1rem;">
                         A partir de 1989, el Coral 25 se ha desempeñado en forma ininterrumpida, revelando una forma de trabajo orientada permanentemente a la superación, al intercambio de experiencias y a una apertura general hacia todos los sectores de la comunidad, con un reconocimiento infinito hacia el público que los acompaña.
                     </p>
+                </div>
+
+                <!-- Los Directores: eras de la dirección -->
+                <div class="glass-card" style="margin: 0 auto 3rem auto;" id="directores">
+                    <h2 class="subtitulo-seccion">Los Directores</h2>
+                    <p class="eras-intro">
+                        La historia del Coral 25 puede narrarse a través de las eras de su dirección coral:
+                        nueve conducciones que, desde 1956, sostuvieron la batuta y el canto colectivo de la
+                        ciudad de 25 de Mayo. Cada época indica los años de actuación de quien estuvo al frente
+                        del conjunto.
+                    </p>
+
+                    <div class="timeline-directores">
+
+                        <div class="era-item">
+                            <span class="era-anios">1956 – 1958</span>
+                            <div class="era-nombre">Casilda López Camelo</div>
+                            <p class="era-descripcion">Primera directora. Bajo su conducción se oficializó en Octubre de 1956 el Coro de la Escuela Normal Mixta y Colegio Nacional Anexo, la semilla estudiantil de la que nacería el Coral 25.</p>
+                        </div>
+
+                        <div class="era-item">
+                            <span class="era-anios">1958 – 1966</span>
+                            <div class="era-nombre">Irma Urteaga</div>
+                            <p class="era-descripcion">Asumió en 1958, con el coro ya funcionando a pleno, y consolidó a la agrupación estudiantil durante casi una década.</p>
+                        </div>
+
+                        <div class="era-item">
+                            <span class="era-anios">1966 – 1973</span>
+                            <div class="era-nombre">Mary Decibe</div>
+                            <p class="era-descripcion">Condujo el coro entre 1966 y 1973.</p>
+                        </div>
+
+                        <div class="era-item">
+                            <span class="era-anios">1973 – 1978</span>
+                            <div class="era-nombre">Teresa Izaza</div>
+                            <p class="era-descripcion">Estuvo al frente del conjunto entre 1973 y 1978.</p>
+                        </div>
+
+                        <div class="era-item">
+                            <span class="era-anios">1978 – 1982</span>
+                            <div class="era-nombre">Amelia Guaraña</div>
+                            <p class="era-descripcion">Dirigió la agrupación entre 1978 y 1982.</p>
+                        </div>
+
+                        <div class="era-item">
+                            <span class="era-anios">1982 – 1984</span>
+                            <div class="era-nombre">Humberto López</div>
+                            <p class="era-descripcion">Su conducción se extendió de 1982 a 1984.</p>
+                        </div>
+
+                        <div class="era-item">
+                            <span class="era-anios">1984 – 1987</span>
+                            <div class="era-nombre">Daniel Riviere</div>
+                            <p class="era-descripcion">Condujo el coral de 1984 a 1987.</p>
+                        </div>
+
+                        <div class="era-item">
+                            <span class="era-anios">1987 – 1989</span>
+                            <div class="era-nombre">Daniel Córdoba</div>
+                            <p class="era-descripcion">Llevó la batuta entre 1987 y 1989, en los años previos al inicio de la era actual.</p>
+                        </div>
+
+                        <div class="era-item era-actual">
+                            <span class="era-anios">1989 – Presente</span>
+                            <div class="era-nombre">Silvia Blanco <span class="era-badge-actual">Directora Actual</span></div>
+                            <p class="era-descripcion">Al frente del Coral 25 desde 1989. Bajo su dirección la agrupación se desempeñó en forma ininterrumpida, con una propuesta orientada a la superación, el intercambio de experiencias y la apertura hacia todos los sectores de la comunidad. <a href="#directora">Conocé su trayectoria completa</a>.</p>
+                        </div>
+
+                    </div>
+
+                    <div class="eras-nota">
+                        La trayectoria documentada en las secciones siguientes — escenarios compartidos, giras,
+                        eventos y distinciones — corresponde en su mayor parte a la era del Coral 25 iniciada en 1989.
+                    </div>
                 </div>
 
                 <!-- La Trayectoria -->
@@ -738,6 +952,7 @@
             <div class="toc-title">Secciones</div>
             <ol>
                 <li><a href="#acerca">Acerca de Coral 25</a></li>
+                <li><a href="#directores">Los Directores</a></li>
                 <li><a href="#trayectoria">Trayectoria y Hitos</a></li>
                 <li><a href="#escenarios">Escenarios Compartidos</a></li>
                 <li><a href="#exterior">En el Exterior</a></li>
