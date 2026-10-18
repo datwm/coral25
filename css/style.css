@@ -25,7 +25,7 @@
     --text-main: #ffffff;
     --text-muted: #a0a0a0;
     --glass-border: rgba(255, 255, 255, 0.1);
-    --sidebar-width: 240px;
+    --sidebar-width: 200px;
 
     /* Fuentes nativas del sistema */
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
