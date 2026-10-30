@@ -3,199 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multimedia - Coral 25</title>
-    <!-- Se añade ?v=2 para forzar la actualización de la caché del navegador -->
-    <link rel="stylesheet" href="css/style.css?v=2">
-    
-    <!-- Estilos específicos para la Galería -->
+
+    <!-- Evita que Dark Reader modifique los colores/fondos de la página -->
+    <meta name="darkreader-lock">
+
+    <title>Galería - Coral 25</title>
+    <link rel="stylesheet" href="css/style.css?v=13">
+
+    <!-- ============================================================
+         GALERÍA SIMPLE (v1)
+         ------------------------------------------------------------
+         MANTENIMIENTO (todo está acá, no hay que tocar nada más):
+
+         1) CARRUSEL (arriba): imágenes APAISADAS de escenarios.
+            Cambiá la ruta en  style="background-image: url(...)"
+            y el texto de  data-caption  de cada slide.
+            Para sumar un slide, copiá una línea <div class="carousel-slide">.
+            Los puntos se generan solos.
+
+         2) GRILLA: una foto por bloque .foto-item.
+            Para agregar: copiá un bloque completo y cambiá el src.
+            Para sacar: borrá el bloque.
+            La etiqueta <span class="etiqueta-foto"> es el AÑO · LUGAR.
+
+         3) Las fotos van en la carpeta  img/galeria/
+            (podés usar .jpg o .webp: solo cambiá la extensión del src).
+            Mientras falta un archivo, el bloque muestra un marcador
+            con el nombre esperado. Al copiar la foto, aparece sola.
+         ============================================================ -->
     <style>
-        /* --- TÍTULOS DE SECCIÓN --- */
-        .section-title {
-            font-size: 1.3rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--text-main);
+        /* Misma tipografía que la portada (index) */
+        body {
+            font-family: Georgia, "Times New Roman", Times, serif;
+        }
+
+        /* Carrusel un poco más bajito que el de la portada,
+           para que la grilla asome abajo */
+        .hero-carousel {
+            height: 76vh;
+            height: 76svh;
+        }
+        @media (max-width: 768px) {
+            .hero-carousel {
+                height: 58vh;
+                height: 58svh;
+            }
+        }
+
+        /* ===== Intro ===== */
+        .galeria-intro {
             text-align: center;
-            margin: 4rem 0 2rem 0;
-            font-weight: 300;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 2px;
-            background: var(--gold);
-            margin: 0.8rem auto 0;
-        }
-
-        /* --- VIDEOS (YouTube Responsive) --- */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .video-card {
-            background: var(--bg-card);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
-        }
-
-        .video-wrapper {
-            position: relative;
-            padding-top: 56.25%; /* Proporción 16:9 */
-            height: 0;
-            overflow: hidden;
-        }
-
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .video-caption {
-            padding: 1rem;
-            text-align: center;
-            font-size: 0.9rem;
             color: var(--text-muted);
+            max-width: 680px;
+            margin: 0 auto 2.5rem auto;
+            line-height: 1.75;
+            font-size: 1rem;
         }
 
-        /* --- AUDIOS (Reproductor HTML5) --- */
-        .audio-grid {
+        /* ===== Grilla simple (una foto por bloque) ===== */
+        .galeria-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 14px;
         }
 
-        .audio-card {
-            background: var(--bg-card);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .audio-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        .audio-info h4 {
-            color: var(--gold);
-            font-family: var(--font-serif); /* Fuente nativa reemplazada */
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .audio-info p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-        }
-
-        /* Estilizar el reproductor de audio nativo para modo oscuro */
-        audio {
-            width: 100%;
-            height: 40px;
-            border-radius: 20px;
-            outline: none;
-            filter: sepia(20%) hue-rotate(10deg) saturate(200%) brightness(90%); /* Tinte dorado sutil */
-        }
-
-        /* --- FOTOS (Grid de Imágenes) --- */
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .photo-item {
+        .foto-item {
             position: relative;
-            border-radius: 10px;
+            aspect-ratio: 3 / 2;
             overflow: hidden;
-            cursor: pointer;
-            aspect-ratio: 4/3; /* Mantiene proporción uniforme */
-            background-color: #151515; /* Color de carga */
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            background: #141414;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .photo-item img {
+        .foto-item.con-imagen { cursor: zoom-in; }
+
+        .foto-item.con-imagen:hover {
+            border-color: rgba(212, 175, 55, 0.45);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+        }
+
+        .foto-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease, filter 0.5s ease;
-            filter: grayscale(30%);
+            display: block;
+            transition: transform 0.45s ease;
         }
 
-        .photo-item:hover img {
-            transform: scale(1.08);
-            filter: grayscale(0%);
-        }
+        .foto-item.con-imagen:hover img { transform: scale(1.06); }
 
-        /* Overlay con texto al pasar el mouse */
-        .photo-overlay {
+        /* Etiqueta AÑO · LUGAR (mismo estilo de píldora que el caption del carrusel) */
+        .etiqueta-foto {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 1.5rem 1rem 1rem;
-            background: linear-gradient(to top, rgba(10, 10, 10, 0.9), transparent);
-            color: white;
-            transform: translateY(100%);
-            transition: transform 0.4s ease;
-        }
-
-        .photo-item:hover .photo-overlay {
-            transform: translateY(0);
-        }
-
-        .photo-overlay h4 {
-            font-size: 1rem;
-            font-family: var(--font-serif); /* Fuente nativa reemplazada */
-            margin-bottom: 0.2rem;
-        }
-
-        .photo-overlay p {
+            left: 10px;
+            bottom: 10px;
+            max-width: calc(100% - 20px);
+            background: rgba(0, 0, 0, 0.65);
+            border: 1px solid #333;
+            border-radius: 20px;
+            padding: 5px 14px;
             font-size: 0.75rem;
-            color: var(--text-muted);
+            letter-spacing: 1px;
+            color: var(--gold-light);
+            z-index: 2;
         }
 
-        /* Responsive para móviles */
+        .foto-item.con-imagen:hover .etiqueta-foto {
+            border-color: var(--gold-soft);
+        }
+
+        /* ===== Marcador de foto faltante ===== */
+        .foto-item.sin-imagen {
+            background:
+                repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02) 0 14px, transparent 14px 28px),
+                #121212;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .foto-item.sin-imagen img,
+        .foto-item.sin-imagen .etiqueta-foto { display: none; }
+
+        .foto-item.sin-imagen::before {
+            content: '📷';
+            font-size: 1.8rem;
+            opacity: 0.45;
+        }
+
+        .foto-item.sin-imagen::after {
+            content: attr(data-archivo);
+            position: absolute;
+            left: 8px;
+            right: 8px;
+            bottom: 10px;
+            text-align: center;
+            font-size: 0.6rem;
+            letter-spacing: 0.5px;
+            color: rgba(255, 255, 255, 0.35);
+            word-break: break-all;
+            line-height: 1.3;
+        }
+
+        /* ===== LIGHTBOX ===== */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(0, 0, 0, 0.94);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 1rem 2rem;
+        }
+
+        .lightbox.abierta {
+            display: flex;
+            animation: lbFade 0.25s ease;
+        }
+
+        @keyframes lbFade {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .lb-img {
+            max-width: min(92vw, 1100px);
+            max-height: 70vh;
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            background: #111;
+            object-fit: contain;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.85), 0 0 46px rgba(212, 175, 55, 0.07);
+        }
+
+        .lb-img.lb-anim { animation: lbFoto 0.3s ease; }
+
+        @keyframes lbFoto {
+            from { opacity: 0; transform: scale(0.97); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        .lb-caption {
+            margin-top: 1rem;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #333;
+            border-radius: 20px;
+            padding: 7px 18px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            color: var(--gold-light);
+            text-align: center;
+            max-width: 90vw;
+        }
+
+        .lb-caption:empty { display: none; }
+
+        .lb-cerrar,
+        .lb-flecha {
+            position: absolute;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid var(--glass-border);
+            color: #ccc;
+            font-family: inherit;
+            font-size: 1.1rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .lb-cerrar { top: 16px; right: 20px; }
+        .lb-cerrar:hover { color: var(--gold); border-color: var(--gold); transform: rotate(90deg); }
+
+        .lb-flecha { top: 50%; transform: translateY(-50%); font-size: 1.6rem; padding-bottom: 3px; user-select: none; }
+        .lb-prev { left: 18px; }
+        .lb-next { right: 18px; }
+        .lb-flecha:hover { color: var(--gold); border-color: var(--gold); background: rgba(212, 175, 55, 0.08); }
+
         @media (max-width: 600px) {
-            .video-grid, .audio-grid, .photo-grid {
-                grid-template-columns: 1fr;
+            .galeria-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
+            .etiqueta-foto { font-size: 0.62rem; padding: 4px 10px; }
+            .lb-flecha { width: 40px; height: 40px; font-size: 1.3rem; }
+            .lb-img { max-height: 58vh; }
+        }
+
+        /* Accesibilidad: menos movimiento */
+        @media (prefers-reduced-motion: reduce) {
+            .lightbox.abierta, .lb-img.lb-anim { animation: none; }
+            .foto-item img, .lb-cerrar, .lb-flecha { transition: none; }
         }
     </style>
 </head>
 <body>
-    
-    <!-- Fondo de Gala -->
+
+    <!-- Fondo de Gala (igual que las demás páginas internas) -->
     <div class="gala-bg" style="background-image: url('img/fondo_coro.jpg');"></div>
 
-    <!-- Navegación -->
+    <!-- Fondo oscuro al abrir el menú en móvil (tocar afuera cierra) -->
+    <div class="menu-overlay" id="menu-overlay"></div>
+
+    <!-- Menú lateral izquierdo (en móvil: barra superior + cajón deslizable) -->
     <nav class="navbar">
-        <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+        <a href="index.html" class="logo">
             <img src="img/logo_coral.png" alt="Logo" class="logo-img">
             <span>Coral 25</span>
         </a>
 
-        <!-- BOTÓN HAMBURGUESA -->
         <button class="hamburger" id="hamburger" aria-label="Abrir menú">
             <span></span>
             <span></span>
@@ -204,165 +271,284 @@
 
         <ul class="nav-links" id="nav-links">
             <li><a href="index.html">Inicio</a></li>
-            <li><a href="coro.html">El Coro</a></li>
+            <li><a href="coro.html">El coro</a></li>
             <li><a href="historia.html">Historia</a></li>
+            <li><a href="galeria.html" class="active">Galería</a></li>
             <li><a href="repertorio.html">Repertorio</a></li>
-            <li><a href="multimedia.html" class="active">Multimedia</a></li>
+            <li><a href="multimedia.html">Multimedia</a></li>
             <li><a href="bitacora.html">Bitácora</a></li>
             <li><a href="prensa.html">Prensa</a></li>
             <li><a href="contacto.html">Contacto</a></li>
         </ul>
     </nav>
 
-    <!-- Contenido de la Página -->
+
+
+
+    <!-- ============================================================
+         1) CARRUSEL DE ESCENARIOS (imágenes apaisadas)
+            Cambiá la ruta de cada slide y su data-caption.
+         ============================================================ -->
+    <section class="hero-carousel">
+        <div class="carousel-slide active" style="background-image: url('galeria_img/2013_Gualeguay_Entre Rios.webp');" data-caption="2013_Gualeguay_Entre Rios"></div>
+        <div class="carousel-slide" style="background-image: url('galeria_img/2015_Criciuma_Brasil.webp');" data-caption="2015_Criciuma_Brasil"></div>
+        <div class="carousel-slide" style="background-image: url('galeria_img/2016_LaPaz_Uruguay.webp');" data-caption="2016_La Paz_Uruguay"></div>
+        <div class="carousel-slide" style="background-image: url('galeria_img/2018_Grabación_Teatro Español_25 de Mayo.webp');" data-caption="2018_Grabación_Teatro Español_25 de Mayo"></div>
+
+        <!-- Etiqueta/Caption inferior (no tocar, es automático) -->
+        <div class="hero-caption">
+            <span id="caption-text"></span>
+        </div>
+
+        <!-- Los puntos se generan solos según cuántos slides haya -->
+        <div class="carousel-dots" id="carousel-dots"></div>
+    </section>
+
+    <!-- ============================================================
+         2) GRILLA DE FOTOS SIMPLE
+            Una foto por bloque .foto-item · la etiqueta es AÑO · LUGAR
+         ============================================================ -->
     <div class="page-content">
-        
-        <h1 class="page-title">Galería Multimedia</h1>
 
-        <!-- ============================================ -->
-        <!-- SECCIÓN: AUDIOS (AHORA PRIMERO) -->
-        <!-- ============================================ -->
-        <h2 class="section-title">Nuestro Sonido</h2>
+        <h1 class="page-title">Galería</h1>
 
-        <div class="audio-grid">
-            <!-- Audio 1 -->
-            <div class="audio-card">
-                <div class="audio-info">
-                    <h4>Nombre de la Canción 1</h4>
-                    <p>Autor / Arreglo: Nombre del Arreglista</p>
-                </div>
-                <!-- Reemplaza 'mp3/cancion1.mp3' con la ruta real de tu archivo local -->
-                <audio controls>
-                    <source src="mp3/cancion1.mp3" type="audio/mpeg">
-                    Tu navegador no soporta el elemento de audio.
-                </audio>
+        <p class="galeria-intro">
+            Los escenarios y momentos del Coral 25, en la ciudad de 25 de Mayo,
+            el resto de Argentina y el exterior.
+        </p>
+
+        <div class="galeria-grid">
+
+            <!-- FOTO 1 · Para agregar otra, copiá este bloque completo -->
+            <div class="foto-item">
+                <img src="galeria_img/2013_Gualeguay_Entre Rios.webp" alt=" " loading="lazy" decoding="async">
+                <span class="etiqueta-foto">2013_Gualeguay_Entre Rios</span>
             </div>
 
-            <!-- Audio 2 -->
-            <div class="audio-card">
-                <div class="audio-info">
-                    <h4>Nombre de la Canción 2</h4>
-                    <p>Autor / Arreglo: Nombre del Arreglista</p>
-                </div>
-                <audio controls>
-                    <source src="mp3/cancion2.mp3" type="audio/mpeg">
-                    Tu navegador no soporta el elemento de audio.
-                </audio>
+            <!-- FOTO 2 -->
+            <div class="foto-item">
+                <img src="galeria_img/2015_Criciuma_Brasil.webp" alt=" " loading="lazy" decoding="async">
+                <span class="etiqueta-foto">2015_Criciuma_Brasil</span>
             </div>
 
-            <!-- Audio 3 -->
-            <div class="audio-card">
-                <div class="audio-info">
-                    <h4>Nombre de la Canción 3</h4>
-                    <p>Autor / Arreglo: Nombre del Arreglista</p>
-                </div>
-                <audio controls>
-                    <source src="mp3/cancion3.mp3" type="audio/mpeg">
-                    Tu navegador no soporta el elemento de audio.
-                </audio>
-            </div>
-        </div>
-
-        <!-- ============================================ -->
-        <!-- SECCIÓN: FOTOS (EN EL MEDIO) -->
-        <!-- ============================================ -->
-        <h2 class="section-title">Momentos</h2>
-
-        <div class="photo-grid">
-            <!-- Foto 1 -->
-            <div class="photo-item">
-                <!-- Reemplaza src con la ruta de tu imagen real -->
-                <img src="img/galeria/foto1.jpg" alt="Ensayo del Coral 25">
-                <div class="photo-overlay">
-                    <h4>Ensayos</h4>
-                    <p>Preparando el repertorio 2024</p>
-                </div>
+            <!-- FOTO 3 -->
+            <div class="foto-item">
+                <img src="galeria_img/2016_LaPaz_Uruguay.webp" alt=" " loading="lazy" decoding="async">
+                <span class="etiqueta-foto">2016_La Paz_Uruguay</span>
             </div>
 
-            <!-- Foto 2 -->
-            <div class="photo-item">
-                <img src="img/galeria/foto2.jpg" alt="Concierto en el Teatro">
-                <div class="photo-overlay">
-                    <h4>Concierto Anual</h4>
-                    <p>Teatro Municipal, 25 de Mayo</p>
-                </div>
+
+            <!-- FOTO 4 -->
+            <div class="foto-item">
+                <img src="galeria_img/2018_Grabación_Teatro Español_25 de Mayo.webp" alt=" " loading="lazy" decoding="async">
+                <span class="etiqueta-foto">2018_Grabación_Teatro Español_25 de Mayo</span>
             </div>
 
-            <!-- Foto 3 -->
-            <div class="photo-item">
-                <img src="img/galeria/foto3.jpg" alt="Viaje a Córdoba">
-                <div class="photo-overlay">
-                    <h4>Giras</h4>
-                    <p>Intercoraliada en Córdoba</p>
-                </div>
+            <!-- FOTO 5 -->
+            <div class="foto-item">
+                <img src="galeria_img/2019_Zapatoca_Colombia.webp" alt=" " loading="lazy" decoding="async">
+                <span class="etiqueta-foto">2019 Zapatoca - Colombia</span>
             </div>
 
-            <!-- Foto 4 -->
-            <div class="photo-item">
-                <img src="img/galeria/foto4.jpg" alt="Coral 25 en el escenario">
-                <div class="photo-overlay">
-                    <h4>Escenario</h4>
-                    <p>Noche de Gala Patria</p>
-                </div>
-            </div>
-        </div>
+ 
 
-        <!-- ============================================ -->
-        <!-- SECCIÓN: VIDEOS (AHORA AL FINAL) -->
-        <!-- ============================================ -->
-        <h2 class="section-title">En Escena</h2>
-        
-        <div class="video-grid">
-            <!-- Video 1 -->
-            <div class="video-card">
-                <div class="video-wrapper">
-                    <!-- Reemplaza el src con la URL real de YouTube (usar formato embed: https://www.youtube.com/embed/ID_VIDEO) -->
-                    <iframe src="https://www.youtube.com/embed/ajhY8zjAW5w" allowfullscreen></iframe>
-                </div>
-                <div class="video-caption">Te quiero (Benedetti y Favero) - "Coral 25" Dir. S. Blanco (Ensayo)</div>
-            </div>
 
-            <!-- Video 2 -->
-            <div class="video-card">
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/XrIvLaz4EAQ?si=bo2iLERy2Dof5tnE" allowfullscreen></iframe>
-                </div>
-                <div class="video-caption">MASA CORAL A MI MANERA - Dir. Silvia Blanco</div>
-            </div>
-        </div>
 
+        </div><!-- fin .galeria-grid -->
+    </div><!-- fin .page-content -->
+
+
+
+    <!-- ===== LIGHTBOX (visor a pantalla completa) ===== -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de fotos">
+        <button class="lb-cerrar" id="lbCerrar" aria-label="Cerrar visor">✕</button>
+        <button class="lb-flecha lb-prev" id="lbPrev" aria-label="Foto anterior">‹</button>
+        <img class="lb-img" id="lbImg" src="" alt="Foto ampliada del Coral 25">
+        <button class="lb-flecha lb-next" id="lbNext" aria-label="Foto siguiente">›</button>
+        <span class="lb-caption" id="lbCaption"></span>
     </div>
+
+
 
     <!-- Pie de Página -->
     <footer class="site-footer">
         <div class="footer-line"></div>
         <div class="footer-content">
             <p class="footer-text">
-                <img src="img/logo_coral.png" alt="Coral 25" class="footer-logo"> 
-                ©2026 Coral 25 - Ciudad de 25 de Mayo, Buenos Aires, Argentina.
+                <img src="img/logo_coral.png" alt="Coral 25" class="footer-logo">
+                ©2026 - Coral 25 - Todos los derechos reservados - 25 de Mayo, Buenos Aires, Argentina.
             </p>
             <p class="footer-firma">
-                <a href="https://scanlabb.github.io" target="_blank">🌐 Scanlabb Diseño Web</a>
+                <a href="https://mariomolinacc.github.io" target="_blank">🌐 Diseño Web x Mario Molina</a>
             </p>
         </div>
     </footer>
 
-    <!-- JAVASCRIPT PARA EL MENÚ MÓVIL -->
+
+
+    <!-- JAVASCRIPT -->
     <script>
+        // ===== MENÚ (mismo mecanismo que la portada, + overlay) =====
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('nav-links');
+        const overlay = document.getElementById('menu-overlay');
+
+        function closeMenu() {
+            navLinks.classList.remove('open');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('show');
+        }
 
         hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-            hamburger.classList.toggle('active');
+            const isOpen = !navLinks.classList.contains('open');
+            navLinks.classList.toggle('open', isOpen);
+            hamburger.classList.toggle('active', isOpen);
+            overlay.classList.toggle('show', isOpen);
         });
 
-        // Cerrar el menú al hacer clic en un enlace
+        overlay.addEventListener('click', closeMenu);
+
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('open');
-                hamburger.classList.remove('active');
+            link.addEventListener('click', closeMenu);
+        });
+
+        // ===== CARRUSEL (idéntico al de la portada) =====
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dotsContainer = document.getElementById('carousel-dots');
+        const captionText = document.getElementById('caption-text');
+        let currentIndex = 0;
+        const slideInterval = 5000;
+
+        if (slides.length > 1) {
+            slides.forEach((_, i) => {
+                const dot = document.createElement('span');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', () => currentSlide(i));
+                dotsContainer.appendChild(dot);
             });
+        } else {
+            dotsContainer.style.display = 'none';
+        }
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            slides[index].classList.add('active');
+            if (dots[index]) dots[index].classList.add('active');
+
+            captionText.textContent = slides[index].getAttribute('data-caption');
+            currentIndex = index;
+        }
+
+        function nextSlide() {
+            let nextIndex = (currentIndex + 1) % slides.length;
+            showSlide(nextIndex);
+        }
+
+        function currentSlide(index) {
+            showSlide(index);
+            clearInterval(slideTimer);
+            slideTimer = setInterval(nextSlide, slideInterval);
+        }
+
+        showSlide(0);
+
+        let slideTimer = setInterval(nextSlide, slideInterval);
+
+        // ===== DETECCIÓN AUTOMÁTICA DE FOTOS =====
+        // Si el archivo existe se muestra; si falta, el bloque muestra
+        // el marcador con el nombre esperado. No hay que tocar nada.
+        document.querySelectorAll('.foto-item').forEach(item => {
+            const img = item.querySelector('img');
+            item.dataset.archivo = img.getAttribute('src');
+
+            const marcarCargada = () => {
+                item.classList.remove('sin-imagen');
+                item.classList.add('con-imagen');
+            };
+
+            const marcarFaltante = () => {
+                item.classList.add('sin-imagen');
+                item.classList.remove('con-imagen');
+            };
+
+            if (img.complete && img.naturalWidth > 0) {
+                marcarCargada();
+            } else {
+                img.addEventListener('load', marcarCargada);
+                img.addEventListener('error', marcarFaltante);
+                if (img.complete && img.naturalWidth === 0) marcarFaltante();
+            }
+        });
+
+        // ===== LIGHTBOX =====
+        // Solo abren las fotos reales (los marcadores no abren el visor).
+        const lightbox  = document.getElementById('lightbox');
+        const lbImg     = document.getElementById('lbImg');
+        const lbCaption = document.getElementById('lbCaption');
+
+        let lbLista = [];
+        let lbIndice = 0;
+
+        function mostrarFoto() {
+            const item = lbLista[lbIndice];
+            const img = item.querySelector('img');
+
+            lbImg.src = img.src;
+            lbImg.alt = img.alt;
+            lbCaption.textContent = item.querySelector('.etiqueta-foto').textContent;
+
+            // Reinicia la animación de entrada
+            lbImg.classList.remove('lb-anim');
+            void lbImg.offsetWidth;
+            lbImg.classList.add('lb-anim');
+        }
+
+        function abrirLightbox(item) {
+            lbLista = [...document.querySelectorAll('.foto-item.con-imagen')];
+            lbIndice = lbLista.indexOf(item);
+            if (lbIndice < 0) return;
+
+            mostrarFoto();
+            lightbox.classList.add('abierta');
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarLightbox() {
+            lightbox.classList.remove('abierta');
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';
+        }
+
+        function pasoLightbox(dir) {
+            lbIndice = (lbIndice + dir + lbLista.length) % lbLista.length;
+            mostrarFoto();
+        }
+
+        document.querySelectorAll('.foto-item').forEach(item => {
+            item.addEventListener('click', () => {
+                if (item.classList.contains('con-imagen')) abrirLightbox(item);
+            });
+        });
+
+        document.getElementById('lbPrev').addEventListener('click', () => pasoLightbox(-1));
+        document.getElementById('lbNext').addEventListener('click', () => pasoLightbox(1));
+        document.getElementById('lbCerrar').addEventListener('click', cerrarLightbox);
+
+        // Cerrar al hacer clic fuera de la foto
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) cerrarLightbox();
+        });
+
+        // Teclado: Escape cierra, flechas navegan
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('abierta')) return;
+            if (e.key === 'Escape') cerrarLightbox();
+            if (e.key === 'ArrowLeft') pasoLightbox(-1);
+            if (e.key === 'ArrowRight') pasoLightbox(1);
         });
     </script>
 
