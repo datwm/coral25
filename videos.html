@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SOLUCIÓN DEFINITIVA: Evita que Dark Reader modifique los colores/fondos de la página -->
+    <meta name="darkreader-lock">
+
+    <title>Multimedia - Coral 25</title>
+    <!-- Se añade ?v=2 para forzar la actualización de la caché del navegador -->
+    <link rel="stylesheet" href="css/style.css?v=2">
+
+    <!-- Estilos específicos para la Galería -->
+    <style>
+        /* --- TÍTULOS DE SECCIÓN --- */
+        .section-title {
+            font-size: 1.3rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            text-align: center;
+            margin: 4rem 0 2rem 0;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+            margin: 0.8rem auto 0;
+        }
+
+        /* --- VIDEOS (formato tarjeta idéntico para YouTube y Vimeo) --- */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Exactamente 2 columnas en escritorio */
+            gap: 2rem;
+        }
+
+        .video-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-top: 56.25%; /* Proporción 16:9 -> video APAISADO */
+            height: 0;
+            overflow: hidden;
+            background: #000;    /* Bordes negros prolijos si el video original no es 16:9 */
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-caption {
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* --- MINIATURA PROPIA para el video de Vimeo 2014 ---
+           Mientras Vimeo no muestre miniatura, se ve una foto nuestra
+           con botón de play (estilo YouTube). Al hacer clic arranca
+           el video y la miniatura se desvanece. */
+        .video-facade {
+            cursor: pointer;
+        }
+
+        .facade-thumb {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 3;
+        }
+
+        /* Si la imagen no existe, se oculta y queda la tarjeta negra con el título */
+        .facade-thumb.facade-hidden {
+            display: none;
+        }
+
+        .facade-text {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 2.5rem 1rem 0.8rem;
+            text-align: center;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+            z-index: 4;
+        }
+
+        .facade-title {
+            display: block;
+            font-family: var(--font-serif);
+            color: #ffffff;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .facade-sub {
+            display: block;
+            font-size: 0.75rem;
+            color: #bbbbbb;
+            margin-top: 0.2rem;
+        }
+
+        .facade-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 68px;
+            height: 48px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(212, 175, 55, 0.92); /* dorado del sitio */
+            cursor: pointer;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .video-facade:hover .facade-play {
+            transform: translate(-50%, -50%) scale(1.08);
+            background: #d4af37;
+        }
+
+        .facade-play::after {
+            content: '';
+            border-style: solid;
+            border-width: 10px 0 10px 18px;
+            border-color: transparent transparent transparent #151515;
+        }
+
+        /* Al hacer clic: la miniatura se desvanece y queda el video */
+        .facade-playing .facade-thumb,
+        .facade-playing .facade-text,
+        .facade-playing .facade-play {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+
+        /* --- AUDIOS (Reproductor HTML5) --- */
+        .audio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .audio-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .audio-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .audio-info h4 {
+            color: var(--gold);
+            font-family: var(--font-serif); /* Fuente nativa reemplazada */
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .audio-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* Estilizar el reproductor de audio nativo para modo oscuro */
+        audio {
+            width: 100%;
+            height: 40px;
+            border-radius: 20px;
+            outline: none;
+            filter: sepia(20%) hue-rotate(10deg) saturate(200%) brightness(90%); /* Tinte dorado sutil */
+        }
+
+        /* --- FOTOS (Grid de Imágenes) --- */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 4/3; /* Mantiene proporción uniforme */
+            background-color: #151515; /* Color de carga */
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease, filter 0.5s ease;
+            filter: grayscale(30%);
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.08);
+            filter: grayscale(0%);
+        }
+
+        /* Overlay con texto al pasar el mouse */
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 1rem 1rem;
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.9), transparent);
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .photo-item:hover .photo-overlay {
+            transform: translateY(0);
+        }
+
+        .photo-overlay h4 {
+            font-size: 1rem;
+            font-family: var(--font-serif); /* Fuente nativa reemplazada */
+            margin-bottom: 0.2rem;
+        }
+
+        .photo-overlay p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive para móviles */
+        @media (max-width: 600px) {
+            .video-grid, .audio-grid, .photo-grid {
+                grid-template-columns: 1fr; /* Los videos se apilan en una sola columna */
+            }
+        }
+
+        /* ========================================================== */
+        /* TVs Y PANTALLAS GIGANTES (desde 1700px de ancho):          */
+        /* el video queda LIMITADO a 800px como máximo, centrado,     */
+        /* sin estirarse a pantalla completa.                         */
+        /* Ajustá el 800px si querés otro tope.                       */
+        /* ========================================================== */
+        @media (min-width: 1700px) {
+            .video-grid {
+                grid-template-columns: repeat(2, minmax(0, 800px)); /* Tope: 800px por video */
+                justify-content: center;                            /* Centrados en la pantalla */
+                gap: 2.5rem;
+            }
+            /* Si preferís UN solo video por fila en la TV, reemplazá la línea de arriba por:
+               grid-template-columns: minmax(0, 800px); */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fondo de Gala -->
+    <div class="gala-bg" style="background-image: url('img/fondo_coro.jpg');"></div>
+
+    <!-- Navegación -->
+    <nav class="navbar">
+        <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+            <img src="img/logo_coral.png" alt="Logo" class="logo-img">
+            <span>Coral 25</span>
+        </a>
+
+        <!-- BOTÓN HAMBURGUESA -->
+        <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="coro.html">EL coro</a></li>
+            <li><a href="historia.html">Historia</a></li>
+            <li><a href="galeria.html">Galeria</a></li>
+            <li><a href="repertorio.html">Repertorio</a></li>
+            <li><a href="videos.html" class="active">Videos</a></li>
+            <li><a href="bitacora.html">Bitácora</a></li>
+            <li><a href="prensa.html">Prensa</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+            <li><a href="  ">··</a></li>
+            <li><a href="  "> Versión v0.01</a></li>           
+        </ul>
+    </nav>
+
+    <!-- Contenido de la Página -->
+    <div class="page-content">
+
+        <h1 class="page-title">VIDEOS CORAL 25</h1>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN: AUDIOS (desactivada por ahora)      -->
+        <!-- Para activarla: quitar el marcado de comentario que envuelve al bloque -->
+        <!-- ============================================ -->
+        <!--
+        <h2 class="section-title">Nuestro Sonido</h2>
+        <div class="audio-grid">
+            <div class="audio-card">
+                <div class="audio-info">
+                    <h4>Nombre de la Canción 1</h4>
+                    <p>Autor / Arreglo: Nombre del Arreglista</p>
+                </div>
+                <audio controls>
+                    <source src="mp3/cancion1.mp3" type="audio/mpeg">
+                    Tu navegador no soporta el elemento de audio.
+                </audio>
+            </div>
+            <div class="audio-card">
+                <div class="audio-info">
+                    <h4>Nombre de la Canción 2</h4>
+                    <p>Autor / Arreglo: Nombre del Arreglista</p>
+                </div>
+                <audio controls>
+                    <source src="mp3/cancion2.mp3" type="audio/mpeg">
+                    Tu navegador no soporta el elemento de audio.
+                </audio>
+            </div>
+        </div>
+        -->
+
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN: FOTOS (desactivada por ahora)       -->
+        <!-- ============================================ -->
+        <!--
+        <h2 class="section-title">Momentos</h2>
+        <div class="photo-grid">
+            <div class="photo-item">
+                <img src="img/galeria/foto1.jpg" alt="Ensayo del Coral 25">
+                <div class="photo-overlay">
+                    <h4>Ensayos</h4>
+                    <p>Preparando el repertorio 2024</p>
+                </div>
+            </div>
+            <div class="photo-item">
+                <img src="img/galeria/foto2.jpg" alt="Concierto en el Teatro">
+                <div class="photo-overlay">
+                    <h4>Concierto Anual</h4>
+                    <p>Teatro Municipal, 25 de Mayo</p>
+                </div>
+            </div>
+        </div>
+        -->
+
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN: FOTOS (desactivada por ahora)       -->
+        <!-- ============================================ -->
+        <!--
+        <h2 class="section-title">Momentos</h2>
+        <div class="photo-grid">
+            <div class="photo-item">
+                <img src="img/galeria/foto1.jpg" alt="Ensayo del Coral 25">
+                <div class="photo-overlay">
+                    <h4>Ensayos</h4>
+                    <p>Preparando el repertorio 2024</p>
+                </div>
+            </div>
+            <div class="photo-item">
+                <img src="img/galeria/foto2.jpg" alt="Concierto en el Teatro">
+                <div class="photo-overlay">
+                    <h4>Concierto Anual</h4>
+                    <p>Teatro Municipal, 25 de Mayo</p>
+                </div>
+            </div>
+        </div>
+        -->
+
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN: RESEÑA HISTÓRICA                    -->
+        <!-- Contenedor GRID: 2 columnas en escritorio,   -->
+        <!-- 1 columna (apilados) en móvil                -->
+        <!-- ============================================ -->
+        <h2 class="section-title">Reseña histórica</h2>
+
+        <div class="video-grid">
+
+            <!-- Video 1 - Vimeo: Coral25_2014 (miniatura propia estilo YouTube: clic = reproduce) -->
+            <div class="video-card">
+                <div class="video-wrapper video-facade">
+                    <!-- Miniatura: guardá una foto del concierto 2014 como img/miniatura_coral_2014.jpg -->
+                    <img src="img/miniatura_coral_2014.jpg" alt="Coral 25 - Concierto 2014" class="facade-thumb" loading="lazy"
+                        onerror="this.classList.add('facade-hidden')">
+                    <div class="facade-text">
+                        <span class="facade-title">Coral 25 - Reseña Histórica hasta el año 2014.</span>
+                        <span class="facade-sub">2014 DVD - 25 Años Juntos 1989 - 2014</span>
+                    </div>
+                    <button type="button" class="facade-play" aria-label="Reproducir video"></button>
+                    <!-- El video recién se carga al hacer clic (la página gana velocidad) -->
+                    <iframe
+                        data-src="https://player.vimeo.com/video/1243410779?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;title=1&amp;byline=0&amp;portrait=0&amp;color=d4af37"
+                        frameborder="0"
+                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen
+                        title="Coral25_2014">
+                    </iframe>
+                </div>
+                <!-- Editá este texto con el título exacto del video -->
+                <div class="video-caption">2014 - RESEÑA HISTÓRICA - CORAL 25 - Dir. Silvia Blanco</div>
+            </div>
+
+
+            <!-- Video 2 - YouTube -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/D9rokYeeWyQ?si=X7TnfpFYV3x-6jWF"
+                        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+                        encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">2026 - EL CORAL 25 CUMPLE 70 AÑOS! - SILVIA BLANCO - DIRECTORA DEL CORAL 25</div>
+            </div>
+
+        </div>
+        <!-- /video-grid -->
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN: EN ESCENA                           -->
+        <!-- Contenedor GRID: 2 columnas en escritorio,   -->
+        <!-- 1 columna (apilados) en móvil                -->
+        <!-- ============================================ -->
+        <h2 class="section-title">En Escena</h2>
+
+        <div class="video-grid">
+
+            <!-- Video 1 -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/qGOYBKZ6CJc?si=E1dNJQp1GVQ1FI8j"
+                        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+                        encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">"Coral 25" Como dos extraños y Tonada de otoño - Dir. S. Blanco | Ensayo.</div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/h23uJQ-qAMM?si=H2jxnQ67rsFuZO_8"
+                        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;
+                        picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">Locuras de Silvio Rodríguez - Bucaramanga, Colombia 2019 - "Coral 25" Dir. S. Blanco (Ensayo)</div>
+            </div>
+
+            <!-- Video 3 -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/ajhY8zjAW5w" allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">Te quiero (Benedetti y Favero) - "Coral 25" Dir. S. Blanco (Ensayo)</div>
+            </div>
+
+            <!-- Video 4 -->
+            <div class="video-card">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/XrIvLaz4EAQ?si=bo2iLERy2Dof5tnE" allowfullscreen></iframe>
+                </div>
+                <div class="video-caption">MASA CORAL A MI MANERA - Dir. Silvia Blanco</div>
+            </div>
+
+        </div>
+        <!-- /video-grid -->
+
+    </div>
+    <!-- /page-content -->
+
+    <!--===================  Pie de Página ========================= -->
+    <footer class="site-footer">
+        <div class="footer-line"></div>
+        <div class="footer-content">
+            <p class="footer-text">
+                <img src="img/logo_coral.png" alt="Coral 25" class="footer-logo">
+                ©2026 Coral 25 - Ciudad de 25 de Mayo, Buenos Aires, Argentina.
+            </p>
+            <p class="footer-firma">
+                <a href="https://wa.me" target="_blank">🌐 Diseño Web x Mario Molina | Update: 2026-10-30</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- API de Vimeo (necesaria para el reproductor embebido) -->
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    <!-- MINIATURA VIMEO: al hacer clic sobre la foto, se carga y reproduce el video -->
+    <script>
+        document.querySelectorAll('.video-facade').forEach(function (facade) {
+            facade.addEventListener('click', function () {
+                if (facade.classList.contains('facade-playing')) return;
+                var iframe = facade.querySelector('iframe');
+                if (iframe && !iframe.getAttribute('src')) {
+                    iframe.setAttribute('src', iframe.getAttribute('data-src') + '&autoplay=1');
+                }
+                facade.classList.add('facade-playing');
+            });
+        });
+    </script>
+
+    <!-- JAVASCRIPT PARA EL MENÚ MÓVIL -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            hamburger.classList.toggle('active');
+        });
+
+        // Cerrar el menú al hacer clic en un enlace
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                hamburger.classList.remove('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
