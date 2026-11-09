@@ -392,7 +392,18 @@
             margin: 0;
         }
 
-        /* Ajuste responsive de la grilla de premios */
+        /* Fecha dorada de cada premio (formato lista, sin imágenes) */
+        .lista-agrupaciones .premio-fecha {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            opacity: 0.7;
+            margin-bottom: 0.3rem;
+        }
+
+/* Ajuste responsive de la grilla de premios */
         @media (max-width: 680px) {
             .premios-grid {
                 grid-template-columns: 1fr;
@@ -882,67 +893,43 @@
                     </div>
                 </div>
 
-                <!-- ===== SECCIÓN DE PREMIOS ===== -->
-                <div class="premios-seccion" id="premios">
+  <div class="premios-seccion" id="premios">
                     <div class="glass-card" style="max-width: 800px; margin: 0 auto;">
                         <h2 class="subtitulo-seccion">Premios y Reconocimientos</h2>
-                        
-                        <div class="premios-grid">
 
-                            <!-- PREMIO 1 (ejemplo) — Reemplaza src, título y descripción -->
-                            <div class="premio-card">
-                                <div class="premio-card-img-wrap">
-                                    <img src="img/premio_ejemplo_1.jpg" alt="Premio Festival Internacional Gustavo Gómez Ardila" class="premio-card-img">
-                                </div>
-                                <div class="premio-card-body">
-                                    <span class="premio-fecha">2019 · Colombia</span>
-                                    <h4>Ganadores del Festival Internacional Gustavo Gómez Ardila</h4>
-                                    <p>Coral 25 obtuvo el primer puesto por concurso en el festival internacional de Bucaramanga, representando a Argentina en tierras colombianas.</p>
-                                </div>
-                            </div>
+                        <ul class="lista-agrupaciones">
 
-                            <!-- PREMIO 2 (ejemplo) — Reemplaza src, título y descripción -->
-                            <div class="premio-card">
-                                <div class="premio-card-img-wrap">
-                                    <img src="img/premio_ejemplo_2.jpg" alt="Distinción Senado de la Nación" class="premio-card-img">
-                                </div>
-                                <div class="premio-card-body">
-                                    <span class="premio-fecha">2018 · Buenos Aires</span>
-                                    <h4>Distinción del Senado de la Nación</h4>
-                                    <p>Reconocimiento por los 62 años de trayectoria ininterrumpida al servicio de la cultura coral argentina, otorgado en el recinto del Senado.</p>
-                                </div>
-                            </div>
+                            <li>
+                                <span class="premio-fecha">2026 · 25 de Mayo</span>
+                                <strong>Distinguido por el H.C.D. de 25 de Mayo</strong>
+                                <p>Homenaje en el Honorable Consejo Deliberante por los 70 años de vida del coro, reconociendo su aporte a la identidad cultural de la ciudad.</p>
+                            </li>
 
-                            <!-- PREMIO 3 (ejemplo) — Reemplaza src, título y descripción -->
-                            <div class="premio-card">
-                                <div class="premio-card-img-wrap">
-                                    <img src="img/premio_ejemplo_3.jpg" alt="Distinción Honorable Concejo Deliberante" class="premio-card-img">
-                                </div>
-                                <div class="premio-card-body">
-                                    <span class="premio-fecha">2026 · 25 de Mayo</span>
-                                    <h4>Distinguido por el H.C.D. de 25 de Mayo</h4>
-                                    <p>Homenaje en el Honorable Consejo Deliberante por los 70 años de vida del coro, reconociendo su aporte a la identidad cultural de la ciudad.</p>
-                                </div>
-                            </div>
+                            <li>
+                                <span class="premio-fecha">2019 · Colombia</span>
+                                <strong>Ganadores del Festival Internacional Gustavo Gómez Ardila</strong>
+                                <p>Coral 25 obtuvo el primer puesto por concurso en el festival internacional de Bucaramanga, representando a Argentina en tierras colombianas.</p>
+                            </li>
+
+                            <li>
+                                <span class="premio-fecha">2018 · Buenos Aires</span>
+                                <strong>Distinción del Senado de la Nación</strong>
+                                <p>Reconocimiento por los 62 años de trayectoria ininterrumpida al servicio de la cultura coral argentina, otorgado en el recinto del Senado.</p>
+                            </li>
 
                             <!-- ➕ AGREGÁ MÁS PREMIOS COPIANDO ESTE BLOQUE Y CAMBIANDO LOS DATOS:
-                            <div class="premio-card">
-                                <div class="premio-card-img-wrap">
-                                    <img src="img/TU_IMAGEN.jpg" alt="Descripción de la imagen" class="premio-card-img">
-                                </div>
-                                <div class="premio-card-body">
-                                    <span class="premio-fecha">AÑO · LUGAR</span>
-                                    <h4>Título del Premio</h4>
-                                    <p>Breve descripción del logro o reconocimiento obtenido.</p>
-                                </div>
-                            </div>
+                            <li>
+                                <span class="premio-fecha">AÑO · LUGAR</span>
+                                <strong>Título del Premio</strong>
+                                <p>Breve descripción del logro o reconocimiento obtenido.</p>
+                            </li>
                             -->
 
-                        </div>
+                        </ul>
                     </div>
                 </div>
 
-            </div><!-- fin .page-main-content -->
+</div><!-- fin .page-main-content -->
         </div><!-- fin .page-with-toc -->
 
     </div><!-- fin .page-content -->
