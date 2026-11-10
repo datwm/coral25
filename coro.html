@@ -38,6 +38,117 @@
             transform: scale(1.05);
             color: #fff;
         }
+        
+   
+   
+   
+    /* ---------- TÍTULOS DE SECCIÓN --- -----------------*/
+        .section-title {
+            font-size: 1.3rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            text-align: center;
+            margin: 4rem 0 2rem 0;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: var(--gold);
+            margin: 0.8rem auto 0;
+        }
+
+      .photo-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 4/3; /* Mantiene proporción uniforme */
+            background-color: #151515; /* Color de carga */
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease, filter 0.5s ease;
+            filter: grayscale(30%);
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.08);
+            filter: grayscale(0%);
+        }
+
+
+       /* --- FOTOS (Grid de Imágenes) --- */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 4/3; /* Mantiene proporción uniforme */
+            background-color: #151515; /* Color de carga */
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease, filter 0.5s ease;
+            filter: grayscale(30%);
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.08);
+            filter: grayscale(0%);
+        }
+
+        /* Overlay con texto al pasar el mouse */
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 1rem 1rem;
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.9), transparent);
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .photo-item:hover .photo-overlay {
+            transform: translateY(0);
+        }
+
+        .photo-overlay h4 {
+            font-size: 1rem;
+            font-family: var(--font-serif); /* Fuente nativa reemplazada */
+            margin-bottom: 0.2rem;
+        }
+
+        .photo-overlay p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        
+        
+        
+        
+        
+        
     </style>
 </head>
 <body>
@@ -72,19 +183,20 @@
     </nav>
 
 
-        <!-- SECCIÓN: Formación Actual + Botón 360 -->
-        <div class="formacion-container">
-        <!--  <h2 class="formacion-title">Formación Actual</h2>  -->
-             <h2 class="page-title">Integrantes</h2>
-            
-            <!-- Nuevo contenedor forzando el centro -->
-            <div class="contenedor-foto-360">
-                <img src="fondo/coral_00.webp" alt="Formación 2026 Coral 25" class="formacion-img">
-         <!--       <a href="visor3d.html" class="btn-360">🌐 Ver en 360°</a>   -->
-          <!--       <a href="visor3d.html" class="btn-360" id="boton360">🌐 Ver en 360°</a> <!-- <--- id="boton360" -->
-            </div>
 
-        </div>
+  <!-- IMAGEN PORTADA INTEGRANTES DEL CORO -->
+   <!--       <h2 class="section-title">  </h2>  -->
+        <div class="photo-grid">
+            <div class="photo-item">
+                <img src="fondo/coral_00.webp" alt="Concierto del Coral 25">
+                <div class="photo-overlay">
+                    <h4>FORMACION TANDIL - 2026-OCT-10 Y 11</h4>
+                    <p>17° ENCUENTRO CORAL SERRANO EN TANDIL, BUENOS AIRES, ARGENTINA. </p>
+                </div>
+            </div>
+          </div>
+         </div>
+
 
 
 
@@ -100,7 +212,7 @@
         <div class="director-section">
             <div class="glass-card voice-card" style="text-align: center; padding: 20px;">
                 <h3 style="margin-bottom: 0.3em;">Silvia M. Blanco</h3>
-                <p style="margin-top: 0px; margin-bottom: 0px; font-weight: bold; opacity: 0.9; letter-spacing: 1px;">• Directora de Coro •</p>
+                <p style="margin-top: 0px; margin-bottom: 0px; font-weight: bold; opacity: 0.9; letter-spacing: 1px;">• Directora Coral •</p>
             </div>
         </div>
 
