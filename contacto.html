@@ -8,8 +8,8 @@
     <meta name="darkreader-lock">
 
     <title>Contacto | Coral 25</title>
-    <!-- Se añade ?v=2 para forzar la actualización de la caché del navegador -->
-    <link rel="stylesheet" href="css/style.css?v=2">
+    <!-- v14: mismo CSS que el resto del sitio, con logos alineados en móvil -->
+    <link rel="stylesheet" href="css/style.css?v=14">
 
     <!-- Estilos específicos de esta página -->
     <style>
@@ -18,7 +18,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: #128C7E; /* Verde WhatsApp oscuro para armonizar con la Gala */
+            background: #128C7E;
             color: #fff;
             padding: 1.2rem 2.5rem;
             border-radius: 50px;
@@ -31,7 +31,7 @@
         }
 
         .wa-btn:hover {
-            background: #25D366; /* Verde clásico al pasar el mouse */
+            background: #25D366;
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
         }
@@ -74,27 +74,38 @@
         }
 
         /* ====================================================
-           AJUSTE: LOGO CENTRADO EN LA TARJETA DE CONTACTO
-           La clase .info-logo-col fue diseñada para la portada
-           (layout de dos columnas): ahí el borde derecho y el
-           padding-right tienen sentido. Aquí, en la tarjeta de
-           contacto, descentraban el logo (lo corrido ~20px a la
-           izquierda) y dibujaban una línea que no corresponde.
+           LOGO CENTRADO EN LA TARJETA DE CONTACTO (v14)
+           Clase propia, independiente de .info-logo-col,
+           para no heredar bordes ni paddings de la portada.
            ==================================================== */
         .contact-logo {
+            text-align: center;
+            margin: 2.5em 0;
+            padding: 0;
             border: none;
-            padding-right: 0;
         }
 
         .contact-logo img {
             display: block;
-            margin: 0 auto;   /* Centrado exacto */
+            margin: 0 auto;
+            max-width: 200px;
+            width: auto;
+            height: auto;
+            opacity: 0.85;
+        }
+
+        /* En móvil, un toque más chico para que no aplaste */
+        @media (max-width: 768px) {
+            .contact-logo {
+                margin: 2em 0;
+            }
+            .contact-logo img {
+                max-width: 170px;
+            }
         }
 
         /* ====================================================
-           AJUSTE: DIRECCIÓN WEB EN DORADO
-           Mismo botón .social-btn, pero con texto, ícono y borde
-           dorados. Al pasar el mouse pasa al dorado claro.
+           DIRECCIÓN WEB EN DORADO
            ==================================================== */
         .social-btn.web-link {
             color: var(--gold);
@@ -109,13 +120,11 @@
 </head>
 <body>
 
-
-
     <div class="gala-bg" style="background-image: url('img/fondo_coro.jpg');"></div>
 
     <!-- Navegación -->
     <nav class="navbar">
-        <a href="index.html" class="logo" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+        <a href="index.html" class="logo">
             <img src="img/logo_coral.png" alt="Logo" class="logo-img">
             <span>Coral 25</span>
         </a>
@@ -142,14 +151,6 @@
           </ul>
     </nav>
 
-
-    <!-- ================= LOGO CORAL 25  ================= -->
-    <!--     <div class="info-logo-col">
-            <img src="img/logo_coral.png" alt="Logo Coral 25">
-        </div>
--->
-
-
     <section class="page-content">
 
         <h1 class="page-title">Contacto</h1>
@@ -160,8 +161,10 @@
                 <h3 style="font-family: var(--font-serif); color: var(--gold-light); margin-bottom: 1rem;">¡Comunicate con Nosotros!</h3>
 
                 <p style="margin-bottom: 2.5em; line-height: 1.6; color: var(--text-muted);">
-                    ¿Querés invitarnos a un encuentro, contratarnos para un evento privado o hacernos una consulta? <br>
-                    Escribinos directamente por nuestros canales oficiales y te responderemos a la brevedad.
+                    ¿Querés invitarnos a un encuentro, contratarnos para un evento privado <br> 
+                     o hacernos una consulta? <br>
+                    Escribinos directamente por nuestros canales oficiales <br> 
+                    y te responderemos a la brevedad.
                 </p>
 
                 <!-- ================= BOTÓN PRINCIPAL DE WHATSAPP ================= -->
@@ -177,29 +180,14 @@
                 <!-- Línea sutil divisoria -->
                 <div style="height: 1px; background: var(--glass-border); width: 80%; margin: 0 auto 2.5em auto;"></div>
 
-
-
-                <!-- ================= E-MAIL ================= -->
-       <!--         <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
-                    <a href="mailto:correo@ejemplo.com" class="social-btn">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                        Enviar Email
-                    </a>
-                </div>
- --> 
-
-
-
-
                 <!-- ================= LOGO CORAL 25  ================= -->
-                <!-- "contact-logo" anula el borde y padding de .info-logo-col
-                     para que el logo quede perfectamente centrado -->
-                <div class="info-logo-col contact-logo">
+                <!-- Clase propia .contact-logo, independiente de .info-logo-col
+                     para no heredar bordes ni paddings de la portada. -->
+                <div class="contact-logo">
                     <img src="img/logo_coral_web.webp" alt="Logo Coral 25">
                 </div>
 
                 <!-- ================= DIRECCION WEB ================= -->
-                <!-- "web-link" da color dorado al texto, al ícono y al borde -->
                 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px;">
                     <a href="https://bio.site/coral25" class="social-btn web-link">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
@@ -207,11 +195,9 @@
                     </a>
                 </div>
 
-
-
                 <p style="margin-top: 3em; font-size: 1em; opacity: 0.9; line-height: 1.4; color: var(--text-muted);">
-                    Sede:<br> Casa de la cultura <br>
-                    Municipalidad de Veinticinco de Mayo <br>
+                     Ubicación: <br> 
+                    Ciudad de Veinticinco de Mayo <br>
                     Provincia de Buenos Aires, Argentina.
                 </p>
 
