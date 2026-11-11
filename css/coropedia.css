@@ -1,0 +1,988 @@
+/* ============================================================
+   COROPEDIA.CSS — Estilos compartidos de todas las páginas
+   de la Enciclopedia Coral (CoroPedia) de Coral 25.
+   Hereda variables y base desde css/style.css del sitio.
+   ============================================================ */
+
+/* ============================================================
+   BREADCRUMB + SUB-NAV COROPEDIA
+   ============================================================ */
+.coropedia-breadcrumb {
+    max-width: 1100px;
+    margin: 1.5rem auto 0 auto;
+    padding: 0 1rem;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+.coropedia-breadcrumb a {
+    color: var(--gold-light);
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(212, 175, 55, 0.4);
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.coropedia-breadcrumb a:hover {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+}
+
+.coropedia-breadcrumb span.separador {
+    margin: 0 0.4rem;
+    color: rgba(212, 175, 55, 0.4);
+}
+
+.coropedia-breadcrumb span.actual {
+    color: var(--gold-light);
+    font-weight: 500;
+}
+
+/* Sub-navegación interna entre subpáginas */
+.coropedia-subnav {
+    max-width: 1100px;
+    margin: 1.2rem auto 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.coropedia-subnav a {
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.02);
+    transition: all 0.25s ease;
+}
+
+.coropedia-subnav a:hover {
+    color: var(--gold-light);
+    border-color: rgba(212, 175, 55, 0.45);
+    background: rgba(212, 175, 55, 0.06);
+}
+
+.coropedia-subnav a.subnav-active {
+    color: #0f0c14;
+    background: var(--gold);
+    border-color: var(--gold);
+    font-weight: 600;
+}
+
+/* Botón "Volver al índice" */
+.volver-index {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 3rem auto 1rem auto;
+    padding: 0.7rem 1.4rem;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    text-decoration: none;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 999px;
+    background: rgba(212, 175, 55, 0.04);
+    transition: all 0.25s ease;
+}
+
+.volver-index:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+    background: rgba(212, 175, 55, 0.1);
+    transform: translateX(-3px);
+}
+
+.volver-index::before {
+    content: "←";
+    font-size: 1rem;
+}
+
+.volver-wrap {
+    text-align: center;
+    margin: 3rem 0;
+}
+
+/* ============================================================
+   TEXTO Y SECCIONES (heredado de historia.html)
+   ============================================================ */
+.coropedia-texto,
+.historia-texto {
+    text-align: justify;
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+.hito-titulo {
+    color: var(--gold);
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+    font-weight: 700;
+}
+
+.hito-descripcion {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(212, 175, 55, 0.3);
+}
+
+/* Subtítulo estilo línea */
+.subtitulo-seccion {
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-main);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+/* Introducción bajo subtítulo */
+.eras-intro,
+.seccion-intro {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 640px;
+    margin: 0 auto 2.5rem auto;
+}
+
+/* ============================================================
+   TARJETA DE LA DIRECTORA / PERSONAJE
+   ============================================================ */
+.directora-seccion {
+    text-align: center;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+}
+
+.directora-seccion .foto-directora {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gold);
+    margin-bottom: 1.5rem;
+    filter: grayscale(20%);
+}
+
+.directora-seccion h3 {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+}
+
+.directora-seccion .rol {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+/* ============================================================
+   LISTAS DE AGRUPACIONES / HITOS
+   ============================================================ */
+.lista-agrupaciones {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.lista-agrupaciones li {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.lista-agrupaciones li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.lista-agrupaciones strong {
+    color: var(--gold-light);
+    font-family: var(--font-serif);
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.lista-agrupaciones p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.lista-giras {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 2rem 0;
+    text-align: left;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.lista-giras li {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    border-left: 2px solid var(--gold);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.lista-giras li strong {
+    color: var(--gold-light);
+    margin-right: 0.5rem;
+}
+
+.lista-agrupaciones .premio-fecha {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 0.3rem;
+}
+
+/* ============================================================
+   MENÚ DE SECCIONES ESTILO WIKIPEDIA (TOC)
+   ============================================================ */
+.page-with-toc {
+    display: flex;
+    max-width: 1100px;
+    margin: 0 auto;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.page-main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.toc-sidebar {
+    position: sticky;
+    top: 100px;
+    width: 260px;
+    min-width: 260px;
+    flex-shrink: 0;
+}
+
+.toc-box {
+    background: rgba(15, 12, 20, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 1.2rem 1rem;
+    font-size: 0.85rem;
+}
+
+.toc-box .toc-title {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--glass-border);
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.toc-box ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: toc-counter;
+}
+
+.toc-box ol li {
+    counter-increment: toc-counter;
+    margin-bottom: 2px;
+}
+
+.toc-box ol li a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    padding: 5px 8px;
+    border-radius: 4px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    line-height: 1.4;
+}
+
+.toc-box ol li a::before {
+    content: counter(toc-counter) ".";
+    color: var(--gold);
+    font-weight: 600;
+    min-width: 1.2em;
+    text-align: right;
+    font-size: 0.8em;
+    flex-shrink: 0;
+}
+
+.toc-box ol li a:hover {
+    background: rgba(212, 175, 55, 0.08);
+    color: var(--text-main);
+}
+
+.toc-box ol li a.toc-active {
+    background: rgba(212, 175, 55, 0.12);
+    color: var(--gold-light);
+    font-weight: 500;
+}
+
+/* TOC móvil */
+.toc-mobile-toggle {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 90;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid var(--gold);
+    background: rgba(15, 12, 20, 0.92);
+    backdrop-filter: blur(12px);
+    color: var(--gold);
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    line-height: 1;
+}
+
+.toc-mobile-toggle:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 28px rgba(212, 175, 55, 0.2);
+}
+
+.toc-mobile-toggle.is-open {
+    background: var(--gold);
+    color: #0f0c14;
+}
+
+.toc-mobile-panel {
+    display: none;
+    position: fixed;
+    bottom: 84px;
+    right: 24px;
+    z-index: 89;
+    width: 280px;
+    max-height: 70vh;
+    overflow-y: auto;
+    background: rgba(15, 12, 20, 0.96);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+    animation: tocSlideUp 0.25s ease-out;
+}
+
+.toc-mobile-panel::-webkit-scrollbar {
+    width: 4px;
+}
+
+.toc-mobile-panel::-webkit-scrollbar-thumb {
+    background: rgba(212, 175, 55, 0.3);
+    border-radius: 2px;
+}
+
+@keyframes tocSlideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.toc-mobile-panel.is-visible {
+    display: block;
+}
+
+@media (max-width: 900px) {
+    .toc-sidebar {
+        display: none;
+    }
+    .toc-mobile-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .page-with-toc {
+        display: block;
+    }
+}
+
+/* ============================================================
+   PREMIOS / TARJETAS DE CULTURA
+   ============================================================ */
+.premios-seccion {
+    margin-top: 4rem;
+}
+
+.premios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.premio-card {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.premio-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 175, 55, 0.35);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.premio-card-img-wrap {
+    overflow: hidden;
+}
+
+.premio-card-body {
+    padding: 1.2rem 1.4rem 1.4rem;
+}
+
+.premio-card-body h4 {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    color: var(--gold-light);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.3;
+}
+
+.premio-card-body p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin: 0;
+}
+
+@media (max-width: 680px) {
+    .premios-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================================
+   LÍNEA DE TIEMPO DE ERAS
+   ============================================================ */
+html {
+    scroll-behavior: smooth;
+}
+
+.timeline-directores,
+.timeline-eras {
+    position: relative;
+    max-width: 660px;
+    margin: 0 auto;
+    text-align: left;
+    padding: 0.5rem 0;
+}
+
+.timeline-directores::before,
+.timeline-eras::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background: linear-gradient(180deg, rgba(212, 175, 55, 0.55), rgba(212, 175, 55, 0.1));
+}
+
+.era-item {
+    position: relative;
+    padding: 0 0 2.2rem 2.4rem;
+}
+
+.era-item:last-child {
+    padding-bottom: 0.5rem;
+}
+
+.era-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #0f0c14;
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.era-item:hover::before {
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2), 0 0 14px rgba(212, 175, 55, 0.35);
+}
+
+.era-item.era-actual::before {
+    background: var(--gold);
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.22), 0 0 18px rgba(212, 175, 55, 0.45);
+}
+
+.era-anios {
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    padding: 2px 10px;
+    border-radius: 999px;
+    margin-bottom: 0.5rem;
+}
+
+.era-nombre {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: var(--gold-light);
+    margin-bottom: 0.35rem;
+    line-height: 1.3;
+}
+
+.era-descripcion {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.era-badge-actual {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #0f0c14;
+    background: var(--gold);
+    padding: 3px 9px;
+    border-radius: 999px;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+}
+
+.eras-nota {
+    margin-top: 2.5rem;
+    padding: 1rem 1.2rem;
+    background: rgba(212, 175, 55, 0.05);
+    border-left: 2px solid rgba(212, 175, 55, 0.4);
+    border-radius: 0 6px 6px 0;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.eras-nota a,
+.era-descripcion a,
+.coropedia-texto a,
+.historia-texto a {
+    color: var(--gold-light);
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(212, 175, 55, 0.5);
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.eras-nota a:hover,
+.era-descripcion a:hover,
+.coropedia-texto a:hover,
+.historia-texto a:hover {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+}
+
+[id] {
+    scroll-margin-top: 90px;
+}
+
+/* ============================================================
+   ÍNDICE COROPEDIA — TARJETAS VISUALES
+   ============================================================ */
+.coropedia-hero {
+    text-align: center;
+    padding: 2rem 1rem 1rem 1rem;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.coropedia-hero .coropedia-eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: block;
+    opacity: 0.85;
+}
+
+.coropedia-hero .coropedia-subtitle {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-top: 1.5rem;
+}
+
+.coropedia-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.8rem;
+    max-width: 1100px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+}
+
+.coropedia-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+    text-decoration: none;
+    color: inherit;
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.04) 0%, rgba(15, 12, 20, 0.5) 100%);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1),
+                border-color 0.35s ease,
+                box-shadow 0.35s ease;
+}
+
+.coropedia-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(212, 175, 55, 0.08), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.coropedia-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212, 175, 55, 0.45);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(212, 175, 55, 0.15) inset;
+}
+
+.coropedia-card:hover::before {
+    opacity: 1;
+}
+
+.coropedia-card-header {
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(15, 12, 20, 0.4));
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.coropedia-card-header .card-icon {
+    font-size: 3.2rem;
+    color: var(--gold);
+    line-height: 1;
+    text-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
+    font-family: var(--font-serif);
+}
+
+.coropedia-card-header .card-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: rgba(15, 12, 20, 0.7);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    padding: 3px 9px;
+    border-radius: 999px;
+}
+
+.coropedia-card-body {
+    padding: 1.5rem 1.5rem 1.8rem 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.coropedia-card-body h3 {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--gold-light);
+    margin: 0 0 0.7rem 0;
+    line-height: 1.3;
+}
+
+.coropedia-card-body p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin: 0 0 1.2rem 0;
+    flex: 1;
+}
+
+.coropedia-card-body .card-link {
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: gap 0.25s ease;
+}
+
+.coropedia-card:hover .card-link {
+    gap: 0.7rem;
+}
+
+.coropedia-card-body .card-link::after {
+    content: "→";
+}
+
+/* Sección destacada (Coral 25) */
+.coropedia-card.destacada {
+    grid-column: span 2;
+    min-height: 320px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(15, 12, 20, 0.6) 100%);
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.coropedia-card.destacada .coropedia-card-header {
+    height: 180px;
+}
+
+.coropedia-card.destacada .coropedia-card-header .card-icon {
+    font-size: 4rem;
+}
+
+.coropedia-card.destacada .coropedia-card-body h3 {
+    font-size: 1.55rem;
+}
+
+.coropedia-card.destacada .coropedia-card-body p {
+    font-size: 0.95rem;
+}
+
+@media (max-width: 720px) {
+    .coropedia-card.destacada {
+        grid-column: span 1;
+    }
+    .coropedia-card.destacada .coropedia-card-header {
+        height: 130px;
+    }
+    .coropedia-card.destacada .coropedia-card-header .card-icon {
+        font-size: 3.2rem;
+    }
+}
+
+/* Cita decorativa */
+.coropedia-quote {
+    max-width: 760px;
+    margin: 3rem auto 1rem auto;
+    padding: 2rem 2.5rem;
+    text-align: center;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    position: relative;
+}
+
+.coropedia-quote::before,
+.coropedia-quote::after {
+    content: "✦";
+    position: absolute;
+    color: var(--gold);
+    opacity: 0.5;
+    font-size: 0.9rem;
+}
+
+.coropedia-quote::before {
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-base, #0f0c14);
+    padding: 0 0.6rem;
+}
+
+.coropedia-quote::after {
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-base, #0f0c14);
+    padding: 0 0.6rem;
+}
+
+.coropedia-quote p {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--text-main);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.coropedia-quote cite {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-style: normal;
+}
+
+/* ============================================================
+   DEFINICIONES Y CONCEPTOS (estilo glosario)
+   ============================================================ */
+.glosario {
+    max-width: 760px;
+    margin: 2rem auto;
+}
+
+.glosario dt {
+    font-family: var(--font-serif);
+    color: var(--gold-light);
+    font-size: 1.05rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+}
+
+.glosario dt:first-child {
+    margin-top: 0;
+}
+
+.glosario dd {
+    margin: 0 0 0 0;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-size: 0.95rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(212, 175, 55, 0.2);
+}
+
+/* Tabla de voces */
+.tabla-voces {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+}
+
+.tabla-voces th,
+.tabla-voces td {
+    padding: 0.8rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.tabla-voces th {
+    background: rgba(212, 175, 55, 0.06);
+    color: var(--gold);
+    font-family: var(--font-serif);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tabla-voces td {
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.tabla-voces td strong {
+    color: var(--gold-light);
+}
+
+.tabla-voces tr:hover td {
+    background: rgba(212, 175, 55, 0.03);
+}
+
+/* Bloque "info-cross" para enlaces cruzados */
+.cross-link-box {
+    margin: 2.5rem 0;
+    padding: 1.5rem 1.8rem;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.06), rgba(15, 12, 20, 0.3));
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.cross-link-box .cross-label {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.cross-link-box .cross-title {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    color: var(--gold-light);
+    margin-bottom: 0.6rem;
+}
+
+.cross-link-box .cross-text {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.cross-link-box .cross-link {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    border-radius: 999px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.cross-link-box .cross-link:hover {
+    background: var(--gold);
+    color: #0f0c14;
+}
